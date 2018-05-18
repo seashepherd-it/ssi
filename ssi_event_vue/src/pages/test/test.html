@@ -1,0 +1,403 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<title>SSI Test</title>
+</head>
+
+<body>
+
+	<h1>App6</h1>
+	<div id="vue-app6">
+		<custom-button></custom-button>
+		<another-custom-button></another-custom-button>
+	</div>
+
+	<br/>
+	<h1>App5</h1>
+	<div id="vue-app5">
+
+		<product-card>
+			<span slot="title">Titolo del prodotto 1</span>
+			Io sono il prodotto 1 e costo
+			<strong>10€</strong>
+			<div slot="footer">Garanzia 12 mesi</div>
+		</product-card>
+
+		<product-card>
+			<span slot="title">Titolo del prodotto 2</span>
+			Io sono il prodotto 1, sono
+			<span class="offer">in offerta</span> e costo
+			<strong>5€</strong>
+			<div slot="footer">Nessuna garanzia per i prodotti in offerta</div>
+		</product-card>
+
+	</div>
+
+	<br/>
+	<h1>App4</h1>
+	<div id="vue-app4">
+		<b>{{ counter }} </b>
+		<incrementer></incrementer>
+	</div>
+
+	<br/>
+	<h1>App3</h1>
+	<div id="vue-app3">
+		<b>{{ firstname }} {{ lastname }}</b>
+		<child-component inline-template :firstname.sync="firstname" :lastname="lastname">
+			<button @click="updateFirstname()">Update from child</button>
+		</child-component>
+	</div>
+
+	<br/>
+	<h1>App2</h1>
+	<div id="vue-app2">
+		<people-list :people="people"></people-list>
+		<div>
+			<input v-model="name" placeholder="name">
+			<br/>
+			<input v-model="surname" placeholder="surname">
+			<br/>
+			<button @click.prevent="addPerson">Add person</button>
+		</div>
+	</div>
+
+	<br/>
+	<h1>App</h1>
+	<div id="vue-app">
+
+		<div>
+			<p>{{text}}
+				<button @click="reverseMessage">Reverse Text</button>
+			</p>
+		</div>
+
+		<div>
+			<span v-html="htmlText"></span>
+		</div>
+
+		<div>
+			<p>
+				My firstname is {{firstname}} and my lastname is
+				<span v-text="lastname"></span>
+			</p>
+		</div>
+
+		<div>
+			<input type="text" v-model="fullname">
+		</div>
+
+		<div>
+			<input type="text" v-model="name">
+			<button :disabled="submitDisabled">Invia</button>
+		</div>
+
+		<div>
+			<p>
+				{{firstname|uppercase|limit(3)}}
+			</p>
+		</div>
+
+		<div>
+			<input type="text" v-model="age" />
+			<template v-if="age >= 18">
+				Puoi guidare la macchina
+			</template>
+			<template v-else-if="age >= 14">
+				Puoi guidare il motorino
+			</template>
+			<template v-else>
+				Ti tocca andare in bici
+			</template>
+		</div>
+
+		<div>
+			<p>
+				<button :disabled="button1Disabled">
+					Button 1
+				</button>
+				<button :disabled="button2Disabled" @click="showMessage('Modified!')">
+					Button 2
+				</button>
+			</p>
+		</div>
+
+		<div>
+			<input @keyup.esc.once="showMessage('ESC pressed!')" @keyup.left="showMessage('LEFT pressed!')">
+		</div>
+
+		<div>
+			<input type="radio" v-model="mese" :value="'marzo'"> Marzo
+			<input type="radio" v-model="mese" :value="'aprile'"> Aprile
+			<input type="radio" v-model="mese" :value="'maggio'"> Maggio
+
+			<br/>
+
+			<input type="checkbox" v-model="tv" :true-value="'si'" :false-value="'no'">tv
+			<input type="checkbox" v-model="sauna" :true-value="'si'" :false-value="'no'">sauna
+
+			<br/>
+			<br/> {{ mese }} - {{ tv }} - {{ sauna }}
+		</div>
+
+		<div>
+			<p>
+				<template v-for="person in people">
+					{{ person }}
+					<br/>
+				</template>
+				<template v-for="(quantity, drink) in drinks">
+					{{ drink | firstToUpper }} => {{ quantity }}
+					<br/>
+				</template>
+			</p>
+		</div>
+
+		<div v-if="showMovies">
+			<h4>My favourite movies</h4>
+			<ul>
+				<li v-for="movie in movies">{{ movie }}</li>
+			</ul>
+		</div>
+		<div v-if="showBooks">
+			<h4>My favourite books</h4>
+			<ul>
+				<li v-for="book in books">{{ book }}</li>
+			</ul>
+		</div>
+
+		<mio-componente></mio-componente>
+		<br/>
+		<div is="mio-componente"></div>
+	</div>
+</body>
+
+<template id="mio-componente-template">
+	<b>Io sono il corpo del componente</b>
+</template>
+
+<template id="people-list">
+	<div>
+		<person v-for="person in people" :person="person" :key="person.name"></person>
+	</div>
+</template>
+
+<template id="person">
+	<div>
+		<i>{{ person.name }}</i>
+		<b>{{ person.surname }}</b>
+	</div>
+</template>
+
+<script type="text/x-template" id="product-card-template">
+	<div class='product-card' style='border:1px solid #ddd; margin: 10px; padding: 10px;'>
+		<h4>
+			<slot name='title'></slot>
+		</h4>
+		<slot></slot>
+		<footer style='font-size: 10px'>
+			<slot name='footer'></slot>
+		</footer>
+	</div>
+</script>
+
+<script>
+	new Vue({
+		el: '#vue-app',
+		data: {
+			text: 'Prova text',
+			htmlText: '<b>Bold</b>',
+			firstname: 'Mattia',
+			lastname: 'Rocchi',
+			name: 'Pippo',
+			age: 22,
+			submitDisabled: false,
+			button1Disabled: true,
+			button2Disabled: false,
+			showMovies: true,
+			showBooks: true,
+			movies: [
+				'Back to the Future',
+				'Matrix',
+				'Indipendence Day'
+			],
+			books: [
+				'Pride and Prejudice',
+				'Brave New World',
+				'1984'
+			],
+			people: [
+				'Alberto',
+				'Marco',
+				'Luca',
+				'Andrea'
+			],
+			drinks: {
+				'water': 3,
+				'code': 4,
+				'beer': 0
+			},
+			mese: 'marzo',
+			tv: 'si',
+			sauna: 'no'
+		},
+		computed: {
+			fullname: {
+				get: function () {
+					return this.firstname + ' ' + this.lastname;
+				},
+				set: function (value) {
+					var parts = value.split(' ');
+					this.firstname = parts[0];
+					this.lastname = parts[1];
+				}
+			}
+		},
+		watch: {
+			name: function (value) {
+				this.submitDisabled = value.length < 3;
+			}
+		},
+		methods: {
+			showMessage: function (text) {
+				alert(text);
+			},
+			reverseMessage: function () {
+				this.text = this.text.split('').reverse().join('')
+			}
+		},
+		filters: {
+			firstToUpper: function (text) {
+				return text.substring(0, 1).toUpperCase() + text.substring(1);
+			},
+			uppercase: function (text) {
+				return text.toUpperCase();
+			},
+			limit: function (text, length) {
+				return text.substring(0, length);
+			}
+		},
+		components: {
+			'mio-componente': {
+				template: '#mio-componente-template'
+			}
+		}
+	});
+
+	Vue.component('people-list', {
+		template: '#people-list',
+		props: ['people']
+	})
+
+	Vue.component('person', {
+		template: '#person',
+		props: ['person']
+	});
+
+	new Vue({
+		el: '#vue-app2',
+		data: {
+			people: [{
+					name: 'Alberto',
+					surname: 'Bianchi'
+				},
+				{
+					name: 'Marco',
+					surname: 'Rossi'
+				},
+				{
+					name: 'Luca',
+					surname: 'Verdi'
+				},
+			],
+			name: '',
+			surname: ''
+		},
+		methods: {
+			addPerson: function () {
+				this.people.push({
+					name: this.name,
+					surname: this.surname
+				});
+				this.name = '';
+				this.surname = '';
+			}
+		}
+	});
+
+	Vue.component('child-component', {
+		props: ['firstname', 'lastname'],
+		methods: {
+			updateFirstname: function () {
+				this.$emit('update:firstname', 'luigi');
+			}
+		}
+	});
+	new Vue({
+		el: '#vue-app3',
+		data: {
+			firstname: 'alberto',
+			lastname: 'bottarini'
+		}
+	});
+
+	Vue.component('incrementer', {
+		template: '<button @click="increment">+</button>',
+		methods: {
+			increment: function () {
+				EventBus.$emit('increment');
+			}
+		}
+	});
+
+	var EventBus = new Vue();
+
+	new Vue({
+		el: '#vue-app4',
+		data: {
+			counter: 0
+		},
+		created: function () {
+			var that = this;
+			EventBus.$on('increment', this.increment.bind(this));
+		},
+		methods: {
+			increment: function () {
+				this.counter++;
+			}
+		}
+	});
+
+	Vue.component('product-card', {
+		template: '#product-card-template'
+	});
+
+	new Vue({
+		el: '#vue-app5'
+	});
+
+	Vue.mixin({
+		methods: {
+			onClick: function () {
+				alert('clicked');
+			}
+		}
+	});
+
+	Vue.component('custom-button', {
+		template: '<button @click="onClick">custom button</button>'
+	});
+
+	Vue.component('another-custom-button', {
+		template: '<button @click="onClick">another custom button</button>'
+	});
+
+	var app = new Vue({
+		el: '#vue-app6'
+	});
+</script>
+
+</html>

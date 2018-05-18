@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+
+<head></head>
+
+<body>
+    <div id="app">
+        Name: <input v-model="name" type="text">
+        <hello-component :name="name" :initial-enthusiasm="5" />
+    </div>
+</body>
+<script src="../dist/build.js"></script>
+
+</html>
