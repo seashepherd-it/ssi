@@ -21,8 +21,8 @@
           <q-item-side icon="home" />
           <q-item-main label="Home"/>
         </q-item>
-        
-        <q-collapsible icon="event" label="Events" opened="true">
+
+        <q-collapsible icon="event" label="Events" opened>
           <q-item link to="/events/search">
             <q-item-side icon="search" />
             <q-item-main label="Search" />
@@ -41,10 +41,20 @@
           <q-item-side icon="mood" />
           <q-item-main label="Hello"/>
         </q-item>        
-
-        <q-item link to="/snoozed">
-          <q-item-side icon="schedule" />
-          <q-item-main label="Snoozed"/>
+        
+        <q-item link to="/calendar">
+          <q-item-side icon="date_range"/>
+          <q-item-main label="Calendar"/>
+        </q-item>
+        
+        <q-item link to="/spreadsheet">
+          <q-item-side icon="view_list"/>
+          <q-item-main label="Spreadsheet"/>
+        </q-item>
+        
+        <q-item link to="/scheduler">
+          <q-item-side icon="scheduler"/>
+          <q-item-main label="Scheduler"/>
         </q-item>
 
         <q-item link to="/trash">

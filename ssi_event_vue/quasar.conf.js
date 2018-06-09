@@ -32,6 +32,8 @@ module.exports = function (ctx) {
         cfg.resolve.alias.router = appPaths.resolve.src('router');
         cfg.resolve.alias.store = appPaths.resolve.src('store');
 
+        cfg.resolve.alias.vue = 'vue/dist/vue.common'
+
         cfg.module.rules.push({
           test: /\.ts(x?)$/,
           use: [

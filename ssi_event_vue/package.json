@@ -12,14 +12,20 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
+    "@progress/kendo-datasource-vue-wrapper": "^2018.2.516",
+    "@progress/kendo-dateinputs-vue-wrapper": "^2018.2.516",
+    "@progress/kendo-scheduler-vue-wrapper": "^2018.2.516",
+    "@progress/kendo-spreadsheet-vue-wrapper": "^2018.2.516",
+    "@progress/kendo-theme-default": "^2.53.2",
+    "@progress/kendo-ui": "^2018.2.530",
     "axios": "^0.18.0",
-    "tslib": "^1.9.0",
-    "vue-i18n": "^7.3.3",
+    "tslib": "^1.9.2",
+    "vue-i18n": "^7.8.0",
     "vue-router": "^3.0.1",
     "vue-style-loader": "^4.1.0"
   },
   "devDependencies": {
-    "@types/node": "^9.6.0",
+    "@types/node": "^9.6.20",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
     "babel-plugin-syntax-jsx": "^6.18.0",
     "babel-plugin-transform-vue-jsx": "^3.7.0",
@@ -27,15 +33,15 @@
     "file-loader": "^1.1.11",
     "node-sass": "^4.9.0",
     "quasar": "0.0.18",
-    "quasar-cli": "^0.15.12",
-    "sass-loader": "^7.0.1",
+    "quasar-cli": "^0.15.20",
+    "sass-loader": "^7.0.2",
     "ts-loader": "3.5.0",
     "tslint": "^5.9.1",
     "tslint-react": "^3.5.1",
-    "typescript": "^2.7.2",
+    "typescript": "^2.9.1",
     "vue-class-component": "^6.2.0",
-    "vue-loader": "^15.0.10",
-    "vue-property-decorator": "^6.0.0"
+    "vue-loader": "^15.2.4",
+    "vue-property-decorator": "^6.1.0"
   },
   "engines": {
     "node": ">= 8.9.0",

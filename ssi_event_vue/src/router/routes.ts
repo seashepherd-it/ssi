@@ -20,6 +20,21 @@ export default [
         }
       },
       {
+        name: "calendar",
+        path: "/calendar",
+        component: () => import("pages/Calendar.vue")
+      },
+      {
+        name: "spreadsheet",
+        path: "/spreadsheet",
+        component: () => import("pages/Spreadsheet.vue")
+      },
+      {
+        name: "scheduler",
+        path: "/scheduler",
+        component: () => import("pages/Scheduler.vue")
+      },      
+      {
         name: "home",
         path: "/home",
         component: () => import("pages/Home.vue")
