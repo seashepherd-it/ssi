@@ -43,5 +43,10 @@
 	<classpathentry kind="lib" path="/opt/tomcat/lib/tomcat-websocket.jar"/>
 	<classpathentry kind="lib" path="/opt/tomcat/lib/websocket-api.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/javax.servlet-api-3.1.0.jar"/>
+	<classpathentry kind="var" path="TOMCAT_HOME/lib/servlet-api.jar"/>
+	<classpathentry kind="var" path="TOMCAT_HOME/lib/jasper.jar"/>
+	<classpathentry kind="var" path="TOMCAT_HOME/lib/jsp-api.jar"/>
+	<classpathentry kind="var" path="TOMCAT_HOME/lib/el-api.jar"/>
+	<classpathentry kind="var" path="TOMCAT_HOME/lib/annotations-api.jar"/>
 	<classpathentry kind="output" path="WEB-INF/classes"/>
 </classpath>
