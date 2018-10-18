@@ -1,6 +1,4 @@
 import {JetView} from "webix-jet";
-import FlightSelectorView from "views/flightselector";
-import AllFlightsView from "views/tables/allflights";
 import LanguagesPopup from "views/lists/lang";
 import NotificationsPopup from "views/lists/notifications";
 
@@ -25,9 +23,8 @@ export default class TopView extends JetView{
 									cols:[
 										{
 											view:"label",
-											template:"SSI Events App"
+											template:"SSI Events Application"
 										},
-										{},
 										{
 											view:"icon",
 											icon:"mdi mdi-invert-colors",
@@ -59,25 +56,13 @@ export default class TopView extends JetView{
 									]
 								}
 							]
-						},
-						{ width:6 }
-					]
-				},
-				{
-					type:"space",
-					cols:[
-						{
-							rows:[
-								FlightSelectorView,
-								{}
-							]
-						},
-						AllFlightsView
+						}
 					]
 				}
 			]
 		};
 	}
+	
 	init(){
 		this.languages = this.ui(LanguagesPopup);
 		this.notifications = this.ui(NotificationsPopup);

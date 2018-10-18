@@ -9,7 +9,7 @@ export default class MyApp extends JetApp{
 				version : VERSION,
 				router 	: HashRouter,
 				debug 	: !PRODUCTION,
-				start 	: "/top/tables.specialoffers",
+				start 	: "/nav",
 				theme	: webix.storage.local.get("theme_color") || ""
 			};
 		super({ ...defaults, ...config });

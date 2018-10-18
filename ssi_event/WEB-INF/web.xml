@@ -36,4 +36,22 @@
 		<servlet-name>EventImportServlet</servlet-name>
 		<url-pattern>/service/importEvent</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>EventSearchServlet</servlet-name>
+		<servlet-class>it.seashepherd.servlet.EventSearchServlet</servlet-class>
+		<init-param>
+			<param-name>ssi_user</param-name>
+			<param-value>pippo</param-value>
+		</init-param>
+		<init-param>
+			<param-name>ssi_password</param-name>
+			<param-value>pluto</param-value>
+		</init-param>		
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EventSearchServlet</servlet-name>
+		<url-pattern>/service/searchEvent</url-pattern>
+	</servlet-mapping>	
 </web-app>

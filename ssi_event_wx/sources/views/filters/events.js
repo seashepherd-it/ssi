@@ -1,7 +1,7 @@
 import {JetView} from "webix-jet";
 import {getCities} from "models/cities";
 
-export default class SearchingFlightView extends JetView {
+export default class FilterEventsView extends JetView {
 	config(){
 		const _ = this.app.getService("locale")._;
 		const cities = getCities();

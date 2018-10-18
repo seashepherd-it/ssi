@@ -1,5 +1,5 @@
 /*Spanish (Spain, International Sort) locale*/
-webix.i18n.locales["es-ES"] = {
+webix.i18n.locales["it-IT"] = {
 	groupDelimiter:".",
 	groupSize:3,
 	decimalDelimiter:",",
@@ -18,19 +18,19 @@ webix.i18n.locales["es-ES"] = {
 		decimalSize:2
 	},
 	calendar:{
-		monthFull:["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"],
-		monthShort:["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"],
-		dayFull:["domingo","lunes","martes","miércoles","jueves","viernes","sábado"],
-		dayShort:["dom","lun","mar","mié","jue","vie","sáb"],
-		hours: "Horas",
-		minutes: "Minutos",
-		done:"Listo",
-		clear: "Reinicio",
-		today: "Hoy"
+		monthFull:["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"],
+		monthShort:["gen","feb","mar","apr","mag","giu","lug","ago","sep","ott","nov","dic"],
+		dayFull:["domenica","lunedì","martedì","mercoledì","giovedì","venerdì","sabato"],
+		dayShort:["dom","lun","mar","mer","gio","ven","sab"],
+		hours: "Ore",
+		minutes: "Minuti",
+		done:"Pronto",
+		clear: "Ripresa",
+		today: "Oggi"
     },
 
     dataExport:{
-		page:"Página",
+		page:"Pagina",
 		of:"de"
     },
     PDFviewer:{
@@ -77,8 +77,8 @@ webix.i18n.locales["es-ES"] = {
         italic: "Itálico"
     },
     combo:{
-    	select:"Seleccionar",
-        selectAll:"Seleccionar todo",
-        unselectAll:"Deselecciona todo"
+    	select:"Seleziona",
+        selectAll:"Seleziona tutto",
+        unselectAll:"Deseleziona tutto"
     }
 };

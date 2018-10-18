@@ -1,5 +1,5 @@
-SSI Events App
-===================
+SSI Events Application
+======================
 
 A demo for booking flights and planning vacation.
 

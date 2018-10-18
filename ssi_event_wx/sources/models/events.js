@@ -1,11 +1,4 @@
-export function getEvents(){
-	return events;
-}
-
-const events = new webix.DataCollection({
-	scheme:{                                                                              
-		$init:function(obj){                                                                          
-		}                                                                                  
-	},
-	url:"data/events.json"
-});
+export function getEvents(eventType){
+	var data = webix.ajax().get("http://localhost:8080/ssi_events/service/searchEvent?eventType="+eventType);
+	return data;
+};

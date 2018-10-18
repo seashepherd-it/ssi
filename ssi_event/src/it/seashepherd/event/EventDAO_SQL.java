@@ -21,9 +21,9 @@ public class EventDAO_SQL {
 		rs.close();
 		statement.close();
 
-		return areaId;		
+		return areaId;
 	}
-	
+
 	public static String getAreaTextById(EventConnection connection, int areaId) throws SQLException {
 
 		if (areaId <= 0)
@@ -44,7 +44,7 @@ public class EventDAO_SQL {
 
 		return areaText;
 	}
-	
+
 	public static int getVolunteerIdByName(EventConnection connection, String volunteerName) throws Exception {
 
 		int volunteerId = -1;
@@ -63,13 +63,13 @@ public class EventDAO_SQL {
 
 		return volunteerId;
 	}
-	
+
 	public static String getVolunteerTextById(EventConnection connection, int volunteerId) throws SQLException {
 
 		String volunteerText = null;
 
-		PreparedStatement prepared = connection.getSQLConnection()
-				.prepareStatement("SELECT CONCAT(TRIM(AN_SURNAME), ' ', TRIM(AN_NAME)) as VOL_TEXT FROM ssi_anagrafica where ID_VOL = ?");
+		PreparedStatement prepared = connection.getSQLConnection().prepareStatement(
+				"SELECT CONCAT(TRIM(AN_SURNAME), ' ', TRIM(AN_NAME)) as VOL_TEXT FROM ssi_anagrafica where ID_VOL = ?");
 		prepared.setInt(1, volunteerId);
 		ResultSet rs = prepared.executeQuery();
 		if (rs.next()) {
@@ -81,7 +81,7 @@ public class EventDAO_SQL {
 
 		return volunteerText;
 	}
-	
+
 	public static String getVolunteerSurnameById(EventConnection connection, int volunteerId) throws SQLException {
 
 		String volunteerText = null;
@@ -99,7 +99,6 @@ public class EventDAO_SQL {
 
 		return volunteerText;
 	}
-	
 
 	public static void saveEvent(EventConnection connection, EventEntity eventEntity) throws SQLException {
 
@@ -170,5 +169,9 @@ public class EventDAO_SQL {
 		} finally {
 			connection.getSQLConnection().setAutoCommit(autoCommit);
 		}
+	}
+
+	public static String getJSONEvents(EventConnection connection, EventType eventType) {
+		return null;
 	}
 }

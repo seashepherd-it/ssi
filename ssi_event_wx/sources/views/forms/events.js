@@ -1,6 +1,6 @@
 import {JetView} from "webix-jet";
 
-export default class RegistrationView extends JetView {
+export default class FormEventsView extends JetView {
 	config(){
 		const _ = this.app.getService("locale")._;
 		return {

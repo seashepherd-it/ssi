@@ -2,33 +2,40 @@ import {JetView} from "webix-jet";
 import {getEvents} from "models/events";
 
 export default class EventsView extends JetView {
+	
 	config(){
 		const _ = this.app.getService("locale")._;
 		return {
-			rows:[
-				{
-					view:"datatable",
-					localId:"datatable",
-					select:true,
-					columns:[
-						{ id:"SSI_EVENT_TYPE", header:"Type", sort:"string" },						
-						{ id:"SSI_EVENT_ID", header:"Id", sort:"int" },
-						{ id:"SSI_EVENT_TEXT", header:_("Text"), fillspace:6, sort:"string" },
-						{ id:"SSI_EVENT_DIVE", header:_("Dive"), fillspace:6, sort:"string" },
-						{ id:"SSI_EVENT_PLACE_COUNTRY", header:_("Place"), fillspace:3, sort:"string" },						
-						{ id:"SSI_EVENT_PLACE_PROVINCE", header:_("Province"), fillspace:2, sort:"string" },						
-						{ id:"SSI_EVENT_DATE_FROM", header:_("Date From"), fillspace:3, sort:"date", format:webix.i18n.longDateFormatStr},
-						{ id:"SSI_EVENT_DATE_TO", header:_("Date To"), fillspace:3, sort:"date", format:webix.i18n.longDateFormatStr},
-						{ id:"SSI_EVENT_PEOPLE_QTY", header:"People", sort:"int" }
-					]
-				}
-			]
+			view:"datatable",
+			autoConfig:true
+// localId:"datatable",
+// select:true,
+// columns:[
+// { id:"SSI_EVENT_TYPE", header:"Type", sort:"string" },
+// { id:"SSI_EVENT_ID", header:"Id", sort:"int" },
+// { id:"SSI_EVENT_TEXT", header:_("Text"), fillspace:6, sort:"string" },
+// { id:"SSI_EVENT_DIVE", header:_("Dive"), fillspace:6, sort:"string" },
+// { id:"SSI_EVENT_PLACE_COUNTRY", header:_("Place"), fillspace:3, sort:"string"
+// },
+// { id:"SSI_EVENT_PLACE_PROVINCE", header:_("Province"), fillspace:2,
+// sort:"string" },
+// { id:"SSI_EVENT_DATE_FROM", header:_("Date From"), fillspace:3, sort:"date",
+// format:webix.i18n.longDateFormatStr},
+// { id:"SSI_EVENT_DATE_TO", header:_("Date To"), fillspace:3, sort:"date",
+// format:webix.i18n.longDateFormatStr},
+// { id:"SSI_EVENT_PEOPLE_QTY", header:"People", sort:"int" }
+// ]
 		};
 	}
-	init(){
-		const grid = this.$$("datatable");
-		grid.sync(getEvents());
-
+	
+	urlChange(view, url){
+		var eventType = this.getParam("eventType");
+		view.clearAll();
+		view.parse(getEvents(eventType));        
+    }
+	
+	init(view){
+		
 		this.on(this.app,"search:event", (from,to,date) => {
 			grid.hideOverlay();
 			if (from || to || date)

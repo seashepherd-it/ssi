@@ -21,7 +21,7 @@ public class EventConnection {
 		this.writer = writer;
 	}
 
-	protected EventDAO getDAO() {
+	public EventDAO getDAO() {
 		return dao;
 	}
 

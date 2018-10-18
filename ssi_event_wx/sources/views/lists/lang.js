@@ -1,6 +1,6 @@
 import {JetView} from "webix-jet";
 
-import "locales/webix/es.js";
+import "locales/webix/it.js";
 
 
 export default class LanguagesPopup extends JetView {
@@ -17,7 +17,7 @@ export default class LanguagesPopup extends JetView {
 				template:"#lang#",
 				data:[
 					{ id:"en", code:"US", lang:"English" },
-					{ id:"es", code:"ES", lang:"Español" }
+					{ id:"it", code:"IT", lang:"Italian" }
 				],
 				on:{
 					onAfterSelect:id => {

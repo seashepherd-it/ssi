@@ -3,13 +3,16 @@
 	font-weight:500;
 }
 .open{
-	color:#41ad7c;
+	color:#F8640F;
 }
 .soon, .ontime{
-	color:#1CA1C1;
+	color:#034256;
 }
 .last{
-	color:#FF5C4C;
+	color:#F8640F;
+}
+.webix_segment_0 webix_selected {
+	color:#F8640F;
 }
 .landed{
 	color:rgb(243, 166, 1);
@@ -21,9 +24,9 @@
 }
 .notifications .webix_list_item .m_title{
 	font-weight:500;
-	color:#313131;
+	color:#000000;
 }
 .notifications .webix_list_item .message{
 	display:block;
-	color:#475466;
+	color:#0F2B35;
 }

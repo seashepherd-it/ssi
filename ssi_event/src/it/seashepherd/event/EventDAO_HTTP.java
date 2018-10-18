@@ -114,4 +114,15 @@ public class EventDAO_HTTP {
 		if(result.startsWith(ERROR))
 			throw new Exception(result.substring(6));
 	}
+
+	public static String getJSONEvents(EventConnection connection, EventType eventType) throws Exception, Exception {
+
+		String url = "https://www.weit.it/mos/services/getEvents.php";
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("eventType", eventType.name());
+		String result = connection.getHttpConnection().postHttpPage(url, HttpUtils.getParamsString(params));
+
+		return result;
+
+	}
 }
