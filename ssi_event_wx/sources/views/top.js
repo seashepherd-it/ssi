@@ -1,39 +1,96 @@
-import {JetView, plugins} from "webix-jet";
-
-
+import {JetView} from "webix-jet";
+import FlightSelectorView from "views/flightselector";
+import AllFlightsView from "views/tables/allflights";
+import LanguagesPopup from "views/lists/lang";
+import NotificationsPopup from "views/lists/notifications";
 
 export default class TopView extends JetView{
 	config(){
-		var header = {
-			type:"header", template:this.app.config.name
-		};
-
-		var menu = {
-			view:"menu", id:"top:menu", 
-			width:180, layout:"y", select:true,
-			template:"<span class='webix_icon fa-#icon#'></span> #value# ",
-			data:[
-				{ value:"DashBoard", id:"start", icon:"envelope-o" },
-				{ value:"Data",		 id:"data",  icon:"briefcase" }
+		const _ = this.app.getService("locale")._;
+		const theme = this.app.config.theme;
+		
+		return {
+			rows:[
+				{
+					view:"toolbar",
+					height:56,
+					localId:"toolbar",
+					css:theme,
+					elements:[
+						{
+							paddingY:7,
+							rows:[
+								{
+									margin:8,
+									cols:[
+										{
+											view:"label",
+											template:"SSI Events App"
+										},
+										{},
+										{
+											view:"icon",
+											icon:"mdi mdi-invert-colors",
+											tooltip:_("Click to change the theme"),
+											color:theme,
+											click:function(){
+												let color = this.config.color;
+												color = !color ? "webix_dark" : "";
+												webix.storage.local.put("theme_color",color);
+												this.$scope.app.config.theme = color;
+												this.$scope.app.refresh();
+											}
+										},
+										{
+											view:"icon", icon:"mdi mdi-bell",
+											localId:"bell",
+											badge:3, tooltip:_("Latest notifications"),
+											click:function(){
+												this.$scope.notifications.showPopup(this.$view);
+											}
+										},
+										{
+											view:"icon", icon:"mdi mdi-earth",
+											tooltip:_("Change the language"),
+											click:function(){
+												this.$scope.languages.showPopup(this.$view);
+											}
+										}
+									]
+								}
+							]
+						},
+						{ width:6 }
+					]
+				},
+				{
+					type:"space",
+					cols:[
+						{
+							rows:[
+								FlightSelectorView,
+								{}
+							]
+						},
+						AllFlightsView
+					]
+				}
 			]
 		};
-
-		var ui = {
-			type:"line", cols:[
-				{ type:"clean", css:"app-left-panel",
-					padding:10, margin:20, borderless:true, rows: [ header, menu ]},
-				{ rows:[ { height:10}, 
-					{ type:"clean", css:"app-right-panel", padding:4, rows:[
-						{ $subview:true } 
-					]}
-				]}
-			]
-		};
-
-
-		return ui;
 	}
 	init(){
-		this.use(plugins.Menu, "top:menu");
+		this.languages = this.ui(LanguagesPopup);
+		this.notifications = this.ui(NotificationsPopup);
+
+		this.on(this.app,"read:notifications",() => {
+			this.$$("bell").config.badge = 0;
+			this.$$("bell").refresh();
+
+			setTimeout(() => {
+				this.$$("bell").config.badge += 1;
+				this.$$("bell").refresh();
+				this.app.callEvent("new:notification");
+			},10000);
+		});
 	}
 }

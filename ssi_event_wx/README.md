@@ -1,13 +1,13 @@
-Webix Jet Demo App
+SSI Events App
 ===================
+
+A demo for booking flights and planning vacation.
 
 ### How to run
 
 - run ```npm install```
 - run ```npm start```
 - open ```http://localhost:8080```
-
-For more details, check https://www.gitbook.com/book/webix/webix-jet/details
 
 ### Other commands
 

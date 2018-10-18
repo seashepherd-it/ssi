@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>SSI Events</title>
+</head>
+
+<body>
+	<h3>SSI Events</H3>
+
+	<div id="app">
+		<p>
+
+			<router-link :to="{ name: 'home'}">Go to Home</router-link>
+			<br/>
+
+			<router-link v-bind:to="{ name: 'hello', params: { name: 'Pippo', initialEnthusiasm: 5}}">Go to Hello</router-link>
+		</p>
+
+		<router-view :key="$route.fullPath"></router-view>
+	</div>
+
+	<ul>
+		<li>
+			<a href="www/test/test.html">Vue Test</a>
+		</li>
+		<li>
+			<a href="www/test/input.html">Vue Input</a>
+		</li>	
+		<li>
+			<a href="www/test/template.html">Vue Template</a>
+		</li>
+	</ul>
+</body>
+<script src="./www/dist/build.js"></script>
+
+</html>

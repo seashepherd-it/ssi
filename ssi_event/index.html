@@ -1,38 +1,18 @@
-<!DOCTYPE HTML>
-<html lang="en">
-
+<!DOCTYPE html>
+<html>
 <head>
-	<meta charset="UTF-8">
-	<title>SSI Events</title>
+	<meta charset="utf-8">
+	<title>SSI Events App</title>
+	<!-- Webix Library -->
+	<script type="text/javascript" src="//cdn.webix.com/pro/edge/webix.js"></script>
+	<link rel="stylesheet" type="text/css" href="//cdn.webix.com/pro/edge/webix.css">
+
+	<!-- Material Design Icons -->
+	<link rel="stylesheet" type="text/css" href="//cdn.materialdesignicons.com/2.7.94/css/materialdesignicons.css">
+
+	<!-- App -->
+	<script type="text/javascript" src="codebase/myapp.js"></script>
+	<link rel="stylesheet" type="text/css" href="codebase/myapp.css">
 </head>
-
-<body>
-	<h3>SSI Events</H3>
-
-	<div id="app">
-		<p>
-
-			<router-link :to="{ name: 'home'}">Go to Home</router-link>
-			<br/>
-
-			<router-link v-bind:to="{ name: 'hello', params: { name: 'Pippo', initialEnthusiasm: 5}}">Go to Hello</router-link>
-		</p>
-
-		<router-view :key="$route.fullPath"></router-view>
-	</div>
-
-	<ul>
-		<li>
-			<a href="www/test/test.html">Vue Test</a>
-		</li>
-		<li>
-			<a href="www/test/input.html">Vue Input</a>
-		</li>	
-		<li>
-			<a href="www/test/template.html">Vue Template</a>
-		</li>
-	</ul>
-</body>
-<script src="./www/dist/build.js"></script>
-
+<body></body>
 </html>

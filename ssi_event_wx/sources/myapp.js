@@ -1,20 +1,27 @@
 import "./styles/app.css";
-import {JetApp, EmptyRouter, HashRouter } from "webix-jet";
+import { JetApp, EmptyRouter, HashRouter, plugins } from "webix-jet";
 
 export default class MyApp extends JetApp{
 	constructor(config){
-		const defaults = {
-			id 		: APPNAME,
-			version : VERSION,
-			router 	: BUILD_AS_MODULE ? EmptyRouter : HashRouter,
-			debug 	: !PRODUCTION,
-			start 	: "/top/start"
-		};
 
+		const defaults = {
+				id 		: APPNAME,
+				version : VERSION,
+				router 	: HashRouter,
+				debug 	: !PRODUCTION,
+				start 	: "/top/tables.specialoffers",
+				theme	: webix.storage.local.get("theme_color") || ""
+			};
 		super({ ...defaults, ...config });
+		
+		this.use(plugins.Locale);
 	}
 }
 
 if (!BUILD_AS_MODULE){
-	webix.ready(() => new MyApp().render() );
+	webix.ready(() => {
+		if (!webix.env.touch && webix.env.scrollSize && webix.CustomScroll)
+			webix.CustomScroll.init();
+		new MyApp().render();
+	});
 }

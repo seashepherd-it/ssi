@@ -62,8 +62,7 @@ module.exports = function(env) {
 			})
 		],
 		devServer:{
-			stats:"errors-only",
-			disableHostCheck: true
+			stats:"errors-only"
 		}
 	};
 
