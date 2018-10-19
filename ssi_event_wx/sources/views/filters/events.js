@@ -10,7 +10,7 @@ export default class FilterEventsView extends JetView {
 		return {
 			view:"form",
 			borderless:true,
-			elementsConfig:{ labelWidth:100, labelAlign:"right" },
+			elementsConfig:{labelAlign:"right" },
 			elements:[
 				{
 					view:"radio",
@@ -125,10 +125,10 @@ export default class FilterEventsView extends JetView {
 						if (data.departure_point || data.destination || data.departure_date){
 							const from = data.departure_point ? cities[data.departure_point].value : "";
 							const to = data.destination ? cities[data.destination].value : "";
-							this.$scope.app.callEvent("search:flight",[from,to,data.departure_date]);
+							this.$scope.app.callEvent("search:event",[from,to,data.departure_date]);
 						}
 						else
-							this.$scope.app.callEvent("search:flight");
+							this.$scope.app.callEvent("search:event");
 					}
 				}
 			]

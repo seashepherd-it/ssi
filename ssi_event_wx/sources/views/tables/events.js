@@ -5,26 +5,28 @@ export default class EventsView extends JetView {
 	
 	config(){
 		const _ = this.app.getService("locale")._;
+		const schema = [
+			 { id:"SSI_EVENT_TYPE", header:"Type", sort:"string" },
+			 { id:"SSI_EVENT_ID", header:"Id", sort:"int" },
+			 { id:"SSI_EVENT_TEXT", header:_("Text"), fillspace:6, sort:"string" },
+			 { id:"SSI_EVENT_DIVE", header:_("Dive"), fillspace:6, sort:"string" },
+			 { id:"SSI_EVENT_PLACE_COUNTRY", header:_("Place"), fillspace:3, sort:"string"
+			 },
+			 { id:"SSI_EVENT_PLACE_PROVINCE", header:_("Province"), fillspace:2,
+			 sort:"string" },
+			 { id:"SSI_EVENT_DATE_FROM", header:_("Date From"), fillspace:3, sort:"date",
+			 format:webix.i18n.longDateFormatStr},
+			 { id:"SSI_EVENT_DATE_TO", header:_("Date To"), fillspace:3, sort:"date",
+			 format:webix.i18n.longDateFormatStr},
+			 { id:"SSI_EVENT_PEOPLE_QTY", header:"People", sort:"int" }
+		 ];
+
 		return {
 			view:"datatable",
-			autoConfig:true
+			autoConfig:true,
 // localId:"datatable",
 // select:true,
-// columns:[
-// { id:"SSI_EVENT_TYPE", header:"Type", sort:"string" },
-// { id:"SSI_EVENT_ID", header:"Id", sort:"int" },
-// { id:"SSI_EVENT_TEXT", header:_("Text"), fillspace:6, sort:"string" },
-// { id:"SSI_EVENT_DIVE", header:_("Dive"), fillspace:6, sort:"string" },
-// { id:"SSI_EVENT_PLACE_COUNTRY", header:_("Place"), fillspace:3, sort:"string"
-// },
-// { id:"SSI_EVENT_PLACE_PROVINCE", header:_("Province"), fillspace:2,
-// sort:"string" },
-// { id:"SSI_EVENT_DATE_FROM", header:_("Date From"), fillspace:3, sort:"date",
-// format:webix.i18n.longDateFormatStr},
-// { id:"SSI_EVENT_DATE_TO", header:_("Date To"), fillspace:3, sort:"date",
-// format:webix.i18n.longDateFormatStr},
-// { id:"SSI_EVENT_PEOPLE_QTY", header:"People", sort:"int" }
-// ]
+			 columns: schema
 		};
 	}
 	
@@ -37,6 +39,9 @@ export default class EventsView extends JetView {
 	init(view){
 		
 		this.on(this.app,"search:event", (from,to,date) => {
+			
+			alert("ecchime!!");
+			
 			grid.hideOverlay();
 			if (from || to || date)
 				grid.filter(obj => {
