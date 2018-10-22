@@ -1,5 +1,5 @@
 import {JetView} from "webix-jet";
-import LanguagesPopup from "views/lists/lang";
+import LanguagesPopup from "views/lists/languages";
 import NotificationsPopup from "views/lists/notifications";
 
 export default class TopView extends JetView{

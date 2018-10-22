@@ -4,27 +4,27 @@ export function getEventTypes(){
 
 const types = [
 	{
-		"SSI_EVENT_TYPE_ID": "DP",
-		"SSI_EVENT_TYPE_TEXT": "Pulizia Fondali"
+		id: "DP",
+		value: "Pulizia Fondali"
 	},
 	{
-		"SSI_EVENT_TYPE_ID": "EP",
-		"SSI_EVENT_TYPE_TEXT": "Pulizia Spiaggia"
+		id: "EP",
+		value: "Pulizia Spiaggia"
 	},
 	{
-		"SSI_EVENT_TYPE_ID": "EV",
-		"SSI_EVENT_TYPE_TEXT": "Divulgazione"
+		id: "EV",
+		value: "Divulgazione"
 	},
 	{
-		"SSI_EVENT_TYPE_ID": "GC",
-		"SSI_EVENT_TYPE_TEXT": "Rifornimento Navi"
+		id: "GC",
+		value: "Rifornimento Navi"
 	},
 	{
-		"SSI_EVENT_TYPE_ID": "PS",
-		"SSI_EVENT_TYPE_TEXT": "Programma Scuole"
+		id: "PS",
+		value: "Programma Scuole"
 	},
 	{
-		"SSI_EVENT_TYPE_ID": "PV",
-		"SSI_EVENT_TYPE_TEXT": "Visite Imbarcazioni"
+		id: "PV",
+		value: "Visite Imbarcazioni"
 	}
 ];

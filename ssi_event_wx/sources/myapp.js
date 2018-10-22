@@ -9,7 +9,7 @@ export default class MyApp extends JetApp{
 				version : VERSION,
 				router 	: HashRouter,
 				debug 	: !PRODUCTION,
-				start 	: "/nav",
+				start 	: "/nav/tables.eventsEV",
 				theme	: webix.storage.local.get("theme_color") || ""
 			};
 		super({ ...defaults, ...config });
@@ -22,6 +22,7 @@ if (!BUILD_AS_MODULE){
 	webix.ready(() => {
 		if (!webix.env.touch && webix.env.scrollSize && webix.CustomScroll)
 			webix.CustomScroll.init();
+		
 		new MyApp().render();
 	});
 }

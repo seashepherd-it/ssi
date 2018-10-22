@@ -16,14 +16,14 @@ export default class CenterView extends JetView {
 						{ view:"label", template:_("Events") },
 						{
 							view:"segmented", 
-							localId:"offers",				
+							localId:"offers",
 							options:[
-								{ id:"tables.events?eventType=DP", value:_("Fondali")},								
-								{ id:"tables.events?eventType=EP", value:_("Spiagge")},
-								{ id:"tables.events?eventType=EV", value:_("Divulgazione")},
-								{ id:"tables.events?eventType=GC", value:_("Rifornimenti")},
-								{ id:"tables.events?eventType=PS", value:_("Scuole")},
-								{ id:"tables.events?eventType=PV", value:_("Visite")}
+								{ id:"tables.eventsEV", value:_("Divulgazione")},
+								{ id:"tables.eventsPS", value:_("Scuole")},
+								{ id:"tables.eventsPV", value:_("Visite")},								
+								{ id:"tables.eventsEP", value:_("Spiagge")},
+								{ id:"tables.eventsDP", value:_("Fondali")}								
+// { id:"tables.eventsGC", value:_("Rifornimenti")}
 							]
 						}
 					]

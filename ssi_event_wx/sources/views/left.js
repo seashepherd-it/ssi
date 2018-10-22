@@ -9,7 +9,6 @@ export default class LeftView extends JetView {
 
 		return {
 			multi:false,
-			margin:1,
 			css:theme,
 			rows:[
 				{

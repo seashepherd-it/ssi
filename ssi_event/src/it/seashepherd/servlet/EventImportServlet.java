@@ -25,6 +25,7 @@ public class EventImportServlet extends HttpServlet {
 		"".toCharArray();
 	}
 
+	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		response.setContentType("text/html");
@@ -37,11 +38,11 @@ public class EventImportServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		response.setContentType("text/html");
-		
+
+		response.setContentType("text/json");
+
 		String ssi_user = getServletConfig().getInitParameter("ssi_user");
 		String ssi_password = getServletConfig().getInitParameter("ssi_password");
 		
@@ -51,10 +52,15 @@ public class EventImportServlet extends HttpServlet {
 			connection = EventConnection.connect(mode, ssi_user, ssi_password, response.getWriter());
 
 			for (Part filePart : request.getParts()) {
-				if(!filePart.getName().equals("file"))
+				
+				if(!filePart.getName().equals("upload"))
 					continue;
+				
 				String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();								
 				EventUtils.importFile(connection, fileName, filePart.getInputStream());
+				
+				response.getWriter().print("{ \"status\": \"server\" }");
+				response.getWriter().flush();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

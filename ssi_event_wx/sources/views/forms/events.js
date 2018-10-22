@@ -6,23 +6,31 @@ export default class FormEventsView extends JetView {
 		return {
 			rows:[
 				{
-					view:"form", borderless:true,
-					elementsConfig:{ labelAlign:"right", labelWidth:140 },
-					elements:[
-						{ view:"text", label:_("First Name"), placeholder:"Matthew" },
-						{ view:"text", label:_("Last Name"), placeholder:"Clark" },
-						{ view:"text", label:_("Email"), placeholder:"mattclark@some.com" },
-						{ view:"text", label:_("Login"), placeholder:"Matt" },
-						{
-							view:"text", label:_("Password"), type:"password",
-							placeholder:"********"
-						},
-						{
-							view:"text", label:_("Confirm Password"),
-							type:"password", placeholder:"********"
-						},
-						{ view:"button", type:"form", value:_("Register") }
-					]
+					view:"form", 
+					borderless:true,
+					elementsConfig:{ labelAlign:"right" },
+				    elements:[
+				        {
+				            view:"uploader",
+				            id: "uploader_1",
+				            value:"Upload files",
+				            link:"mylist",
+				            autosend:false,
+				            upload:"http://localhost:8080/ssi_events/service/importEvent",
+				            datatype:"json"
+				        }, 
+				        {
+				            view:"list",  
+				            id:"mylist", 
+				            type:"uploader",
+				            borderless:true 
+				        },
+				        { 
+				            view:"button",
+				            value:"Send files",
+				            click: "$$('uploader_1').send()"
+				        }
+				    ]
 				}
 			]
 		};

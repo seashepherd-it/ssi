@@ -29,9 +29,8 @@ public class EventSearchServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
 		response.setContentType("text/json");
-		response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
 		
 		String ssi_user = getServletConfig().getInitParameter("ssi_user");
 		String ssi_password = getServletConfig().getInitParameter("ssi_password");

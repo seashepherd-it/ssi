@@ -61,17 +61,17 @@ public abstract class EventImporter {
 	}
 
 	protected void printError(String message) {
-		getConnection().getWriter().println("ERROR: " + message + "<br/>");
-		getConnection().getWriter().flush();
+//		getConnection().getWriter().println("ERROR: " + message + "<br/>");
+//		getConnection().getWriter().flush();
 	}
 
 	protected void printWarning(String message) {
-		getConnection().getWriter().println("WARNING: " + message + "<br/>");
-		getConnection().getWriter().flush();		
+//		getConnection().getWriter().println("WARNING: " + message + "<br/>");
+//		getConnection().getWriter().flush();		
 	}
 
 	protected void printInfo(String massage) {
-		getConnection().getWriter().println("INFO: " + massage + "<br/>");
-		getConnection().getWriter().flush();		
+//		getConnection().getWriter().println("INFO: " + massage + "<br/>");
+//		getConnection().getWriter().flush();		
 	}
 }
