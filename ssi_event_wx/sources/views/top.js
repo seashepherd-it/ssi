@@ -11,7 +11,7 @@ export default class TopView extends JetView{
 			rows:[
 				{
 					view:"toolbar",
-					height:56,
+//					height:56,
 					localId:"toolbar",
 					css:theme,
 					elements:[
