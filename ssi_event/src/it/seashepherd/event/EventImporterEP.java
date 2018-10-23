@@ -74,7 +74,7 @@ public class EventImporterEP extends EventImporter {
 		String area = row.getCell(0).getStringCellValue().trim().toUpperCase();
 		int areaId = getConnection().getDAO().getAreaIdByName(getConnection(), area);
 		if (areaId < 0)
-			printError("EventId: " + getEvent().getEventId() + " Area not found: " + area);
+			addError("Area not found: " + area);
 		getEvent().setAreaId(areaId);
 		getEvent().setEventDateFrom(row.getCell(1).getDateCellValue());
 		getEvent().setEventDateTo(row.getCell(2).getDateCellValue());
@@ -86,7 +86,7 @@ public class EventImporterEP extends EventImporter {
 		String account = row.getCell(5).getStringCellValue();
 		int accountId = getConnection().getDAO().getVolunteerIdByName(getConnection(), account);
 		if (accountId < 0)
-			printError("EventId: " + getEvent().getEventId() + " Account not found: " + account);
+			addError("Account not found: " + account);
 		getEvent().setEventAccountId(accountId);
 
 		int material_qty = 0;
@@ -95,7 +95,7 @@ public class EventImporterEP extends EventImporter {
 		} catch (Exception e1) {
 			material_qty = EventUtils.normalizeMaterialQty(row.getCell(6).getStringCellValue());
 			if (material_qty < 0)
-				printWarning("EventId: " + getEvent().getEventId() + " invalid material");
+				addWarning("Invalid material: " + EventUtils.normalizeMaterialQty(row.getCell(6).getStringCellValue()));
 		}
 		getEvent().setDisposalMaterialKG(material_qty);
 		getEvent().setDisposalContact(row.getCell(7).getStringCellValue());
@@ -118,18 +118,19 @@ public class EventImporterEP extends EventImporter {
 		if (volunteerId < 0) {
 			volunteerId = (int) row.getCell(0).getNumericCellValue();
 			if (volunteerId > 0) {
-				String volunteerSurname = getConnection().getDAO().getVolunteerSurnameById(getConnection(), volunteerId);
+				String volunteerSurname = getConnection().getDAO().getVolunteerSurnameById(getConnection(),
+						volunteerId);
 				if (volunteerSurname == null || !volunteer.toUpperCase().contains(volunteerSurname.toUpperCase())) {
 					String volunteerText = getConnection().getDAO().getVolunteerTextById(getConnection(), volunteerId);
-					printWarning("Volunteer " + volunteer + "(" + volunteerId + ")"
-							+ " not found, please use instead " + volunteerText);
+					addWarning("Volunteer " + volunteer + "(" + volunteerId + ")" + " not found, please use instead "
+							+ volunteerText);
 				}
 			} else
-				printError("Volunteer not found: " + volunteer);
+				addError("Volunteer not found: " + volunteer);
 		}
 
 		if (volunteerId != row.getCell(0).getNumericCellValue())
-			printWarning("Volunteer " + volunteer + "(" + (int) row.getCell(0).getNumericCellValue() + ")"
+			addWarning("Volunteer " + volunteer + "(" + (int) row.getCell(0).getNumericCellValue() + ")"
 					+ " is internal code, please use instead " + volunteerId);
 
 		double eventHours = row.getCell(2).getNumericCellValue();
@@ -148,18 +149,19 @@ public class EventImporterEP extends EventImporter {
 		if (volunteerId < 0) {
 			volunteerId = (int) row.getCell(0).getNumericCellValue();
 			if (volunteerId > 0) {
-				String volunteerSurname = getConnection().getDAO().getVolunteerSurnameById(getConnection(), volunteerId);
+				String volunteerSurname = getConnection().getDAO().getVolunteerSurnameById(getConnection(),
+						volunteerId);
 				if (volunteerSurname == null || !volunteer.toUpperCase().contains(volunteerSurname.toUpperCase())) {
 					String volunteerText = getConnection().getDAO().getVolunteerTextById(getConnection(), volunteerId);
-					printWarning("Volunteer " + volunteer + "(" + volunteerId + ")"
-							+ " not found, please use instead " + volunteerText);
+					addWarning("Volunteer " + volunteer + "(" + volunteerId + ")" + " not found, please use instead "
+							+ volunteerText);
 				}
 			} else
-				printError("Volunteer not found: " + volunteer);
+				addError("Volunteer not found: " + volunteer);
 		}
 
 		if (volunteerId != row.getCell(0).getNumericCellValue())
-			printWarning("Volunteer " + volunteer + "(" + (int) row.getCell(0).getNumericCellValue() + ")"
+			addWarning("Volunteer " + volunteer + "(" + (int) row.getCell(0).getNumericCellValue() + ")"
 					+ " is internal code, please use instead " + volunteerId);
 
 		double eventHours = row.getCell(3).getNumericCellValue();

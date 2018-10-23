@@ -42,12 +42,12 @@ public class EventUtils {
 			event.setEventPlaceProvince("IT-" + province.toUpperCase());
 	}
 	
-	public static void importFile(EventConnection connection, File excelFilePath) throws IOException {
+	public static EventImporterResult importFile(EventConnection connection, File excelFilePath) throws IOException {
 		FileInputStream inputStream = new FileInputStream(excelFilePath);
-		importFile(connection, excelFilePath.getName(), inputStream);
+		return importFile(connection, excelFilePath.getName(), inputStream);
 	}
 	
-	public static void importFile(EventConnection connection, String fileName, InputStream inputStream) throws IOException {
+	public static EventImporterResult importFile(EventConnection connection, String fileName, InputStream inputStream) throws IOException {
 
 		String[] nameTokens = fileName.split(" ");
 		String eventFileName = nameTokens[0];
@@ -66,14 +66,16 @@ public class EventUtils {
 		Workbook workbook = new XSSFWorkbook(inputStream);
 		try {
 			eventImporter = EventImporter.create(connection, event, workbook);
-			eventImporter.printInfo(fileName);
+			eventImporter.addInfo(fileName);
 			eventImporter.importEvent();
 
 		} catch (Exception e) {
-			eventImporter.printError(e.getMessage());
+			eventImporter.addError(e.getMessage());
 		} finally {
 			workbook.close();
-		}		
+		}
+		
+		return eventImporter.getResult();
 	}
 	
 	public static void importDirectory(EventConnection connection, File file) throws IOException {

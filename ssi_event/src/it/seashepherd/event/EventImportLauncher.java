@@ -1,7 +1,6 @@
 package it.seashepherd.event;
 
 import java.io.File;
-import java.io.PrintWriter;
 
 public class EventImportLauncher {
 
@@ -11,7 +10,7 @@ public class EventImportLauncher {
 		EventConnection connection = null;
 		
 		try {
-			connection = EventConnection.connect(mode, args[1], args[2], new PrintWriter(System.out));
+			connection = EventConnection.connect(mode, args[1], args[2]);
 
 			String excelFileDir = args[3];
 			

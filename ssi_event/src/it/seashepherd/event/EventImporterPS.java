@@ -77,7 +77,7 @@ public class EventImporterPS extends EventImporter {
 		String area = row.getCell(0).getStringCellValue().trim().toUpperCase();
 		int areaId = getConnection().getDAO().getAreaIdByName(getConnection(), area);
 		if (areaId < 0)
-			printError("EventId: " + getEvent().getEventId() + " Area not found: " + area);
+			addError("Area not found: " + area);
 		getEvent().setAreaId(areaId);
 
 		getEvent().setInstituteType(row.getCell(1).getStringCellValue());
@@ -92,12 +92,12 @@ public class EventImporterPS extends EventImporter {
 		try {
 			getEvent().setEventDateFrom(row.getCell(5).getDateCellValue());
 		} catch (Exception e) {
-			printWarning("EventId: " + getEvent().getEventId() + " Invalid date: " + row.getCell(5));
+			addWarning("Invalid date: " + row.getCell(5));
 		}
 		try {
 			getEvent().setEventDateFrom(row.getCell(6).getDateCellValue());
 		} catch (Exception e) {
-			printWarning("EventId: " + getEvent().getEventId() + " Invalid date: " + row.getCell(6));
+			addWarning("Invalid date: " + row.getCell(6));
 		}
 		try {
 			getEvent().setInstituteSpeaker(row.getCell(7).getStringCellValue());
@@ -116,7 +116,7 @@ public class EventImporterPS extends EventImporter {
 		String account = row.getCell(10).getStringCellValue();
 		int accountId = getConnection().getDAO().getVolunteerIdByName(getConnection(), account);
 		if (accountId < 0)
-			printError("EventId: " + getEvent().getEventId() + " Account not found: " + account);
+			addError("Account not found: " + account);
 		getEvent().setEventAccountId(accountId);
 
 		getEvent().setEventPeopleQty((int) row.getCell(11).getNumericCellValue());
@@ -139,15 +139,15 @@ public class EventImporterPS extends EventImporter {
 				String volunteerSurname = getConnection().getDAO().getVolunteerSurnameById(getConnection(), volunteerId);
 				if (volunteerSurname == null || !volunteer.toUpperCase().contains(volunteerSurname.toUpperCase())) {
 					String volunteerText = getConnection().getDAO().getVolunteerTextById(getConnection(), volunteerId);
-					printWarning("Volunteer " + volunteer + "(" + volunteerId + ")"
+					addWarning("Volunteer " + volunteer + "(" + volunteerId + ")"
 							+ " not found, please use instead " + volunteerText);
 				}
 			} else
-				printError("Volunteer not found: " + volunteer);
+				addError("Volunteer not found: " + volunteer);
 		}
 
 		if (volunteerId != nextRow.getCell(0).getNumericCellValue())
-			printWarning("Volunteer " + volunteer + "(" + (int) nextRow.getCell(0).getNumericCellValue() + ")"
+			addWarning("Volunteer " + volunteer + "(" + (int) nextRow.getCell(0).getNumericCellValue() + ")"
 					+ " is internal code, please use instead " + volunteerId);
 
 		double eventHours = nextRow.getCell(2).getNumericCellValue();

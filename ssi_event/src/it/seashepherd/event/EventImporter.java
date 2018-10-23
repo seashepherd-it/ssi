@@ -5,21 +5,27 @@ import org.apache.poi.ss.usermodel.Workbook;
 public abstract class EventImporter {
 
 	private EventConnection connection = null;
+	private EventImporterResult result;
 	private EventEntity event = null;
 	private Workbook workbook = null;
 
 	public EventImporter(EventConnection connection, EventEntity event, Workbook workbook) {
 		this.connection = connection;
 		this.event = event;
+		this.result = new EventImporterResult();
 		this.workbook = workbook;
 	}
-
+	
 	protected EventConnection getConnection() {
 		return connection;
 	}
 
 	protected EventEntity getEvent() {
 		return event;
+	}
+
+	public EventImporterResult getResult() {
+		return this.result;
 	}
 
 	protected Workbook getWorkbook() {
@@ -60,18 +66,15 @@ public abstract class EventImporter {
 		return eventImporter;
 	}
 
-	protected void printError(String message) {
-//		getConnection().getWriter().println("ERROR: " + message + "<br/>");
-//		getConnection().getWriter().flush();
+	protected void addError(String message) {
+		getResult().addError(message);
 	}
 
-	protected void printWarning(String message) {
-//		getConnection().getWriter().println("WARNING: " + message + "<br/>");
-//		getConnection().getWriter().flush();		
+	protected void addWarning(String message) {
+		getResult().addWarning(message);
 	}
 
-	protected void printInfo(String massage) {
-//		getConnection().getWriter().println("INFO: " + massage + "<br/>");
-//		getConnection().getWriter().flush();		
+	protected void addInfo(String message) {
+		getResult().addInfo(message);
 	}
 }

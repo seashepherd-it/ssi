@@ -1,6 +1,5 @@
 package it.seashepherd.event;
 
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -10,35 +9,29 @@ public class EventConnection {
 
 	private Object connection;
 	private EventDAO dao = null;
-	private PrintWriter writer;
 	
 	private EventConnection() {
 	}
 
-	private EventConnection(MODE mode, Object connection, PrintWriter writer) {
+	private EventConnection(MODE mode, Object connection) {
 		this.dao = new EventDAO(mode);
 		this.connection = connection;
-		this.writer = writer;
 	}
 
 	public EventDAO getDAO() {
 		return dao;
 	}
-
-	protected PrintWriter getWriter() {
-		return writer;
-	}
 	
-	public static EventConnection connect(MODE mode, String user, String password, PrintWriter writer) throws Exception {
+	public static EventConnection connect(MODE mode, String user, String password) throws Exception {
 
 		switch (mode) {
 		case HTTP:
-			return new EventConnection(mode, new HttpConnection("Mattia.R", "sea6321"), writer);
+			return new EventConnection(mode, new HttpConnection("Mattia.R", "sea6321"));
 
 		case SQL:
 			Class.forName("org.mariadb.jdbc.Driver");
 			return new EventConnection(mode, DriverManager
-					.getConnection("jdbc:mysql://localhost/ssi?" + "user=" + user + "&password=" + password), writer);
+					.getConnection("jdbc:mysql://localhost/ssi?" + "user=" + user + "&password=" + password));
 		}
 		return null;
 	}

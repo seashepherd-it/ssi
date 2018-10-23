@@ -40,7 +40,7 @@ public class EventSearchServlet extends HttpServlet {
 		EventConnection connection = null;
 		try {
 			EventDAO.MODE mode = EventDAO.MODE.HTTP;
-			connection = EventConnection.connect(mode, ssi_user, ssi_password, response.getWriter());
+			connection = EventConnection.connect(mode, ssi_user, ssi_password);
 			
 			
 			String result = connection.getDAO().getJSONEvents(connection, EventType.valueOf(eventType));
