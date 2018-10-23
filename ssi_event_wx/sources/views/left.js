@@ -1,6 +1,7 @@
 import {JetView} from "webix-jet";
 import FilterEvents from "views/filters/events";
 import ImportEvents from "views/forms/events";
+import DownloadModels from "views/lists/events";
 		
 export default class LeftView extends JetView {
 	config(){
@@ -19,6 +20,12 @@ export default class LeftView extends JetView {
 					header:_("Import Events"),
 					collapsed:true,
 					body:ImportEvents
+				}
+				,
+				{
+					header:_("Download Models"),
+					collapsed:true,
+					body:DownloadModels
 				}
 			]
 		};

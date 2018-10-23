@@ -1,7 +1,7 @@
 import {JetView} from "webix-jet";
 import {getEvents} from "models/events";
 
-export default class EventsView extends JetView {
+export default class EventsTable extends JetView {
 	
 	config(){
 		const _ = this.app.getService("locale")._;

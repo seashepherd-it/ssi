@@ -1,7 +1,7 @@
 import {JetView} from "webix-jet";
-import EventsView from "views/tables/events";
+import EventsTable from "views/tables/events";
 
-export default class EventsViewEV extends EventsView {
+export default class EventsTableEV extends EventsTable {
 	config() {
 		var config = super.config();
 		config.eventType = "PV";
