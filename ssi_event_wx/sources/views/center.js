@@ -8,31 +8,35 @@ export default class CenterView extends JetView {
 		return {
 			gravity:3,
 			rows:[
-				{
+				{					
 					view:"toolbar",
-					localId:"toolbar",
 					css:theme,
 					cols:[
 						{ view:"label", template:_("Events") },
 						{
-							view:"segmented", 
-							localId:"offers",
+							view:"segmented",
+							localId:"events",
 							options:[
 								{ id:"tables.eventsEV", value:_("Divulgazione")},
 								{ id:"tables.eventsPS", value:_("Scuole")},
 								{ id:"tables.eventsPV", value:_("Visite")},								
 								{ id:"tables.eventsEP", value:_("Spiagge")},
 								{ id:"tables.eventsDP", value:_("Fondali")}								
-// { id:"tables.eventsGC", value:_("Rifornimenti")}
 							]
+						},
+						{ view: "icon",  icon:"mdi mdi-file-excel", 
+							click:function(){
+								webix.toExcel($$("events"));
+							}
 						}
 					]
 				},
-				{ $subview:true }
+				{$subview: true}
 			]
 		};
 	}
+
 	init(){
-		this.use(plugins.Menu,"offers");
+		this.use(plugins.Menu,"events");
 	}
 }

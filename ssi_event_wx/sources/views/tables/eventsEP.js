@@ -8,8 +8,11 @@ export default class EventsTableEP extends EventsTable {
 		
         config.columns.insertAt({
             id: "SSI_DISPOSAL_MATERIAL_KG",
-            header: "Material",
-            sort:"int"
+            header: "Material(Kg)",
+            format:webix.Number.numToStr({decimalSize:0}),
+            css:{'text-align':'right'},
+            sort:"int", 
+            footer:{content:"summColumn"}
           }, config.columns.length);
 		
         config.columns.insertAt({

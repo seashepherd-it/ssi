@@ -4,20 +4,16 @@ export function getEventTypes(){
 
 const types = [
 	{
+		id: "EV",
+		value: "Divulgazione"
+	},
+	{
 		id: "DP",
 		value: "Pulizia Fondali"
 	},
 	{
 		id: "EP",
 		value: "Pulizia Spiaggia"
-	},
-	{
-		id: "EV",
-		value: "Divulgazione"
-	},
-	{
-		id: "GC",
-		value: "Rifornimento Navi"
 	},
 	{
 		id: "PS",

@@ -6,8 +6,13 @@ export default class EventsTable extends JetView {
 	config(){
 		const _ = this.app.getService("locale")._;
 		var config = {
-			localId:"events",
 			view:"datatable",
+			id:"events",
+			dragColumn:true,
+			headermenu:true,
+			footer:true,
+			leftSplit:3,
+			resizeColumn:true,
 			eventType: null
 		}
 			
@@ -56,21 +61,22 @@ export default class EventsTable extends JetView {
             adjust:true,            
             format:webix.Number.numToStr({decimalSize:0}),
             css:{'text-align':'right'},
-            sort:"int"
+            sort:"int", 
+            footer:{content:"summColumn"}
           }, config.columns.length);
         
         config.columns.insertAt({
             id: "SSI_EVENT_DATE_FROM",
             header: "From",
 //            format:webix.i18n.dateFormatStr,
-            sort:"date"
+            sort:"string"
           }, config.columns.length);
         
         config.columns.insertAt({
             id: "SSI_EVENT_DATE_TO",
             header: "To",
 //          format:webix.i18n.dateFormatStr,            
-            sort:"date"
+            sort:"string"
           }, config.columns.length);
 
         config.columns.insertAt({
@@ -100,6 +106,7 @@ export default class EventsTable extends JetView {
 		view.hideColumn("SSI_AREA_ID");
 				
 		view.parse(getEvents(view.config.eventType));
+		
 		
 		this.on(this.app,"search:event", (eventDate, eventArea) => {
 
