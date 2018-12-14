@@ -1,4 +1,4 @@
-import {JetView} from "webix-jet";
+import {JetView, plugins} from "webix-jet";
 import {getEventTypes} from "models/eventTypes";
 
 export default class FormEventsView extends JetView {
@@ -6,7 +6,8 @@ export default class FormEventsView extends JetView {
 		const _ = this.app.getService("locale")._;
 		const types = getEventTypes();
 		return {
-			view:"list",
+			view:"tree",
+			type: "menuTree2",
 			id:"event1",
 			data:types,
 		    scroll: true
@@ -14,6 +15,7 @@ export default class FormEventsView extends JetView {
 	}
 	
 	init(view) {
+		this.use(plugins.Menu, "event1");
 		$$("event1").attachEvent("onItemClick", function(id, e, node){
 		    var item = this.getItem(id);
 			webix.message(item.id);

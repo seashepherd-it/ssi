@@ -13,7 +13,7 @@ export default class FormEventsView extends JetView {
 		            autosend:false,
 		            value:"Upload files",
 		            link:"mylist",
-		            upload:"http://localhost:8080/ssi_events/service/importEvent"
+		            upload:"http://localhost:8080/ssi/service/importEvent"
 		        }, 
 		        {
 		            view:"list",  
