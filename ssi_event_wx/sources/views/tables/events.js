@@ -32,7 +32,8 @@ export default class EventsTable extends JetView {
         config.columns.insertAt({
             id: "SSI_EVENT_TEXT",
             header: "Text",
-            adjust:true,
+            width:280,
+//            adjust:true,
             sort:"string"
           }, config.columns.length);
         
