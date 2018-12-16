@@ -9,7 +9,7 @@ export default class FormEventsView extends JetView {
 		    rows:[
 		        {
 		            view:"uploader",
-		            id: "upl1",
+		            id: "events_upl1",
 		            autosend:false,
 		            value:"Upload files",
 		            link:"mylist",
@@ -24,7 +24,7 @@ export default class FormEventsView extends JetView {
 		        { 
 		            view:"button",
 		            label:"Send files",
-		            click: "$$('upl1').send()"
+		            click: "$$('events_upl1').send()"
 		        }
 		    ], 
 		    scroll: true
@@ -32,10 +32,10 @@ export default class FormEventsView extends JetView {
 	}
 	
 	init(view) {
-		$$("upl1").attachEvent("onUploadComplete", function(response){
+		$$("events_upl1").attachEvent("onUploadComplete", function(response){
 			// webix.message("Done");
 		});
-		$$("upl1").attachEvent("onFileUpload", function(file, response){
+		$$("events_upl1").attachEvent("onFileUpload", function(file, response){
 			if(response.warning === "") {
 			    webix.message({		    	
 			        type:"success",
@@ -54,7 +54,7 @@ export default class FormEventsView extends JetView {
 			    });				
 			}
 		});
-		$$("upl1").attachEvent("onFileUploadError", function(file, response){			
+		$$("events_upl1").attachEvent("onFileUploadError", function(file, response){			
 		    webix.message({
 		        type:"error",
 		        text:response.info + "<br/>" + response.error,
