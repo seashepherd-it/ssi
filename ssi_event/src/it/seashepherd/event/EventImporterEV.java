@@ -108,7 +108,8 @@ public class EventImporterEV extends EventImporter {
 			}
 		}
 
-		saveEvent();
+		if(!getResult().onError())
+			saveEvent();
 	}
 
 	private void buildHeader(Row row) throws SQLException, ParseException {

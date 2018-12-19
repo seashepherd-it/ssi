@@ -13,7 +13,7 @@ import it.seashepherd.event.EventDAO;
 import it.seashepherd.event.EventType;
 
 @MultipartConfig
-public class EventSearchServlet extends HttpServlet {
+public class EventDeleteServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
@@ -36,14 +36,14 @@ public class EventSearchServlet extends HttpServlet {
 		String ssi_password = getServletConfig().getInitParameter("ssi_password");
 
 		String eventType = request.getParameter("eventType");
+		String eventId =  request.getParameter("eventId");
 		
 		EventConnection connection = null;
 		try {
 			EventDAO.MODE mode = EventDAO.MODE.HTTP;
-			connection = EventConnection.connect(mode, ssi_user, ssi_password);
+			connection = EventConnection.connect(mode, ssi_user, ssi_password);			
 			
-			
-			String result = connection.getDAO().getJSONEvents(connection, EventType.valueOf(eventType));
+			String result = connection.getDAO().deleteEvent(connection, EventType.valueOf(eventType), eventId);
 			response.getWriter().print(result.trim());
 			response.flushBuffer();
 		} catch (Exception e) {

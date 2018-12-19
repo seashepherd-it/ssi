@@ -1,5 +1,5 @@
 import {JetView} from "webix-jet";
-import {getEvents} from "models/events";
+import {getEvents, deleteEvent} from "models/events";
 
 export default class EventsTable extends JetView {
 	
@@ -19,9 +19,11 @@ export default class EventsTable extends JetView {
 		    onClick:{ 
 		    	"mdi-trash-can": function  (event, id, node) {
 		    		var dtable = this;
-		    	    webix.confirm("Are you sure, to delete this?", function(action) {
+	    	    	var event = dtable.getItem(id);
+		    	    webix.confirm("Delete " + event.SSI_EVENT_TEXT + "?", function(action) {
 			    	    if(action === true) {
-			    	    	dtable.remove(id.row)
+			    	    	if(deleteEvent(event.SSI_EVENT_TYPE, event.SSI_EVENT_ID) === true)
+			    	    		dtable.remove(id.row);
 			    	    }
 		    	    });
 		        },
@@ -29,11 +31,11 @@ export default class EventsTable extends JetView {
 		    		var dtable = this;
 		    	    webix.confirm("Are you sure, to update this?", function(action) {
 			    	    if(action === true) {
-			    	    	dtable.remove(id.row)
+			    	    	alert(id.row);
+//			    	    	dtable.remove(id.row)
 			    	    }
 		    	    });
 		        }
-
 		    }
 		}
 			
@@ -126,6 +128,14 @@ export default class EventsTable extends JetView {
             header: "Place",
             adjust: true,
             sort:"string"
+          }, config.columns.length);
+
+        config.columns.insertAt({
+            id: "SSI_EVENT_LINK",
+            header: "Link",
+            adjust:true,
+            sort:"string",
+            template:"<a href='#SSI_EVENT_LINK#' target='_new'>#SSI_EVENT_LINK#</a>"
           }, config.columns.length);
         
 		return config;

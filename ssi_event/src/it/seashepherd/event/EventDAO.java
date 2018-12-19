@@ -118,4 +118,19 @@ public class EventDAO {
 		
 		return json;
 	}
+
+	public String deleteEvent(EventConnection connection, EventType eventType, String eventId) throws Exception {
+
+		String json = null;
+		switch (mode) {
+		case HTTP:
+			json = EventDAO_HTTP.deleteEvent(connection, eventType, eventId);
+			break;
+		case SQL:
+			json = EventDAO_SQL.deleteEvent(connection, eventType, eventId);
+			break;
+		}
+		
+		return json;
+	}
 }

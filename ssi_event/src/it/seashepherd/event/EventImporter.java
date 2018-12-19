@@ -52,9 +52,6 @@ public abstract class EventImporter {
 		case EV:
 			eventImporter = new EventImporterEV(connection, event, workbook);
 			break;
-		case GC:
-			eventImporter = new EventImporterGC(connection, event, workbook);
-			break;
 		case PS:
 			eventImporter = new EventImporterPS(connection, event, workbook);
 			break;

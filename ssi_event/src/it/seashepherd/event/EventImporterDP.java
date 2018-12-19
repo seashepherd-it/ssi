@@ -60,7 +60,8 @@ public class EventImporterDP extends EventImporter {
 			}
 		}
 
-		saveEvent();
+		if(!getResult().onError())
+			saveEvent();
 	}
 
 	private void buildHeader(Row row) throws Exception {
@@ -107,6 +108,10 @@ public class EventImporterDP extends EventImporter {
 		}
 		if (row.getCell(24) != null)
 			getEvent().setEventNote(row.getCell(24).getStringCellValue());
+		if (row.getCell(25) != null)
+			getEvent().setEventLink(row.getCell(25).getStringCellValue());
+		else
+			getEvent().setEventLink("");
 	}
 
 	private void buildVolunteer(Row row) throws Exception {

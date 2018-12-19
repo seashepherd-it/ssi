@@ -101,7 +101,7 @@ public class EventDAO_SQL {
 	}
 
 	public static void saveEvent(EventConnection connection, EventEntity eventEntity) throws SQLException {
-
+/*
 		boolean autoCommit = connection.getSQLConnection().getAutoCommit();
 		try {
 			connection.getSQLConnection().setAutoCommit(false);
@@ -168,10 +168,15 @@ public class EventDAO_SQL {
 			connection.getSQLConnection().commit();
 		} finally {
 			connection.getSQLConnection().setAutoCommit(autoCommit);
-		}
+		}*/
 	}
 
 	public static String getJSONEvents(EventConnection connection, EventType eventType) {
+		return null;
+	}
+
+	public static String deleteEvent(EventConnection connection, EventType eventType, String eventId) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

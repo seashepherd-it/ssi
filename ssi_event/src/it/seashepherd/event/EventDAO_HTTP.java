@@ -115,11 +115,23 @@ public class EventDAO_HTTP {
 			throw new Exception(result.substring(6));
 	}
 
-	public static String getJSONEvents(EventConnection connection, EventType eventType) throws Exception, Exception {
+	public static String getJSONEvents(EventConnection connection, EventType eventType) throws Exception {
 
 		String url = "https://www.weit.it/mos/services/getEvents.php";
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("eventType", eventType.name());
+		String result = connection.getHttpConnection().postHttpPage(url, HttpUtils.getParamsString(params));
+
+		return result;
+
+	}
+
+	public static String deleteEvent(EventConnection connection, EventType eventType, String eventId) throws Exception {
+
+		String url = "https://www.weit.it/mos/services/deleteEvent.php";
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("eventType", eventType.name());
+		params.put("eventId", eventId);
 		String result = connection.getHttpConnection().postHttpPage(url, HttpUtils.getParamsString(params));
 
 		return result;

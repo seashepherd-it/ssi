@@ -23,6 +23,7 @@ public class EventEntity {
 	private int eventReceiptsQty = 0;
 	private double eventReceiptsTot = 0;
 	private String eventNote = null;
+	private String eventLink = null;
 	private int disposalMaterialKG = 0;
 	private String disposalContact;
 	private String instituteType = null;
@@ -174,6 +175,14 @@ public class EventEntity {
 
 	public void setEventNote(String eventNote) {
 		this.eventNote = eventNote;
+	}
+
+	public String getEventLink() {
+		return eventLink;
+	}
+
+	public void setEventLink(String eventLink) {
+		this.eventLink = eventLink;
 	}
 
 	public String getInstituteType() {

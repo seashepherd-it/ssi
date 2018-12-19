@@ -36,7 +36,7 @@ export default class TopMenu extends JetView{
 								{
 									view:"icon", icon:"mdi mdi-bell",
 									localId:"bell",
-									badge:1, tooltip:_("Latest notifications"),
+									badge:0, tooltip:_("Latest notifications"),
 									click:function(){
 										this.$scope.notifications.showPopup(this.$view);
 									}

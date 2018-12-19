@@ -68,7 +68,8 @@ public class EventImporterPV extends EventImporter {
 			}
 		}
 
-		saveEvent();
+		if(!getResult().onError())
+			saveEvent();
 	}
 
 	private void buildHeader(Row row) throws Exception {
