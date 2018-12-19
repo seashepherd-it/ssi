@@ -1,18 +1,19 @@
 import "./styles/app.css";
+
 import { JetApp, EmptyRouter, HashRouter, plugins } from "webix-jet";
 
 export default class MyApp extends JetApp{
 	constructor(config){
-
-		const defaults = {
+		super({
+				webix,
 				id 		: APPNAME,
 				version : VERSION,
 				router 	: HashRouter,
 				debug 	: !PRODUCTION,
 				start 	: "/nav/tables.eventsEV",
 				theme	: webix.storage.local.get("theme_color") || ""
-			};
-		super({ ...defaults, ...config });
+			}				
+		);
 		
 		this.use(plugins.Locale);
 	}

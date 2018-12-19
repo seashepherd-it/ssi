@@ -5,22 +5,51 @@ export default class EventsTable extends JetView {
 	
 	config(){
 		const _ = this.app.getService("locale")._;
+		var actions = "<span class='mdi mdi-trash-can'></span><span class='mdi mdi-update'></span>";
+		
 		var config = {
 			view:"datatable",
 			id:"events",
 			dragColumn:true,
 			headermenu:true,
 			footer:true,
-			leftSplit:3,
+			leftSplit:4,
 			resizeColumn:true,
-			eventType: null
+			eventType: null,
+		    onClick:{ 
+		    	"mdi-trash-can": function  (event, id, node) {
+		    		var dtable = this;
+		    	    webix.confirm("Are you sure, to delete this?", function(action) {
+			    	    if(action === true) {
+			    	    	dtable.remove(id.row)
+			    	    }
+		    	    });
+		        },
+		    	"mdi-update": function  (event, id, node) {
+		    		var dtable = this;
+		    	    webix.confirm("Are you sure, to update this?", function(action) {
+			    	    if(action === true) {
+			    	    	dtable.remove(id.row)
+			    	    }
+		    	    });
+		        }
+
+		    }
 		}
 			
-		var columns = [
-			{ id:"SSI_EVENT_TYPE", header:"Type" }
-		];
+		var columns = [ {
+			id: "actions",
+	        header: "Actions",
+            adjust:true,	        
+	        template: actions 
+		} ];
 		
         config.columns = webix.toArray(columns);
+
+        config.columns.insertAt({
+        	id:"SSI_EVENT_TYPE", 
+        	header:"Type"
+        }, config.columns.length);
 
         config.columns.insertAt({
             id: "SSI_EVENT_ID",
@@ -48,13 +77,6 @@ export default class EventsTable extends JetView {
             adjust:true,
             sort:"string"
           }, config.columns.length);
-        
-        config.columns.insertAt({
-            id: "SSI_EVENT_ARGUMENT",
-            header: "Argument",
-            adjust:true,
-            sort:"string"
-          }, config.columns.length);
 
         config.columns.insertAt({
             id: "SSI_EVENT_PEOPLE_QTY",
@@ -63,7 +85,14 @@ export default class EventsTable extends JetView {
             format:webix.Number.numToStr({decimalSize:0}),
             css:{'text-align':'right'},
             sort:"int", 
-            footer:{content:"summColumn"}
+            footer:{content:"summColumn", css:{'text-align':'right'}}
+          }, config.columns.length);
+        
+        config.columns.insertAt({
+            id: "SSI_EVENT_ARGUMENT",
+            header: "Argument",
+            adjust:true,
+            sort:"string"
           }, config.columns.length);
         
         config.columns.insertAt({
@@ -107,7 +136,6 @@ export default class EventsTable extends JetView {
 		view.hideColumn("SSI_AREA_ID");
 				
 		view.parse(getEvents(view.config.eventType));
-		
 		
 		this.on(this.app,"search:event", (eventDate, eventArea) => {
 

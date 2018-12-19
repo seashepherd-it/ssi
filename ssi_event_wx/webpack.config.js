@@ -69,6 +69,9 @@ module.exports = function(env) {
 	if (!production){
 		config.devtool = "inline-source-map";
 	}
+	else {
+		config.devtool = "source-map";
+	}
 
 	if (asmodule){
 		if (!standalone){
@@ -77,12 +80,8 @@ module.exports = function(env) {
 		}
 
 		const out = config.output;
-		const sub = standalone ? "full" : "module";
-
 		out.library = pack.name.replace(/[^a-z0-9]/gi, "");
 		out.libraryTarget= "umd";
-		out.path = path.join(__dirname, "dist", sub);
-		out.publicPath = "/dist/"+sub+"/";
 	}
 
 	return config;

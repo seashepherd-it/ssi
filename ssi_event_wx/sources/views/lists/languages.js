@@ -37,12 +37,13 @@ export default class LanguagesPopup extends JetView {
 		this.getRoot().show(pos);
 	}
 	toggleLanguage(value,country){
+		
 		webix.i18n.setLocale(value+"-"+country);
 		const langs = this.app.getService("locale");
 		const clang = langs.getLang();
 		if (value !== clang){
 			webix.storage.local.put("clang",value);
-			langs.setLang(value);
+//			langs.setLang(value);
 		}
 	}
 }

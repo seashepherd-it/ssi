@@ -12,8 +12,9 @@ export default class EventsTableEP extends EventsTable {
             format:webix.Number.numToStr({decimalSize:0}),
             css:{'text-align':'right'},
             sort:"int", 
-            footer:{content:"summColumn"}
-          }, config.columns.length);
+            footer:{content:"summColumn", css:{'text-align':'right'}},
+            css:{'text-align':'right'}
+          }, config.columns.length-5);
 		
         config.columns.insertAt({
             id: "SSI_DISPOSAL_CONTACT",

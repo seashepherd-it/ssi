@@ -9,8 +9,11 @@ export default class EventsTableDP extends EventsTable {
         config.columns.insertAt({
             id: "SSI_DISPOSAL_MATERIAL_KG",
             header: "Material",
-            sort:"int"
-          }, config.columns.length);
+            format:webix.Number.numToStr({decimalSize:0}),
+            sort:"int",
+            footer:{content:"summColumn", css:{'text-align':'right'}},
+            css:{'text-align':'right'}
+          }, config.columns.length-5);
 		
         config.columns.insertAt({
             id: "SSI_DISPOSAL_CONTACT",

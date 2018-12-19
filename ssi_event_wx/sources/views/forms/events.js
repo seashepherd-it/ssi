@@ -4,7 +4,7 @@ export default class FormEventsView extends JetView {
 	config(){
 		const _ = this.app.getService("locale")._;
 		return {
-			view:"form", 
+			view:"form",
 			elementsConfig:{ labelAlign:"right" },
 		    rows:[
 		        {
@@ -21,17 +21,28 @@ export default class FormEventsView extends JetView {
 		            type:"uploader",
 		            borderless:true
 		        },
-		        { 
-		            view:"button",
-		            label:"Send files",
-		            click: "$$('events_upl1').send()"
-		        }
+		        {
+		        	type:"head",
+		        	cols:[
+				        { 
+				            view:"button",
+				            label:"Send files",
+				            click: "$$('events_upl1').send()"
+				        },
+				        { 
+				            view:"button",
+				            label:"Clear files",
+				            click: "$$('events_upl1').files.data.clearAll()"
+				        }		        		
+		        	]
+		        },
 		    ], 
 		    scroll: true
 		};		
 	}
 	
 	init(view) {
+		
 		$$("events_upl1").attachEvent("onUploadComplete", function(response){
 			// webix.message("Done");
 		});
