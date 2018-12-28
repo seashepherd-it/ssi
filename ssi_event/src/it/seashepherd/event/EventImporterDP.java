@@ -68,11 +68,13 @@ public class EventImporterDP extends EventImporter {
 
 		// decode area
 		String area = row.getCell(0).getStringCellValue().trim().toUpperCase();
+		normalizeText(area);
+		
 		int areaId = getConnection().getDAO().getAreaIdByName(getConnection(), area);
 		if (areaId < 0)
 			addError("Area not found: " + area);
-		getEvent().setAreaId(areaId);
-
+		
+		getEvent().setAreaId(areaId);		
 		getEvent().setEventDive(row.getCell(1).getStringCellValue());
 		getEvent().setEventDateFrom(row.getCell(2).getDateCellValue());
 		getEvent().setEventDateTo(row.getCell(3).getDateCellValue());
@@ -108,8 +110,12 @@ public class EventImporterDP extends EventImporter {
 		}
 		if (row.getCell(24) != null)
 			getEvent().setEventNote(row.getCell(24).getStringCellValue());
-		if (row.getCell(25) != null)
-			getEvent().setEventLink(row.getCell(25).getStringCellValue());
+		if (row.getCell(25) != null) {
+			String link = row.getCell(25).getStringCellValue().trim();
+			if(link.endsWith("/"))
+				link = removeLastChar(link);
+			getEvent().setEventLink(link);
+		}
 		else
 			getEvent().setEventLink("");
 	}

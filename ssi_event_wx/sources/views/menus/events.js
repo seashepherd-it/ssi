@@ -9,18 +9,21 @@ export default class LeftMenu extends JetView {
 		const theme = this.app.config.theme;
 
 		return {
-			view:"sidebar",
+			view:"accordion",
 			css:theme,
-			collapsed: true,
-			data:[
-				{ id:"events", value:_("Events"), icon:"mdi mdi-cart" }
+			rows:[
+				{
+					header:_("Search Events"),
+					collapsed:false,
+					body:FilterEvents
+				},
+				{
+					header:_("Import Events"),
+					collapsed:true,
+					body:ImportEvents
+				}
+				, {}
 			]
 		};
-	}
-	
-	init(sidebar){
-		this.on(this.app,"menu:toggle",() => {
-			sidebar.toggle();
-		});
 	}
 }

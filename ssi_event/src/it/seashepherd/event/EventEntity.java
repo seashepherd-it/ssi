@@ -26,7 +26,7 @@ public class EventEntity {
 	private String eventLink = null;
 	private int disposalMaterialKG = 0;
 	private String disposalContact;
-	private String instituteType = null;
+	private String instituteTypeId = null;
 	private String instituteName = null;
 	private String instituteSpeaker = null;
 	private String instituteContact = null;
@@ -60,6 +60,10 @@ public class EventEntity {
 
 	public String getEventText() {
 		return eventText;
+	}
+
+	public void setEventText(String text) {
+		this.eventText = text;
 	}
 
 	public String getEventStatus() {
@@ -185,12 +189,12 @@ public class EventEntity {
 		this.eventLink = eventLink;
 	}
 
-	public String getInstituteType() {
-		return instituteType;
+	public String getInstituteTypeId() {
+		return instituteTypeId;
 	}
 
-	public void setInstituteType(String instituteType) {
-		this.instituteType = instituteType;
+	public void setInstituteTypeId(String instituteType) {
+		this.instituteTypeId = instituteType;
 	}
 
 	public String getInstituteName() {

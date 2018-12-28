@@ -5,7 +5,8 @@ export default class EventsTable extends JetView {
 	
 	config(){
 		const _ = this.app.getService("locale")._;
-		var actions = "<span class='mdi mdi-trash-can'></span><span class='mdi mdi-update'></span>";
+//		var actions = "<span class='mdi mdi-trash-can'></span><span class='mdi mdi-update'></span>";
+		var actions = "<span class='mdi mdi-trash-can'></span>";
 		
 		var config = {
 			view:"datatable",
@@ -63,8 +64,8 @@ export default class EventsTable extends JetView {
         config.columns.insertAt({
             id: "SSI_EVENT_TEXT",
             header: "Text",
-            width:280,
-//            adjust:true,
+//            width:280,
+            adjust:true,
             sort:"string"
           }, config.columns.length);
         
@@ -74,46 +75,41 @@ export default class EventsTable extends JetView {
           }, config.columns.length);
         
         config.columns.insertAt({
-            id: "AN_SSI_AREA_V",
-            header: "Area",
-            adjust:true,
-            sort:"string"
-          }, config.columns.length);
-
-        config.columns.insertAt({
-            id: "SSI_EVENT_PEOPLE_QTY",
-            header: "People",
-            adjust:true,            
-            format:webix.Number.numToStr({decimalSize:0}),
-            css:{'text-align':'right'},
-            sort:"int", 
-            footer:{content:"summColumn", css:{'text-align':'right'}}
-          }, config.columns.length);
-        
-        config.columns.insertAt({
-            id: "SSI_EVENT_ARGUMENT",
-            header: "Argument",
-            adjust:true,
-            sort:"string"
-          }, config.columns.length);
-        
-        config.columns.insertAt({
             id: "SSI_EVENT_DATE_FROM",
             header: "From",
-//            format:webix.i18n.dateFormatStr,
             sort:"string"
           }, config.columns.length);
         
         config.columns.insertAt({
             id: "SSI_EVENT_DATE_TO",
-            header: "To",
-//          format:webix.i18n.dateFormatStr,            
+            header: "To",       
+            sort:"string"
+          }, config.columns.length);
+
+        config.columns.insertAt({
+            id: "SSI_EVENT_ARGUMENT",
+            header: "Argument",
+            adjust:true,
+            sort:"string"
+          }, config.columns.length);        
+
+        config.columns.insertAt({
+            id: "SSI_EVENT_ACCOUNT_TEXT",
+            header: "Account",
+            adjust:true,
             sort:"string"
           }, config.columns.length);
 
         config.columns.insertAt({
             id: "SSI_EVENT_PLACE_COUNTRY",
             header: "Country",
+            sort:"string"
+          }, config.columns.length);
+        
+        config.columns.insertAt({
+            id: "AN_SSI_AREA_V",
+            header: "Area",
+            adjust:true,
             sort:"string"
           }, config.columns.length);
 
@@ -137,12 +133,70 @@ export default class EventsTable extends JetView {
             sort:"string",
             template:"<a href='#SSI_EVENT_LINK#' target='_new'>#SSI_EVENT_LINK#</a>"
           }, config.columns.length);
+
+        config.columns.insertAt({
+            id: "SSI_EVENT_NOTE",
+            header: "Note",
+            adjust:true,
+            sort:"string"
+          }, config.columns.length);
+        
+        config.columns.insertAt({
+            id: "SSI_EVENT_DAYS",
+            header: "Days",
+            adjust:true,            
+            format:webix.Number.numToStr({decimalSize:0}),
+            css:{'text-align':'right'},        
+            sort:"int",
+            footer:{content:"summColumn", css:{'text-align':'right'}}
+          }, config.columns.length);
+
+        config.columns.insertAt({
+            id: "SSI_EVENT_PEOPLE_QTY",
+            header: "People",
+            adjust:true,            
+            format:webix.Number.numToStr({decimalSize:0}),
+            css:{'text-align':'right'},
+            sort:"int", 
+            footer:{content:"summColumn", css:{'text-align':'right'}}
+          }, config.columns.length);
+        
+        config.columns.insertAt({
+            id: "SSI_VOLUNTEER_TOT",
+            header: "Volunteers",
+            adjust:true,            
+            format:webix.Number.numToStr({decimalSize:0}),
+            css:{'text-align':'right'},
+            sort:"int", 
+            footer:{content:"summColumn", css:{'text-align':'right'}}
+          }, config.columns.length);        
+
+        config.columns.insertAt({
+            id: "SSI_VOLUNTEER_HOURS",
+            header: "Hours",
+            adjust:true,            
+            format:webix.Number.numToStr({decimalSize:0}),
+            css:{'text-align':'right'},
+            sort:"int", 
+            footer:{content:"summColumn", css:{'text-align':'right'}}
+          }, config.columns.length);
+
+        config.columns.insertAt({
+            id: "SSI_EVENT_RECEIPTS_TOT",
+            header: "Receipts",
+            adjust:true,            
+            format:webix.Number.numToStr({decimalSize:0}),
+            css:{'text-align':'right'},
+            sort:"int", 
+            footer:{content:"summColumn", css:{'text-align':'right'}}
+          }, config.columns.length);
         
 		return config;
 	}
 	
 	init(view){		
 		view.hideColumn("SSI_EVENT_TYPE");
+		view.hideColumn("SSI_EVENT_PLACE_COUNTRY");
 		view.hideColumn("SSI_AREA_ID");
 				
 		view.parse(getEvents(view.config.eventType));

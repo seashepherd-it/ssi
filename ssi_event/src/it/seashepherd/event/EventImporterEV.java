@@ -24,19 +24,19 @@ public class EventImporterEV extends EventImporter {
 	public void importEvent() throws Exception {
 
 		Sheet firstSheet = getWorkbook().getSheetAt(0);
-
+		getEvent().setEventLink("");
 		Iterator<Row> rows = firstSheet.iterator();
 		while (rows.hasNext()) {
 			Row nextRow = rows.next();
 			Iterator<Cell> cellIterator = nextRow.cellIterator();
 			while (cellIterator.hasNext()) {
-				Cell cell = cellIterator.next();
+				Cell cell = cellIterator.next();				
 				if (parsingStatus == null && cell.getStringCellValue().equalsIgnoreCase("Descrizione Evento")) {
 					parsingStatus = ParsingStatus.HEADER;
 					nextRow = rows.next();
 					break;
 				}
-
+				
 				try {
 					if (parsingStatus.equals(ParsingStatus.NONE)
 							&& (cell.getStringCellValue().equalsIgnoreCase("Cognome Nome")
@@ -61,6 +61,8 @@ public class EventImporterEV extends EventImporter {
 				if (nextRow.getCell(2) != null
 						&& nextRow.getCell(2).getStringCellValue().equalsIgnoreCase("Coordinamento")) {
 					String area = nextRow.getCell(4).getStringCellValue().trim().toUpperCase();
+					normalizeText(area);
+					
 					int areaId = getConnection().getDAO().getAreaIdByName(getConnection(), area);
 					if (areaId < 0)
 						addError("Area not found: " + area);
@@ -70,6 +72,18 @@ public class EventImporterEV extends EventImporter {
 				if (nextRow.getCell(0) != null
 						&& nextRow.getCell(0).getStringCellValue().equalsIgnoreCase("Tipo Evento")) {
 					getEvent().setEventArgument(nextRow.getCell(1).getStringCellValue());
+				}
+				// note
+				if (nextRow.getCell(3) != null
+						&& nextRow.getCell(3).getStringCellValue().equalsIgnoreCase("Note")) {
+					if(nextRow.getCell(4) != null)
+						getEvent().setEventNote(nextRow.getCell(4).getStringCellValue());
+				}
+				// link
+				if (nextRow.getCell(5) != null
+						&& nextRow.getCell(5).getStringCellValue().equalsIgnoreCase("Link")) {
+					if(nextRow.getCell(6) != null)
+						getEvent().setEventLink(nextRow.getCell(6).getStringCellValue());
 				}
 				// imbarcazione
 				if (nextRow.getCell(0) != null
@@ -141,10 +155,11 @@ public class EventImporterEV extends EventImporter {
 			getEvent().setEventReceiptsQty((int) row.getCell(7).getNumericCellValue());
 		} catch (Exception e) {
 		}
-		try {
+/*		try {
 			getEvent().setEventReceiptsTot((double) row.getCell(14).getNumericCellValue());
 		} catch (Exception e) {
-		}
+		}*/
+				
 	}
 
 	private void buildVolunteer(Row nextRow) throws Exception {

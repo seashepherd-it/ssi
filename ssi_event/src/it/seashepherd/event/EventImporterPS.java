@@ -76,12 +76,14 @@ public class EventImporterPS extends EventImporter {
 
 		// decode area
 		String area = row.getCell(0).getStringCellValue().trim().toUpperCase();
+		normalizeText(area);
+		
 		int areaId = getConnection().getDAO().getAreaIdByName(getConnection(), area);
 		if (areaId < 0)
 			addError("Area not found: " + area);
 		getEvent().setAreaId(areaId);
 
-		getEvent().setInstituteType(row.getCell(1).getStringCellValue());
+		getEvent().setInstituteTypeId(getInstituteTypeIdByText(row.getCell(1).getStringCellValue()));
 		try {
 			getEvent().setInstituteName(row.getCell(2).getStringCellValue());
 		} catch (Exception e) {
@@ -96,7 +98,7 @@ public class EventImporterPS extends EventImporter {
 			addWarning("Invalid date: " + row.getCell(5));
 		}
 		try {
-			getEvent().setEventDateFrom(row.getCell(6).getDateCellValue());
+			getEvent().setEventDateTo(row.getCell(6).getDateCellValue());
 		} catch (Exception e) {
 			addWarning("Invalid date: " + row.getCell(6));
 		}
@@ -123,6 +125,8 @@ public class EventImporterPS extends EventImporter {
 		getEvent().setEventPeopleQty((int) row.getCell(11).getNumericCellValue());
 		if (row.getCell(12) != null)
 			getEvent().setEventNote(row.getCell(12).getStringCellValue());
+				
+		getEvent().setEventLink("");
 	}
 
 	private void buildVolunteer(Row nextRow) throws Exception {

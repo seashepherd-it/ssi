@@ -74,4 +74,70 @@ public abstract class EventImporter {
 	protected void addInfo(String message) {
 		getResult().addInfo(message);
 	}
+	
+    protected String removeLastChar(String str) {
+        return str.substring(0, str.length() - 1);
+    }
+    
+    protected void normalizeText(String area) {
+
+    	String[] areas = area.split(" ");
+    	if(areas.length == 2) {
+    		area = areas[0].substring(0, 1) + areas[1].substring(0, 1); 
+    	}
+    	
+		String text = getEvent().getEventText();		
+		if(text.substring(2, 3).equals(" ") && area.startsWith(text.substring(0, 2).toUpperCase())) {
+			text = text.substring(3);
+			getEvent().setEventText(text);
+		}			
+    }
+    
+    protected String getInstituteTypeIdByText(String text) {
+    	
+    	String ret = "";
+    	
+    	text = text.trim();
+    	
+    	if(text.equalsIgnoreCase("Superiori"))
+    		ret = "S2";
+    	else if(text.equalsIgnoreCase("Secondaria"))
+    		ret = "S1";
+    	else if(text.equalsIgnoreCase("Secondaria 1 grado"))
+    		ret = "S1";
+    	else if(text.equalsIgnoreCase("Superiore 2 grado"))
+    		ret = "S2";
+    	else if(text.equalsIgnoreCase("Primaria"))
+    		ret = "P1";
+    	else if(text.equalsIgnoreCase("Scuola Primaria"))
+    		ret = "P1";    	
+    	else if(text.equalsIgnoreCase("Superiore"))
+    		ret = "S2";
+    	else if(text.equalsIgnoreCase("Secondaria secondo Grado"))
+    		ret = "S2";
+    	else if(text.equalsIgnoreCase("Scuola secondaria di primo grado"))
+    		ret = "S1";
+    	else if(text.equalsIgnoreCase("Secondaria Primo Grado"))
+    		ret = "S1";    	
+    	else if(text.equalsIgnoreCase("Primaria/Secondaria ! Grado"))
+    		ret = "S1";
+    	else if(text.equalsIgnoreCase("Secondaria I grado"))
+    		ret = "S1";
+    	else if(text.equalsIgnoreCase("Secondaria 2 grado"))
+    		ret = "S2";
+    	else if(text.equalsIgnoreCase("Secondaria \" grado"))
+    		ret = "S2";
+    	else if(text.equalsIgnoreCase("Elementari"))
+    		ret = "P1";
+    	else if(text.equalsIgnoreCase("Elementare"))
+    		ret = "P1";    	
+    	else if(text.equalsIgnoreCase("Media"))
+    		ret = "S1";
+    	else if(text.equalsIgnoreCase("Medie"))
+    		ret = "S1";
+    	else
+    		ret = "";
+    	
+    	return ret;
+    }
 }

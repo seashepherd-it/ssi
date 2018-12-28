@@ -7,13 +7,11 @@ import CenterView from "views/center";
 
 export default class NavView extends JetView{
 	config(){
-		const _ = this.app.getService("locale")._;
 		
 		return {
 			rows:[
 				TopMenu, 
 				{
-					type:"space",
 					cols:[
 						LeftMenu,
 						CenterView

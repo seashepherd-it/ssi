@@ -6,6 +6,14 @@ export default class EventsTableDP extends EventsTable {
 		var config = super.config();
 		config.eventType = "DP";
 
+		
+        config.columns.insertAt({
+            id: "SSI_EVENT_DIVE",
+            header: "Dive",
+            adjust: true,
+            sort:"string"
+          }, config.columns.length);
+
         config.columns.insertAt({
             id: "SSI_DISPOSAL_MATERIAL_KG",
             header: "Material",

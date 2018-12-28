@@ -61,8 +61,8 @@ export default class FormEventsView extends JetView {
 			    webix.message({		    	
 			        type:"debug",
 			        text:response.info + "<br/>" + response.warning,
-//			        expire: 20000
-			        expire: -1
+			        expire: 20000
+//			        expire: -1
 			    });				
 			}
 		});
@@ -77,8 +77,8 @@ export default class FormEventsView extends JetView {
 				webix.message({
 			        type:"debug",
 			        text:response.info + "<br/>" + response.warning,
-//			        expire: 20000
-			        expire: -1
+			        expire: 20000
+//			        expire: -1
 			    });			        
 			};
 		});

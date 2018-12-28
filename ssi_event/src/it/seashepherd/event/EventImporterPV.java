@@ -29,15 +29,20 @@ public class EventImporterPV extends EventImporter {
 			Iterator<Cell> cellIterator = nextRow.cellIterator();
 			while (cellIterator.hasNext()) {
 				Cell cell = cellIterator.next();
-				if (parsingStatus == null && cell.getStringCellValue().equalsIgnoreCase("Coordinamento")) {
-					parsingStatus = ParsingStatus.HEADER;
-					nextRow = rows.next();
+				try {
+					if (parsingStatus == null && cell.getStringCellValue().equalsIgnoreCase("Coordinamento")) {
+						parsingStatus = ParsingStatus.HEADER;
+						nextRow = rows.next();
+					}
+	
+					if (parsingStatus.equals(ParsingStatus.NONE)
+							&& cell.getStringCellValue().equalsIgnoreCase("Cognome Nome")) {
+						parsingStatus = ParsingStatus.VOLUNTEERS;
+						nextRow = rows.next();
+					}
 				}
-
-				if (parsingStatus.equals(ParsingStatus.NONE)
-						&& cell.getStringCellValue().equalsIgnoreCase("Cognome Nome")) {
-					parsingStatus = ParsingStatus.VOLUNTEERS;
-					nextRow = rows.next();
+				catch(Exception e) {
+					
 				}
 			}
 
@@ -76,12 +81,14 @@ public class EventImporterPV extends EventImporter {
 
 		// decode area
 		String area = row.getCell(0).getStringCellValue().trim().toUpperCase();
+		normalizeText(area);
+		
 		int areaId = getConnection().getDAO().getAreaIdByName(getConnection(), area);
 		if (areaId < 0)
-			addError(" Area not found: " + area);
+			addError("Area not found: " + area);
 		getEvent().setAreaId(areaId);
 		getEvent().setShipName(row.getCell(1).getStringCellValue());
-		getEvent().setInstituteType(row.getCell(2).getStringCellValue());
+		getEvent().setInstituteTypeId(getInstituteTypeIdByText(row.getCell(2).getStringCellValue()));
 		getEvent().setInstituteName(row.getCell(3).getStringCellValue());
 
 		EventUtils.setProvincePlace(getEvent(), row.getCell(5).getStringCellValue(), row.getCell(4).getStringCellValue());
@@ -115,6 +122,8 @@ public class EventImporterPV extends EventImporter {
 
 		if (row.getCell(13) != null)
 			getEvent().setEventNote(row.getCell(13).getStringCellValue());
+		
+		getEvent().setEventLink("");
 	}
 
 	private void buildVolunteer(Row nextRow) throws Exception {

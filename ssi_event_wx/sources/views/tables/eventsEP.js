@@ -14,7 +14,7 @@ export default class EventsTableEP extends EventsTable {
             sort:"int", 
             footer:{content:"summColumn", css:{'text-align':'right'}},
             css:{'text-align':'right'}
-          }, config.columns.length-5);
+          }, config.columns.length);
 		
         config.columns.insertAt({
             id: "SSI_DISPOSAL_CONTACT",

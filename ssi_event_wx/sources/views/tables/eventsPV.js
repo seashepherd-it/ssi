@@ -5,9 +5,16 @@ export default class EventsTableEV extends EventsTable {
 	config() {
 		var config = super.config();
 		config.eventType = "PV";
-		
+
         config.columns.insertAt({
-            id: "SSI_INSTITUTE_TYPE",
+            id: "SSI_SHIP_NAME",
+            header: "Ship Name",
+            adjust:true,
+            sort:"string"
+          }, config.columns.length);
+
+        config.columns.insertAt({
+            id: "SSI_INSTITUTE_TYPE_TEXT",
             header: "Institute Type",
             adjust:true,
             sort:"string"

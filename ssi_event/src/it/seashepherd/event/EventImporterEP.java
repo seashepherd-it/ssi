@@ -73,6 +73,8 @@ public class EventImporterEP extends EventImporter {
 
 		// decode area
 		String area = row.getCell(0).getStringCellValue().trim().toUpperCase();
+		normalizeText(area);
+		
 		int areaId = getConnection().getDAO().getAreaIdByName(getConnection(), area);
 		if (areaId < 0)
 			addError("Area not found: " + area);
@@ -106,6 +108,23 @@ public class EventImporterEP extends EventImporter {
 		if (row.getCell(10) != null)
 			getEvent().setEventNote(row.getCell(10).getStringCellValue());
 
+		try {
+			getEvent().setEventReceiptsQty((int) row.getCell(11).getNumericCellValue());
+		} catch (Exception e) {
+		}
+		try {
+			getEvent().setEventReceiptsTot((double) row.getCell(16).getNumericCellValue());
+		} catch (Exception e) {
+		}
+
+		if (row.getCell(24) != null) {
+			String link = row.getCell(24).getStringCellValue().trim();
+			if(link.endsWith("/"))
+				link = removeLastChar(link);
+			getEvent().setEventLink(link);
+		}
+		else
+			getEvent().setEventLink("");
 	}
 
 	private void buildVolunteer_1(Row row) throws Exception {

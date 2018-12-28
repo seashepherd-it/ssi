@@ -7,7 +7,7 @@ export default class EventsTablePS extends EventsTable {
 		config.eventType = "PS";
 		
         config.columns.insertAt({
-            id: "SSI_INSTITUTE_TYPE",
+            id: "SSI_INSTITUTE_TYPE_TEXT",
             header: "Institute Type",
             adjust:true,
             sort:"string"

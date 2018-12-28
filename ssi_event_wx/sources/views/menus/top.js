@@ -17,6 +17,10 @@ export default class TopMenu extends JetView{
 						{
 							cols:[
 								{
+									view:"icon", icon:"mdi mdi-menu",
+									click:() => this.app.callEvent("menu:toggle")
+								},
+								{
 									view:"label",
 									template:"SSI Events Application"
 								},
