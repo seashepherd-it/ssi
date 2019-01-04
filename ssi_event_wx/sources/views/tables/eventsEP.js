@@ -4,9 +4,12 @@ import EventsTable from "views/tables/events";
 export default class EventsTableEP extends EventsTable {
 	config() {
 		var config = super.config();
-		config.eventType = "EP";
+		this.setEventType("EP");
+
+		var datatable = this.getDatatable();
+		var columns = webix.toArray(datatable.columns);
 		
-        config.columns.insertAt({
+        columns.insertAt({
             id: "SSI_DISPOSAL_MATERIAL_KG",
             header: "Material(Kg)",
             format:webix.Number.numToStr({decimalSize:0}),
@@ -14,14 +17,16 @@ export default class EventsTableEP extends EventsTable {
             sort:"int", 
             footer:{content:"summColumn", css:{'text-align':'right'}},
             css:{'text-align':'right'}
-          }, config.columns.length);
+          }, columns.length);
 		
-        config.columns.insertAt({
+        columns.insertAt({
             id: "SSI_DISPOSAL_CONTACT",
             header: "Contact",
             adjust: true,
             sort:"string"
-          }, config.columns.length);
+          }, columns.length);
+        
+        datatable.columns = columns;
         
 		return config;
 	}
@@ -29,7 +34,7 @@ export default class EventsTableEP extends EventsTable {
 	init(view) {
 		super.init(view);
 		
-		view.hideColumn("SSI_EVENT_ARGUMENT");
+		this.getDatatable().hideColumn("SSI_EVENT_ARGUMENT");
 	}
 }
 

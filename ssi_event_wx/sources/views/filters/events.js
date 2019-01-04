@@ -9,37 +9,58 @@ export default class FilterEventsView extends JetView {
 		const date_format = "%d %M %Y";
 
 		return {
-			view:"form",
-			borderless:true,
-			elementsConfig:{labelAlign:"right" },
-			elements:[
-				{
-					view:"combo",
-					name:"eventArea",
-					label:_("Area"), 
-					placeholder:_("Select area"),
-					options:{
-						data:areas
+			view:"window",
+			position:"center",
+			modal:true,
+			head:_("Filter Events"),
+			body:{	
+				view:"form",
+				localId:"form",
+				elementsConfig:{labelPosition:"top" },
+				elements:[
+					{
+						view:"combo",
+						name:"eventArea",
+						label:_("Area"), 
+						placeholder:_("Select area"),
+						options:{
+							data:areas
+						}
+					},				
+					{
+						view:"daterangepicker",
+						name:"eventDate",
+						label:_("Event Date"),
+						value:{start: webix.Date.add(new Date(), -2, "year"), end: webix.Date.add(new Date(), 1, "month")},
+						format:date_format
+					},
+					{
+						cols:[
+							{
+								view:"button", value:_("Cancel"),
+								click:() => this.getBack()
+							},
+							{
+								view:"button",
+								value:_("Search"), type:"form",
+								click:() => this.searchEvents()
+							}
+						]
 					}
-				},				
-				{
-					view:"daterangepicker",
-					name:"eventDate",
-					label:_("Event Date"),
-					value:{start: webix.Date.add(new Date(), -2, "year"), end: webix.Date.add(new Date(), 1, "month")},
-					format:date_format
-				},
-				{
-					view:"button",
-					type:"form",
-					value:_("Search"),
-					click:function(){
-						const data = this.getFormView().getValues();
-						this.$scope.app.callEvent("search:event",[data.eventDate, data.eventArea]);
-					}
-				}
-			]
+				]
+			}
 		};
+	}
+	showWindow(){
+		this.getRoot().show();
+	}
+	getBack(){
+		this.getRoot().hide();
+	}
+	searchEvents() {
+		const data = this.$$("form").getValues();
+		this.app.callEvent("search:event",[data.eventDate, data.eventArea]);
+		this.getBack();
 	}
 }
 	

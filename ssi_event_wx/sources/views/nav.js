@@ -1,8 +1,7 @@
 import {JetView} from "webix-jet";
 
-import TopMenu from "views/menus/top";
-import LeftMenu from "views/menus/left";
-import CenterView from "views/center";
+import ToolbarMenu from "views/menus/toolbar";
+import ApplicationMenu from "views/menus/application";
 
 
 export default class NavView extends JetView{
@@ -10,11 +9,10 @@ export default class NavView extends JetView{
 		
 		return {
 			rows:[
-				TopMenu, 
-				{
+				ToolbarMenu, {
 					cols:[
-						LeftMenu,
-						CenterView
+						ApplicationMenu,
+						{$subview: true}
 					]
 				}
 			]
