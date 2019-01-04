@@ -2,7 +2,7 @@ import {JetView} from "webix-jet";
 import LanguagesPopup from "views/lists/languages";
 import NotificationsPopup from "views/lists/notifications";
 
-export default class TopMenu extends JetView{
+export default class ToolbarMenu extends JetView{
 	config(){
 		const _ = this.app.getService("locale")._;
 		const theme = this.app.config.theme;

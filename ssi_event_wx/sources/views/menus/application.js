@@ -1,9 +1,8 @@
 import {JetView, plugins} from "webix-jet";
 import FilterEvents from "views/filters/events";
-import ImportEvents from "views/forms/events";
 import DownloadModels from "views/lists/events";
 		
-export default class LeftMenu extends JetView {
+export default class ApplicationMenu extends JetView {
 	config(){
 		const _ = this.app.getService("locale")._;
 		const theme = this.app.config.theme;

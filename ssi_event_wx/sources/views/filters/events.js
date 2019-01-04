@@ -11,7 +11,9 @@ export default class FilterEventsView extends JetView {
 		return {
 			view:"window",
 			position:"center",
-			modal:true,
+//			modal:true,
+			move:true,
+			resize:true,
 			head:_("Filter Events"),
 			body:{	
 				view:"form",
@@ -37,8 +39,8 @@ export default class FilterEventsView extends JetView {
 					{
 						cols:[
 							{
-								view:"button", value:_("Cancel"),
-								click:() => this.getBack()
+								view:"button", value:_("Close"),
+								click:() => this.close()
 							},
 							{
 								view:"button",
@@ -54,13 +56,13 @@ export default class FilterEventsView extends JetView {
 	showWindow(){
 		this.getRoot().show();
 	}
-	getBack(){
+	close(){
 		this.getRoot().hide();
 	}
 	searchEvents() {
 		const data = this.$$("form").getValues();
 		this.app.callEvent("search:event",[data.eventDate, data.eventArea]);
-		this.getBack();
+//		this.close();
 	}
 }
 	

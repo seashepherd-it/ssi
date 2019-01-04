@@ -1,6 +1,8 @@
 import {JetView} from "webix-jet";
 import {getEvents, deleteEvent} from "models/events";
 import FilterEventsView from "views/filters/events";
+import ImportEventsView from "views/forms/importEvents";
+import InsertEventView from "views/forms/insertEvent";
 
 export default class EventsTable extends JetView {
 
@@ -167,8 +169,14 @@ export default class EventsTable extends JetView {
 //					css:theme,
 					cols:[
 						{ view:"label", template:_("Events") },
+						{ view: "icon",  icon:"mdi mdi-plus-box-outline", 
+							click:() => this.addEvent.showWindow()
+						},						
 						{ view: "icon",  icon:"mdi mdi-filter-outline", 
 							click:() => this.setFilter.showWindow()
+						},
+						{ view: "icon",  icon:"mdi mdi-file-upload", 
+							click:() => this.importEvents.showWindow()
 						},
 						{ view: "icon",  icon:"mdi mdi-file-excel", 
 							click:function(){
@@ -213,7 +221,9 @@ export default class EventsTable extends JetView {
 				
 		datatable.parse(getEvents(this.getEventType()));
 
+		this.importEvents = this.ui(ImportEventsView);
 		this.setFilter = this.ui(FilterEventsView);
+		this.addEvent = this.ui(InsertEventView);
 		
 		this.on(this.app,"search:event", (eventDate, eventArea) => {
 

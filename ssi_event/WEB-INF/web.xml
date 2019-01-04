@@ -65,8 +65,25 @@
 		<servlet-name>EventSearchServlet</servlet-name>
 		<url-pattern>/service/searchEvent</url-pattern>
 	</servlet-mapping>
-	
-	
+
+	<servlet>
+		<servlet-name>VolunteerSearchServlet</servlet-name>
+		<servlet-class>it.seashepherd.servlet.VolunteerSearchServlet</servlet-class>
+		<init-param>
+			<param-name>ssi_user</param-name>
+			<param-value>pippo</param-value>
+		</init-param>
+		<init-param>
+			<param-name>ssi_password</param-name>
+			<param-value>pluto</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>VolunteerSearchServlet</servlet-name>
+		<url-pattern>/service/searchVolunteer</url-pattern>
+	</servlet-mapping>
+		
 	<servlet>
 		<servlet-name>EventDeleteServlet</servlet-name>
 		<servlet-class>it.seashepherd.servlet.EventDeleteServlet</servlet-class>

@@ -179,4 +179,9 @@ public class EventDAO_SQL {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public static String getJSONVolunteers(EventConnection connection) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

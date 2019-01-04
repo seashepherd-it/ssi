@@ -123,7 +123,6 @@ public class EventDAO_HTTP {
 		String result = connection.getHttpConnection().postHttpPage(url, HttpUtils.getParamsString(params));
 
 		return result;
-
 	}
 
 	public static String deleteEvent(EventConnection connection, EventType eventType, String eventId) throws Exception {
@@ -136,5 +135,14 @@ public class EventDAO_HTTP {
 
 		return result;
 
+	}
+
+	public static String getJSONVolunteers(EventConnection connection) throws Exception {
+
+		String url = "https://www.weit.it/mos/services/getVolunteers.php";
+		Map<String, String> params = new HashMap<String, String>();
+		String result = connection.getHttpConnection().postHttpPage(url, HttpUtils.getParamsString(params));
+
+		return result;
 	}
 }
