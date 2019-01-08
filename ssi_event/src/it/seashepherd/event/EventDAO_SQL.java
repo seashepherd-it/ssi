@@ -184,4 +184,14 @@ public class EventDAO_SQL {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public static String getJSONEvent(EventConnection connection, EventType eventType, String eventId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String getJSONEventVolunteers(EventConnection connection, EventType eventType, String eventId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

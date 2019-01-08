@@ -67,6 +67,42 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>EventLookupServlet</servlet-name>
+		<servlet-class>it.seashepherd.servlet.EventLookupServlet</servlet-class>
+		<init-param>
+			<param-name>ssi_user</param-name>
+			<param-value>pippo</param-value>
+		</init-param>
+		<init-param>
+			<param-name>ssi_password</param-name>
+			<param-value>pluto</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EventLookupServlet</servlet-name>
+		<url-pattern>/service/lookupEvent</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>EventVolunteersLookupServlet</servlet-name>
+		<servlet-class>it.seashepherd.servlet.EventVolunteersLookupServlet</servlet-class>
+		<init-param>
+			<param-name>ssi_user</param-name>
+			<param-value>pippo</param-value>
+		</init-param>
+		<init-param>
+			<param-name>ssi_password</param-name>
+			<param-value>pluto</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EventVolunteersLookupServlet</servlet-name>
+		<url-pattern>/service/lookupEventVolunteers</url-pattern>
+	</servlet-mapping>
+		
+	<servlet>
 		<servlet-name>VolunteerSearchServlet</servlet-name>
 		<servlet-class>it.seashepherd.servlet.VolunteerSearchServlet</servlet-class>
 		<init-param>

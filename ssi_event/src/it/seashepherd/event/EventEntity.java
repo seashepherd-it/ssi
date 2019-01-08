@@ -105,13 +105,6 @@ public class EventEntity {
 	public Date getEventDateFrom() {
 		return eventDateFrom;
 	}
-
-	public long getEventTimeFrom() {
-		if(getEventDateFrom() != null)
-			return getEventDateFrom().getTime();
-		else
-			return 0;
-	}
 	
 	public void setEventDateFrom(Date eventDate) {
 		this.eventDateFrom = eventDate;
@@ -271,13 +264,6 @@ public class EventEntity {
 
 	public Date getEventDateTo() {
 		return eventDateTo;
-	}
-
-	public long getEventTimeTo() {
-		if(getEventDateTo() != null)
-			return getEventDateTo().getTime();
-		else
-			return 0;
 	}
 
 	public void setEventDateTo(Date eventDateTo) {

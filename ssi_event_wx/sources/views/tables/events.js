@@ -2,7 +2,7 @@ import {JetView} from "webix-jet";
 import {getEvents, deleteEvent} from "models/events";
 import FilterEventsView from "views/filters/events";
 import ImportEventsView from "views/forms/importEvents";
-import InsertEventView from "views/forms/insertEvent";
+import SaveEventView from "views/forms/saveEvent";
 
 export default class EventsTable extends JetView {
 
@@ -10,8 +10,7 @@ export default class EventsTable extends JetView {
 		
 		const _ = this.app.getService("locale")._;
 		
-//		var actions = "<span class='mdi mdi-trash-can'></span><span class='mdi mdi-update'></span>";
-		var actions = "<span class='mdi mdi-trash-can'></span>";
+		var actions = "<span class='mdi mdi-trash-can'></span><span class='mdi mdi-update'></span>";
 		
 		var columns = webix.toArray([ {
 			id: "actions",
@@ -162,15 +161,46 @@ export default class EventsTable extends JetView {
             footer:{content:"summColumn", css:{'text-align':'right'}}
           }, columns.length);
         
+        var datatable = {
+				view:"datatable",
+				id:"events",
+				dragColumn:true,
+				headermenu:true,
+				footer:true,
+				leftSplit:4,
+				resizeColumn:true,
+				columns: columns,
+			    onClick:{ 
+			    	"mdi-trash-can": function  (event, id, node) {
+				    	var dtable = this;
+			    	    var event = dtable.getItem(id);
+				    	webix.confirm("Delete " + event.SSI_EVENT_TEXT + "?", function(action) {
+					    if(action === true) {
+					    	if(deleteEvent(event.SSI_EVENT_TYPE, event.SSI_EVENT_ID) === true)
+					    		dtable.remove(id.row);
+					    	}
+				    	});
+			    	},
+			    	"mdi-update": function  (event, id, node) {
+				    	var dtable = this;
+			    	    var item = dtable.getItem(id);
+			    	    this.$scope.addEvent.showWindow(item.SSI_EVENT_TYPE, item.SSI_EVENT_ID);
+			    	}
+			    }			
+			}
+        
+        this.setDatatable(datatable);
+        
 		return {
+			id: "listEvents",
 			rows:[ 
 				{					
 					view:"toolbar",
 //					css:theme,
 					cols:[
 						{ view:"label", template:_("Events") },
-						{ view: "icon",  icon:"mdi mdi-plus-box-outline", 
-							click:() => this.addEvent.showWindow()
+						{ view: "icon",  icon:"mdi mdi-plus-box-outline", 						
+							click:() => this.addEvent.showWindow(this.getEventType())
 						},						
 						{ view: "icon",  icon:"mdi mdi-filter-outline", 
 							click:() => this.setFilter.showWindow()
@@ -185,46 +215,26 @@ export default class EventsTable extends JetView {
 						}
 					]
 				},
-				{
-					view:"datatable",
-					id:"events",
-					dragColumn:true,
-					headermenu:true,
-					footer:true,
-					leftSplit:4,
-					resizeColumn:true,
-					columns: columns,
-				    onClick:{ 
-				    	"mdi-trash-can": function  (event, id, node) {
-				    		var dtable = this;
-			    	    	var event = dtable.getItem(id);
-				    	    webix.confirm("Delete " + event.SSI_EVENT_TEXT + "?", function(action) {
-					    	    if(action === true) {
-					    	    	if(deleteEvent(event.SSI_EVENT_TYPE, event.SSI_EVENT_ID) === true)
-					    	    		dtable.remove(id.row);
-					    	    }
-				    	    });
-				        }
-				    }			
-				}
+				datatable
 			]
 		}
 	}
 	
 	init(config) {
 		
-		var datatable = this.getDatatable();
+		var datatable = $$("events");
 
 		datatable.hideColumn("SSI_EVENT_TYPE");
 		datatable.hideColumn("SSI_EVENT_PLACE_COUNTRY");
 		datatable.hideColumn("SSI_AREA_ID");
-				
-		datatable.parse(getEvents(this.getEventType()));
-
+		
+		datatable.clearAll();
+		datatable.sync(getEvents(this.getEventType()));
+		
 		this.importEvents = this.ui(ImportEventsView);
 		this.setFilter = this.ui(FilterEventsView);
-		this.addEvent = this.ui(InsertEventView);
-		
+		this.addEvent = this.ui(SaveEventView);
+				
 		this.on(this.app,"search:event", (eventDate, eventArea) => {
 
 			datatable.hideOverlay();
@@ -271,7 +281,11 @@ export default class EventsTable extends JetView {
 		return this.eventType;
 	}
 	
+	setDatatable(datatable) {
+		this.datatable_ = datatable;
+	}
+	
 	getDatatable() {
-		return $$("events");
+		return this.datatable_;
 	}
 }

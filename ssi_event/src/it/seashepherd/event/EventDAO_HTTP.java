@@ -108,6 +108,7 @@ public class EventDAO_HTTP {
 		Map<String, String> params = new HashMap<String, String>();
 		
 		String json = new JSONObject(event).toString();
+//		System.out.println(json);
 		params.put("event", json);
 		String result = connection.getHttpConnection().postHttpPage(url, HttpUtils.getParamsString(params)).trim();
 		
@@ -117,7 +118,7 @@ public class EventDAO_HTTP {
 
 	public static String getJSONEvents(EventConnection connection, EventType eventType) throws Exception {
 
-		String url = "https://www.weit.it/mos/services/getEvents.php";
+		String url = "https://www.weit.it/mos/services/getEventsByType.php";
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("eventType", eventType.name());
 		String result = connection.getHttpConnection().postHttpPage(url, HttpUtils.getParamsString(params));
@@ -125,6 +126,27 @@ public class EventDAO_HTTP {
 		return result;
 	}
 
+	public static String getJSONEvent(EventConnection connection, EventType eventType, String eventId) throws Exception {
+		String url = "https://www.weit.it/mos/services/getEventByTypeId.php";
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("eventType", eventType.name());
+		params.put("eventId", eventId);
+		String result = connection.getHttpConnection().postHttpPage(url, HttpUtils.getParamsString(params));
+
+		return result;
+	}
+
+	public static String getJSONEventVolunteers(EventConnection connection, EventType eventType, String eventId) throws Exception {
+
+		String url = "https://www.weit.it/mos/services/getEventVolunteersByTypeId.php";
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("eventType", eventType.name());		
+		params.put("eventId", eventId);		
+		String result = connection.getHttpConnection().postHttpPage(url, HttpUtils.getParamsString(params));
+
+		return result;
+	}
+	
 	public static String deleteEvent(EventConnection connection, EventType eventType, String eventId) throws Exception {
 
 		String url = "https://www.weit.it/mos/services/deleteEvent.php";
@@ -134,7 +156,6 @@ public class EventDAO_HTTP {
 		String result = connection.getHttpConnection().postHttpPage(url, HttpUtils.getParamsString(params));
 
 		return result;
-
 	}
 
 	public static String getJSONVolunteers(EventConnection connection) throws Exception {

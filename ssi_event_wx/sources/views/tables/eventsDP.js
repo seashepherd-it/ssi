@@ -8,14 +8,14 @@ export default class EventsTableDP extends EventsTable {
 
 		var datatable = this.getDatatable();
 		var columns = webix.toArray(datatable.columns);
-		
+				
         columns.insertAt({
             id: "SSI_EVENT_DIVE",
             header: "Dive",
             adjust: true,
             sort:"string"
           }, columns.length);
-
+		
         columns.insertAt({
             id: "SSI_DISPOSAL_MATERIAL_KG",
             header: "Material",
@@ -40,7 +40,7 @@ export default class EventsTableDP extends EventsTable {
 	init(view) {
 		super.init(view);
 		
-		this.getDatatable().hideColumn("SSI_EVENT_ARGUMENT");
+		$$("events").hideColumn("SSI_EVENT_ARGUMENT");
 	}
 }
 

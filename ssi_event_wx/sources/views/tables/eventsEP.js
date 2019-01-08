@@ -34,7 +34,7 @@ export default class EventsTableEP extends EventsTable {
 	init(view) {
 		super.init(view);
 		
-		this.getDatatable().hideColumn("SSI_EVENT_ARGUMENT");
+		$$("events").hideColumn("SSI_EVENT_ARGUMENT");
 	}
 }
 

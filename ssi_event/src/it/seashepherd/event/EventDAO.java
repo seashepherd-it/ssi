@@ -119,7 +119,34 @@ public class EventDAO {
 		return json;
 	}
 
+	public String getJSONEvent(EventConnection connection, EventType eventType, String eventId) throws Exception {
+		String json = null;
+		switch (mode) {
+		case HTTP:
+			json = EventDAO_HTTP.getJSONEvent(connection, eventType, eventId);
+			break;
+		case SQL:
+			json = EventDAO_SQL.getJSONEvent(connection, eventType, eventId);
+			break;
+		}
+		
+		return json;
+	}
 
+	public String getJSONEventVolunteers(EventConnection connection, EventType eventType, String eventId) throws Exception {
+		String json = null;
+		switch (mode) {
+		case HTTP:
+			json = EventDAO_HTTP.getJSONEventVolunteers(connection, eventType, eventId);
+			break;
+		case SQL:
+			json = EventDAO_SQL.getJSONEventVolunteers(connection, eventType, eventId);
+			break;
+		}
+		
+		return json;
+	}
+	
 	public String getJSONVolunteers(EventConnection connection) throws Exception {
 
 		String json = null;
