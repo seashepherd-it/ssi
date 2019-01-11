@@ -1,13 +1,10 @@
 import {JetView} from "webix-jet";
 import {getEvent, getEventVolunteers, deleteEvent} from "models/events";
-import {getEventTypeText} from "models/eventTypes";
+import {getEventTypes, getEventTypeText} from "models/eventTypes";
+import {getAreas} from "models/areas";
+import {getProvinces} from "models/provinces";
+import {getInstituteTypes} from "models/instituteTypes";
 import {getVolunteers} from "models/volunteers";
-import EventFormEV from "views/forms/saveEventEV";
-import EventFormPS from "views/forms/saveEventPS";
-import EventFormEP from "views/forms/saveEventEP";
-import EventFormDP from "views/forms/saveEventDP";
-import EventFormPV from "views/forms/saveEventPV";
-import EventFormReceipts from "views/forms/saveEventReceipts";
 
 export default class SaveEventView extends JetView {
 	
@@ -34,69 +31,292 @@ export default class SaveEventView extends JetView {
 			},
 			width:1200,
 			body:{	
-				view:"form",
-				localId:"form_save",
-				elementsConfig:{
-					labelPosition:"left" 
-				},
-				elements:[
+				view:"layout",
+				type:"wide",
+				rows:[
 					{
-						height:700,
 						cols:[
 							{
 								rows:[
 									{
 										view: "tabbar",  
-										localId:"tabbar",
+										id:"tabbar",
 										multiview: true,
+										height: 700,
 							         	options:[
-							         		{localId: "base", value: "Base"},
-							         		{localId: "receipts", value: "Receipts"}
+							         		{id: "EV", value: "Base"},
+							         		{id: "PS", value: "PS"},
+							         		{id: "EP", value: "EP"},
+							         		{id: "DP", value: "DP"},
+							         		{id: "PV", value: "PV"},
+							         		{id: "receipts", value: "Receipts"}
 							            ]
 									},
 									{
-										keepView:true, 
 										cells:[                                   
 											{
 												view:"form",
-												id:"base",
+												id:"EV",
+												elementsConfig:{
+													labelPosition:"left" 
+												},
 												elements:[
-													EventFormEV
+													{
+														view:"combo",
+														name:"eventTypeName",
+														label:_("Type"), 
+														disabled: true,
+														options:{
+															data:getEventTypes()
+														}
+													},
+													{ 
+														view:"text",
+														name:"eventText",
+														label:_("Text")
+													},
+													{
+														cols:[
+															{
+																view:"datepicker",
+																name:"eventDateFrom",
+																label:_("Date From"),
+																value:new Date(),
+																format:date_format
+															},
+															{
+																view:"datepicker",
+																name:"eventDateTo",
+																label:_("Date To"),
+																value:new Date(),
+																format:date_format
+															}
+														]
+													},
+													{ 
+														view:"text",
+														name:"eventArgument",
+														label:_("Argument")
+													},					
+													{ 
+														view:"combo",
+														name:"eventAccountId",
+														label:_("Account"),
+														suggest:getVolunteers()
+													},					
+													{
+														view:"combo",
+														name:"areaId",
+														label:_("Area"), 
+														options:{
+															data:getAreas()
+														}
+													},
+													{
+														cols:[
+															{ 
+																view:"text",
+																name:"eventPlaceCountry",
+																label:_("Country")
+															},
+															{ 
+																view:"combo",
+																name:"eventPlaceProvince",
+																label:_("Province"),
+																options:{
+																	data:getProvinces()
+																}
+															}
+														],
+														rules:{
+															eventText:webix.rules.isNotEmpty,
+															eventDateFrom:webix.rules.isNotEmpty,
+															eventDateTo:webix.rules.isNotEmpty,
+															eventAccountId:webix.rules.isNotEmpty,
+															areaId:webix.rules.isNotEmpty,
+															eventPlaceCountry:webix.rules.isNotEmpty,					
+															eventPlaceProvince:webix.rules.isNotEmpty,
+															eventPlace:webix.rules.isNotEmpty
+														}
+													},
+													{ 
+														view:"text",
+														name:"eventPlace",
+														label:_("Place")
+													},					
+													{ 
+														view:"text",
+														name:"eventPeopleQty",
+														label:_("People Qty"), 
+														format:"11"
+													},
+													{ 
+														view:"text",
+														name:"eventLink",
+														label:_("Link")
+													},
+													{ 
+														view:"text",
+														name:"eventNote",
+														label:_("Note")
+													}
 												] 
 											},
 											{
 												view:"form",
 												id:"receipts",
+												elementsConfig:{labelPosition:"left" },
 												elements:[
-													EventFormReceipts
+													{ 
+														view:"text",
+														name:"eventReceiptsQty",
+														label:_("Quantity"),
+														labelWidth:100, 
+														format:"1111"
+													},
+													{ 
+														view:"text",
+														name:"eventReceiptsTot",
+														label:_("Total"),
+														labelWidth:100, 
+														format:"1111.11"
+													},
+													{ 
+														view:"text",
+														name:"eventReceiptsTotPOS",
+														label:_("Total POS"),
+														labelWidth:100, 
+														format:"1111.11"
+													},
+													{
+														cols:[
+															{ 
+																view:"text",
+																name:"eventReceiptsTicketFrom",
+																label:_("Ticket From"),
+																labelWidth:100, 
+																format:"1111"
+															},
+															{ 
+																view:"text",
+																name:"eventReceiptsTicketTo",
+																label:_("Ticket To"),
+																format:"1111"
+															}
+														]
+													}
 												] 
 											},
 											{
 												view:"form",
 												id:"PS",
+												elementsConfig:{labelPosition:"left" },
 												elements:[
-													EventFormPS
+													{ 
+														view:"combo",
+														name:"instituteTypeId",
+														label:_("Type"), 
+														options:{
+															data:getInstituteTypes()
+														}
+													},
+													{ 
+														view:"text",
+														name:"instituteName",
+														label:_("Name")
+													},
+													{ 
+														view:"text",
+														name:"instituteSpeaker",
+														label:_("Speaker")
+													},
+													{ 
+														view:"text",
+														name:"instituteContact",
+														label:_("Contact")
+													}	
 												] 
 											},
 											{
 												view:"form",
 												id:"EP",
+												elementsConfig:{
+													labelPosition:"left",
+													labelWidth:100 
+												},
 												elements:[
-													EventFormEP
+													{ 
+														view:"text",
+														name:"disposalMaterialKG",
+														label:_("Material(Kg)"),
+														format:"11"
+													},
+													{ 
+														view:"text",
+														name:"disposalContact",
+														label:_("Contact")
+													}			
 												] 
 											},
 											{
 												view:"form",
 												id:"DP",
+												elementsConfig:{
+													labelPosition:"left",
+													labelWidth:100 
+												},
 												elements:[
-													EventFormDP
+													{ 
+														view:"text",
+														name:"eventDive",
+														label:_("Dive")
+													},
+													{ 
+														view:"text",
+														name:"disposalMaterialKG",
+														label:_("Material(Kg)"),
+														format:"11"
+													},
+													{ 
+														view:"text",
+														name:"disposalContact",
+														label:_("Contact")
+													}
 												] 
 											},
 											{
 												view:"form",
 												id:"PV",
+												elementsConfig:{labelPosition:"left" },
 												elements:[
-													EventFormPV
+													{ 
+														view:"text",
+														name:"shipName",
+														label:_("Ship Name")
+													},
+													{ 
+														view:"combo",
+														name:"instituteTypeId",
+														label:_("Type"), 
+														options:{
+															data:getInstituteTypes()
+														}
+													},
+													{ 
+														view:"text",
+														name:"instituteName",
+														label:_("Name")
+													},
+													{ 
+														view:"text",
+														name:"instituteSpeaker",
+														label:_("Speaker")
+													},
+													{ 
+														view:"text",
+														name:"instituteContact",
+														label:_("Contact")
+													}	
 												] 
 											}											
 										]
@@ -106,20 +326,18 @@ export default class SaveEventView extends JetView {
 							{
 								rows:[ 
 								    { 
-								        cols:[{
-								        	view:"button", 
-								        	label:"Add Row",
-								        	click:function() {
-								        		var data = {};
-								        		this.$$('event_volunteers').editStop();
-								        		var id = this.$$('event_volunteers').add(data, this.$$('event_volunteers').count());
-								        		this.$$('event_volunteers').editRow(id);
-								        		this.$$("event_volunteers").focusEditor({
-								        		    row:id,
-								        		    column:"volunteerId"
-								        		});
-								          }
-								        }]
+							        	view:"button", 
+							        	label:"Add Row",
+							        	click:function() {
+							        		var data = {};
+							        		this.$$('event_volunteers').editStop();
+							        		var id = this.$$('event_volunteers').add(data, this.$$('event_volunteers').count());
+							        		this.$$('event_volunteers').editRow(id);
+							        		this.$$("event_volunteers").focusEditor({
+							        		    row:id,
+							        		    column:"volunteerId"
+							        		});
+							        	}
 								    },
 									{					
 										view:"datatable",
@@ -134,7 +352,7 @@ export default class SaveEventView extends JetView {
 										        template: actions 
 											},
 									        {
-									            id: "volunteerId",
+												id: "volunteerId",
 									            header: "Volunteer",
 									            fillspace:true,
 									            editor:"combo",
@@ -179,77 +397,77 @@ export default class SaveEventView extends JetView {
 							}
 						]
 					}
-				],
-				rules:{
-					eventText:webix.rules.isNotEmpty,
-					eventDateFrom:webix.rules.isNotEmpty,
-					eventDateTo:webix.rules.isNotEmpty,
-					eventAccountId:webix.rules.isNotEmpty,
-					areaId:webix.rules.isNotEmpty,
-					eventPlaceCountry:webix.rules.isNotEmpty,					
-					eventPlaceProvince:webix.rules.isNotEmpty,
-					eventPlace:webix.rules.isNotEmpty
-				}
+				]
 			}
 		};
 	}
 	
 	showWindow(eventType, eventId){
 		const _ = this.app.getService("locale")._;
-		
-		this.$$("base").clear();
-		this.$$("base").setValues({ eventTypeName: eventType });
-		this.$$("receipts").clear();		
-		this.$$("event_volunteers").clearAll();
-
-		if(this.$$("PS") != null)
-			this.$$("PS").clear();
-		if(this.$$("EP") != null)
-			this.$$("EP").clear();
-		if(this.$$("DP") != null) 
-			this.$$("DP").clear();
-		if(this.$$("PV") != null)
-			this.$$("PV").clear();
-
+		const eventTypes = getEventTypes();
 		
 		this.setEventTypeName(eventType);
 
-		if(eventType != "EV") {
-			this.$$("tabbar").removeOption(eventType);
-			this.$$("tabbar").addOption(eventType, getEventTypeText(eventType));
+		this.$$("receipts").clear();		
+		this.$$("event_volunteers").clearAll();
+
+		var i;
+		for(i=0; i < eventTypes.length; i++) {
+			
+//			if(this.$$(eventTypes[i].id) != null)
+			this.$$(eventTypes[i].id).clear();
+
+//			if(eventTypes[i].id != "EV") 
+//				this.$$("tabbar").hideOption(eventTypes[i].id);				
 		}
+
+//		if(eventType != "EV") 
+//			this.$$("tabbar").showOption(eventType);
 		
 		if(eventId != null) {	
+			
 			const view = this;
     	    const event = getEvent(eventType, eventId, function() {
     			view.$$("toolbar_label").setValue(_("Update Event") + " " + event.getValues().eventText + " (" + eventType + "-" + eventId + ")");
-    			view.$$("base").setValues(event.getValues());
+    	
     			view.$$("receipts").setValues(event.getValues());
     			view.$$("event_volunteers").sync(getEventVolunteers(eventType, eventId));
     			
-    			if(view.$$("PS") != null)
-    				view.$$("PS").setValues(event.getValues());
-    			if(view.$$("EP") != null)
-    				view.$$("EP").setValues(event.getValues());
-    			if(view.$$("DP") != null)
-    				view.$$("DP").setValues(event.getValues());
-    			if(view.$$("PV") != null)
-    				view.$$("PV").setValues(event.getValues());
+    			var i;
+    			for(i=0; i < eventTypes.length; i++) {
+//    				if(view.$$(eventTypes[i].id) != null)
+  					view.$$(eventTypes[i].id).setValues(event.getValues());
+    			}
 
     			view.getRoot().show();
     	    });
 		}
 		else {
 			this.$$("toolbar_label").setValue(_("Insert Event") + " " + eventType);
+			
+//			alert(this.$$("EV").name);
+//			this.listProperties(this.$$("EV"));
+			
+			this.$$("EV").setValues({ eventTypeName: eventType });
 			this.getRoot().show();
 		}
 		
-		this.$$("tabbar").removeOption("receipts");
-		this.$$("tabbar").addOption("receipts", "Receipts");		
+//		this.$$("tabbar").removeOption("receipts");
+//		this.$$("tabbar").addOption("receipts", "Receipts");		
 	}
 
 	closex(){
 		this.getRoot().hide();
+	}
+	
+	listProperties(obj) {
+		var propList = "";
+		for(var propName in obj) {
+			if(typeof(obj[propName]) != "undefined") {
+				propList += (propName + "=" + obj[propName] + ", ");
+			}
+		}
+		alert(propList);
 	}
 	
 	saveEvent() {
@@ -267,7 +485,7 @@ export default class SaveEventView extends JetView {
 		if(this.$$("PV") != null) {
 			const eventDP = this.$$("PV").getValues();
 		}
-//		const receipts = $$("form_receipts").serialize();
+		const receipts = $$("form_receipts").serialize();
 		const volunteers = this.$$("event_volunteers").serialize();
 //		if (!this.$$("form").validate())
 //			return;

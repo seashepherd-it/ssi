@@ -18,10 +18,15 @@ export default class ApplicationMenu extends JetView {
 						{ id: "tables.eventsPS", icon:"mdi mdi-circle", value: "Scuole"},
 						{ id: "tables.eventsEP", icon:"mdi mdi-circle", value: "Spiagge"},
 						{ id: "tables.eventsDP", icon:"mdi mdi-circle", value: "Fondali"},
-						{ id: "tables.eventsPV", icon:"mdi mdi-circle", value: "Visite"}
+						{ id: "tables.eventsPV", icon:"mdi mdi-circle", value: "Imbarcazioni"}
 					]
 				}
-			]
+			],
+		    onClick:{ 
+		    	"mdi-timetable": function  (event, id, node) {
+//		    		alert("ecchime!!");
+		    	}
+		    }			
 		};
 	}
 	
