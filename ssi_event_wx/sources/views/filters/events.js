@@ -5,7 +5,6 @@ export default class FilterEventsView extends JetView {
 	
 	config(){
 		const _ = this.app.getService("locale")._;
-		const areas = getAreas();
 		const date_format = "%d %M %Y";
 
 		return {
@@ -17,7 +16,7 @@ export default class FilterEventsView extends JetView {
 			head:_("Filter Events"),
 			body:{	
 				view:"form",
-				localId:"form",
+				localId:"form_filter",
 				elementsConfig:{labelPosition:"top" },
 				elements:[
 					{
@@ -26,7 +25,7 @@ export default class FilterEventsView extends JetView {
 						label:_("Area"), 
 						placeholder:_("Select area"),
 						options:{
-							data:areas
+							data:getAreas()
 						}
 					},				
 					{
@@ -40,7 +39,7 @@ export default class FilterEventsView extends JetView {
 						cols:[
 							{
 								view:"button", value:_("Close"),
-								click:() => this.close()
+								click:() => this.closex()
 							},
 							{
 								view:"button",
@@ -56,13 +55,11 @@ export default class FilterEventsView extends JetView {
 	showWindow(){
 		this.getRoot().show();
 	}
-	close(){
+	closex(){
 		this.getRoot().hide();
 	}
 	searchEvents() {
-		const data = this.$$("form").getValues();
+		const data = this.$$("form_filter").getValues();
 		this.app.callEvent("search:event",[data.eventDate, data.eventArea]);
-//		this.close();
 	}
 }
-	

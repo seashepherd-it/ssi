@@ -3,8 +3,7 @@ import EventsTable from "views/tables/events";
 
 export default class EventsTableEP extends EventsTable {
 	config() {
-		var config = super.config();
-		this.setEventType("EP");
+		var config = super.config("EP");
 
 		var datatable = this.getDatatable();
 		var columns = webix.toArray(datatable.columns);
@@ -34,7 +33,7 @@ export default class EventsTableEP extends EventsTable {
 	init(view) {
 		super.init(view);
 		
-		$$("events").hideColumn("SSI_EVENT_ARGUMENT");
+		this.$$("events_table").hideColumn("SSI_EVENT_ARGUMENT");
 	}
 }
 

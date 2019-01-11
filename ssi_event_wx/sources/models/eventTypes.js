@@ -1,6 +1,21 @@
 export function getEventTypes(){
 	return types;
-}
+};
+
+export function getEventTypeText(eventType){
+	
+	var text = null;
+
+	var i;
+	for (i = 0; i < types.length; i++) {
+		if(types[i].id == eventType) {
+			text = types[i].value;
+			break;
+		}
+	}
+	
+	return text;
+};
 
 const types = [
 	{
@@ -9,18 +24,18 @@ const types = [
 	},
 	{
 		id: "DP",
-		value: "Pulizia Fondali"
+		value: "Fondali"
 	},
 	{
 		id: "EP",
-		value: "Pulizia Spiaggia"
+		value: "Spiagge"
 	},
 	{
 		id: "PS",
-		value: "Programma Scuole"
+		value: "Scuole"
 	},
 	{
 		id: "PV",
-		value: "Visite Imbarcazioni"
+		value: "Imbarcazioni"
 	}
 ];

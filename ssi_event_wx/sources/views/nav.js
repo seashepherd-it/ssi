@@ -7,7 +7,10 @@ import ApplicationMenu from "views/menus/application";
 export default class NavView extends JetView{
 	config(){
 		
+		const theme = this.app.config.theme;
+		
 		return {
+			css:theme,
 			rows:[
 				ToolbarMenu, {
 					cols:[

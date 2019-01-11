@@ -1,6 +1,4 @@
 import {JetView, plugins} from "webix-jet";
-import FilterEvents from "views/filters/events";
-import DownloadModels from "views/lists/events";
 		
 export default class ApplicationMenu extends JetView {
 	config(){
@@ -14,21 +12,16 @@ export default class ApplicationMenu extends JetView {
 		    multipleOpen:true,
 			data:[
 				{ 
-					id:"events", icon:"mdi mdi-timetable", value:_("Events"), 
+					icon:"mdi mdi-timetable", value:_("Events"), 
 					data:[
-						{ id: "tables.eventsEV", icon:"mdi mdi-circle", value: _("Divulgazione")},
-						{ id: "tables.eventsPS", icon:"mdi mdi-circle", value: _("Scuole")},
-						{ id: "tables.eventsEP", icon:"mdi mdi-circle", value: _("Spiagge")},
-						{ id: "tables.eventsDP", icon:"mdi mdi-circle", value: _("Fondali")},
-						{ id: "tables.eventsPV", icon:"mdi mdi-circle", value: _("Visite")}
+						{ id: "tables.eventsEV", icon:"mdi mdi-circle", value: "Divulgazione"},
+						{ id: "tables.eventsPS", icon:"mdi mdi-circle", value: "Scuole"},
+						{ id: "tables.eventsEP", icon:"mdi mdi-circle", value: "Spiagge"},
+						{ id: "tables.eventsDP", icon:"mdi mdi-circle", value: "Fondali"},
+						{ id: "tables.eventsPV", icon:"mdi mdi-circle", value: "Visite"}
 					]
 				}
-			],
-			on:{
-				onAfterSelect: function(id){
-//					webix.message("Selected: "+this.getItem(id).value)
-				}
-			}
+			]
 		};
 	}
 	

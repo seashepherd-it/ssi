@@ -15,7 +15,7 @@ export function getEvent(eventType, eventId, callback){
 	var data = new webix.DataRecord( {} );
 	if(callback != null)
 		data.attachEvent("onAfterLoad", callback);
-	data.parse(webix.ajax().get(getServicePath() + "/service/lookupEvent?eventType="+eventType+"&eventId="+eventId));
+	data.parse(webix.ajax().get(getServicePath() + "/lookupEvent?eventType="+eventType+"&eventId="+eventId));
 	
 	return data;
 };

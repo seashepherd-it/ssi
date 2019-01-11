@@ -3,8 +3,7 @@ import EventsTable from "views/tables/events";
 
 export default class EventsTablePS extends EventsTable {
 	config() {
-		var config = super.config();
-		this.setEventType("PS");
+		var config = super.config("PS");
 		
 		var datatable = this.getDatatable();
 		var columns = webix.toArray(datatable.columns);

@@ -6,7 +6,8 @@ import SaveEventView from "views/forms/saveEvent";
 
 export default class EventsTable extends JetView {
 
-	config() {
+	config(eventType) {
+		this.eventType_ = eventType;
 		
 		const _ = this.app.getService("locale")._;
 		
@@ -153,7 +154,17 @@ export default class EventsTable extends JetView {
 
         columns.insertAt({
             id: "SSI_EVENT_RECEIPTS_TOT",
-            header: "Receipts",
+            header: "Receipts Tot",
+            adjust:true,            
+            format:webix.Number.numToStr({decimalSize:0}),
+            css:{'text-align':'right'},
+            sort:"int", 
+            footer:{content:"summColumn", css:{'text-align':'right'}}
+          }, columns.length);
+
+        columns.insertAt({
+            id: "SSI_EVENT_RECEIPTS_QTY",
+            header: "Receipts Qty",
             adjust:true,            
             format:webix.Number.numToStr({decimalSize:0}),
             css:{'text-align':'right'},
@@ -163,7 +174,7 @@ export default class EventsTable extends JetView {
         
         var datatable = {
 				view:"datatable",
-				id:"events",
+				localId:"events_table",
 				dragColumn:true,
 				headermenu:true,
 				footer:true,
@@ -184,7 +195,7 @@ export default class EventsTable extends JetView {
 			    	"mdi-update": function  (event, id, node) {
 				    	var dtable = this;
 			    	    var item = dtable.getItem(id);
-			    	    this.$scope.addEvent.showWindow(item.SSI_EVENT_TYPE, item.SSI_EVENT_ID);
+			    	    this.$scope.saveEvent.showWindow(item.SSI_EVENT_TYPE, item.SSI_EVENT_ID);
 			    	}
 			    }			
 			}
@@ -199,8 +210,8 @@ export default class EventsTable extends JetView {
 //					css:theme,
 					cols:[
 						{ view:"label", template:_("Events") },
-						{ view: "icon",  icon:"mdi mdi-plus-box-outline", 						
-							click:() => this.addEvent.showWindow(this.getEventType())
+						{ view: "icon",  icon:"mdi mdi-plus-box-outline",
+							click:() => this.saveEvent.showWindow(this.getEventType())
 						},						
 						{ view: "icon",  icon:"mdi mdi-filter-outline", 
 							click:() => this.setFilter.showWindow()
@@ -208,10 +219,8 @@ export default class EventsTable extends JetView {
 						{ view: "icon",  icon:"mdi mdi-file-upload", 
 							click:() => this.importEvents.showWindow()
 						},
-						{ view: "icon",  icon:"mdi mdi-file-excel", 
-							click:function(){
-								webix.toExcel($$("events"));
-							}
+						{ view: "icon",  icon:"mdi mdi-file-excel",
+							click:() => this.download()
 						}
 					]
 				},
@@ -222,19 +231,20 @@ export default class EventsTable extends JetView {
 	
 	init(config) {
 		
-		var datatable = $$("events");
+		var datatable = this.$$("events_table");
 
+//		this.importEvents = this.ui(ImportEventsView);
+		this.setFilter = this.ui(FilterEventsView);
+		this.saveEvent = this.ui(SaveEventView);
+		
 		datatable.hideColumn("SSI_EVENT_TYPE");
 		datatable.hideColumn("SSI_EVENT_PLACE_COUNTRY");
 		datatable.hideColumn("SSI_AREA_ID");
 		
 		datatable.clearAll();
+		
 		datatable.sync(getEvents(this.getEventType()));
 		
-		this.importEvents = this.ui(ImportEventsView);
-		this.setFilter = this.ui(FilterEventsView);
-		this.addEvent = this.ui(SaveEventView);
-				
 		this.on(this.app,"search:event", (eventDate, eventArea) => {
 
 			datatable.hideOverlay();
@@ -273,12 +283,8 @@ export default class EventsTable extends JetView {
 		});
 	}
 	
-	setEventType(eventType) {
-		this.eventType = eventType;
-	}
-	
 	getEventType() {
-		return this.eventType;
+		return this.eventType_;
 	}
 	
 	setDatatable(datatable) {
@@ -287,5 +293,9 @@ export default class EventsTable extends JetView {
 	
 	getDatatable() {
 		return this.datatable_;
+	}
+	
+	download() {
+		webix.toExcel(this.$$("events_table"));		
 	}
 }

@@ -14,12 +14,12 @@ export default class ImportEventsView extends JetView {
 			width: 600,
 			body:{	
 				view:"form",
-				localId:"form",
+				localId:"form_import",
 				elementsConfig:{ labelAlign:"right" },
 			    rows:[
 			        {
 			            view:"uploader",
-			            id: "events_upl1",
+			            localId: "events_upl1",
 			            autosend:false,
 			            value:"Upload files",
 			            link:"mylist",
@@ -37,16 +37,16 @@ export default class ImportEventsView extends JetView {
 					        { 
 					            view:"button",
 					            label:"Send",
-					            click: "$$('events_upl1').send()"
+					            click:() => this.send()
 					        },
 					        { 
 					            view:"button",
 					            label:"Clear",
-					            click: "$$('events_upl1').files.data.clearAll()"
+					            click:() => this.clear()
 					        },
 					        {
 								view:"button", value:_("Close"),
-								click:() => this.close()
+								click:() => this.closex()
 							}
 			        	]
 			        },
@@ -58,10 +58,10 @@ export default class ImportEventsView extends JetView {
 	
 	init(view) {
 		
-		$$("events_upl1").attachEvent("onUploadComplete", function(response){
+		this.$$("events_upl1").attachEvent("onUploadComplete", function(response){
 			// webix.message("Done");
 		});
-		$$("events_upl1").attachEvent("onFileUpload", function(file, response){
+		this.$$("events_upl1").attachEvent("onFileUpload", function(file, response){
 			if(response.warning === "") {
 			    webix.message({		    	
 			        type:"success",
@@ -81,7 +81,9 @@ export default class ImportEventsView extends JetView {
 			    });				
 			}
 		});
-		$$("events_upl1").attachEvent("onFileUploadError", function(file, response){			
+		
+		this.$$("events_upl1").attachEvent("onFileUploadError", function(file, response){
+			
 		    webix.message({
 		        type:"error",
 		        text:response.info + "<br/>" + response.error,
@@ -101,7 +103,13 @@ export default class ImportEventsView extends JetView {
 	showWindow(){
 		this.getRoot().show();
 	}
-	close(){
+	closex(){
 		this.getRoot().hide();
+	}
+	send() {
+		this.$$('events_upl1').send();		
+	}
+	clear() {
+		this.$$('events_upl1').files.data.clearAll();		
 	}
 }

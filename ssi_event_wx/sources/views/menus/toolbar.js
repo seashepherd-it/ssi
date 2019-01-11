@@ -61,8 +61,8 @@ export default class ToolbarMenu extends JetView{
 	}
 	
 	init(){
-		this.languages = this.ui(LanguagesPopup);
-		this.notifications = this.ui(NotificationsPopup);
+//		this.languages = this.ui(LanguagesPopup);
+//		this.notifications = this.ui(NotificationsPopup);
 
 		this.on(this.app,"read:notifications",() => {
 			this.$$("bell").config.badge = 0;
