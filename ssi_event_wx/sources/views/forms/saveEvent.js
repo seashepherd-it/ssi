@@ -13,10 +13,296 @@ export default class SaveEventView extends JetView {
 		const actions = "<span class='mdi mdi-trash-can'></span>";
 		const date_format = "%d %M %Y";
 
+		var tabbar = {
+						view: "tabbar",  
+						localId:"tabbar",
+						multiview: true,
+			         	options:[
+			         		{id: "EV", value: "Base"},
+			         		{id: "PS", value: getEventTypeText("PS")},
+			         		{id: "EP", value: getEventTypeText("EP")},
+			         		{id: "DP", value: getEventTypeText("DP")},
+			         		{id: "PV", value: getEventTypeText("PV")},
+			         		{id: "receipts", value: "Receipts"}
+			            ],
+					};
+		
+		var forms = {
+					height: 700,
+					cells: [                              
+							{
+								view:"form",
+								id:"EV",
+								elementsConfig:{
+									labelPosition:"left" 
+								},
+								elements:[
+									{
+										view:"combo",
+										name:"eventTypeName",
+										label:_("Type"), 
+										disabled: true,
+										options:{
+											data:getEventTypes()
+										}
+									},
+									{ 
+										view:"text",
+										name:"eventText",
+										label:_("Text")
+									},
+									{
+										cols:[
+											{
+												view:"datepicker",
+												name:"eventDateFrom",
+												label:_("Date From"),
+												value:new Date(),
+												format:date_format
+											},
+											{
+												view:"datepicker",
+												name:"eventDateTo",
+												label:_("Date To"),
+												value:new Date(),
+												format:date_format
+											}
+										]
+									},
+									{ 
+										view:"text",
+										name:"eventArgument",
+										label:_("Argument")
+									},					
+									{ 
+										view:"combo",
+										name:"eventAccountId",
+										label:_("Account"),
+										suggest:getVolunteers()
+									},					
+									{
+										view:"combo",
+										name:"areaId",
+										label:_("Area"), 
+										options:{
+											data:getAreas()
+										}
+									},
+									{
+										cols:[
+											{ 
+												view:"text",
+												name:"eventPlaceCountry",
+												label:_("Country")
+											},
+											{ 
+												view:"combo",
+												name:"eventPlaceProvince",
+												label:_("Province"),
+												options:{
+													data:getProvinces()
+												}
+											}
+										],
+										rules:{
+											eventText:webix.rules.isNotEmpty,
+											eventDateFrom:webix.rules.isNotEmpty,
+											eventDateTo:webix.rules.isNotEmpty,
+											eventAccountId:webix.rules.isNotEmpty,
+											areaId:webix.rules.isNotEmpty,
+											eventPlaceCountry:webix.rules.isNotEmpty,					
+											eventPlaceProvince:webix.rules.isNotEmpty,
+											eventPlace:webix.rules.isNotEmpty
+										}
+									},
+									{ 
+										view:"text",
+										name:"eventPlace",
+										label:_("Place")
+									},					
+									{ 
+										view:"text",
+										name:"eventPeopleQty",
+										label:_("People Qty"), 
+										format:"11"
+									},
+									{ 
+										view:"text",
+										name:"eventLink",
+										label:_("Link")
+									},
+									{ 
+										view:"text",
+										name:"eventNote",
+										label:_("Note")
+									}
+								] 
+							},
+							{
+								view:"form",
+								id:"receipts",
+								elementsConfig:{labelPosition:"left" },
+								elements:[
+									{ 
+										view:"text",
+										name:"eventReceiptsQty",
+										label:_("Quantity"),
+										labelWidth:100, 
+										format:"1111"
+									},
+									{ 
+										view:"text",
+										name:"eventReceiptsTot",
+										label:_("Total"),
+										labelWidth:100, 
+										format:"1111.11"
+									},
+									{ 
+										view:"text",
+										name:"eventReceiptsTotPOS",
+										label:_("Total POS"),
+										labelWidth:100, 
+										format:"1111.11"
+									},
+									{
+										cols:[
+											{ 
+												view:"text",
+												name:"eventReceiptsTicketFrom",
+												label:_("Ticket From"),
+												labelWidth:100, 
+												format:"1111"
+											},
+											{ 
+												view:"text",
+												name:"eventReceiptsTicketTo",
+												label:_("Ticket To"),
+												format:"1111"
+											}
+										]
+									}
+								] 
+							},
+							{
+								view:"form",
+								id:"PS",
+								elementsConfig:{labelPosition:"left" },
+								elements:[
+									{ 
+										view:"combo",
+										name:"instituteTypeId",
+										label:_("Type"), 
+										options:{
+											data:getInstituteTypes()
+										}
+									},
+									{ 
+										view:"text",
+										name:"instituteName",
+										label:_("Name")
+									},
+									{ 
+										view:"text",
+										name:"instituteSpeaker",
+										label:_("Speaker")
+									},
+									{ 
+										view:"text",
+										name:"instituteContact",
+										label:_("Contact")
+									}	
+								] 
+							},
+							{
+								view:"form",
+								id:"EP",
+								elementsConfig:{
+									labelPosition:"left",
+									labelWidth:100 
+								},
+								elements:[
+									{ 
+										view:"text",
+										name:"disposalMaterialKG",
+										label:_("Material(Kg)"),
+										format:"11"
+									},
+									{ 
+										view:"text",
+										name:"disposalContact",
+										label:_("Contact")
+									}			
+								] 
+							},
+							{
+								view:"form",
+								id:"DP",
+								elementsConfig:{
+									labelPosition:"left",
+									labelWidth:100 
+								},
+								elements:[
+									{ 
+										view:"text",
+										name:"eventDive",
+										label:_("Dive")
+									},
+									{ 
+										view:"text",
+										name:"disposalMaterialKG",
+										label:_("Material(Kg)"),
+										format:"11"
+									},
+									{ 
+										view:"text",
+										name:"disposalContact",
+										label:_("Contact")
+									}
+								] 
+							},
+							{
+								view:"form",
+								id:"PV",
+								elementsConfig:{labelPosition:"left" },
+								elements:[
+									{ 
+										view:"text",
+										name:"shipName",
+										label:_("Ship Name")
+									},
+									{ 
+										view:"combo",
+										name:"instituteTypeId",
+										label:_("Type"), 
+										options:{
+											data:getInstituteTypes()
+										}
+									},
+									{ 
+										view:"text",
+										name:"instituteName",
+										label:_("Name")
+									},
+									{ 
+										view:"text",
+										name:"instituteSpeaker",
+										label:_("Speaker")
+									},
+									{ 
+										view:"text",
+										name:"instituteContact",
+										label:_("Contact")
+									}	
+								] 
+							}
+						]
+					};
+		
 		return {
 			view:"window",
+//			id:"event_window",
 			position:"center",
-			modal:false,
+			modal:true,
 			move:true,
 			resize:true,
 			head:{
@@ -38,289 +324,8 @@ export default class SaveEventView extends JetView {
 						cols:[
 							{
 								rows:[
-									{
-										view: "tabbar",  
-										id:"tabbar",
-										multiview: true,
-										height: 700,
-							         	options:[
-							         		{id: "EV", value: "Base"},
-							         		{id: "PS", value: "PS"},
-							         		{id: "EP", value: "EP"},
-							         		{id: "DP", value: "DP"},
-							         		{id: "PV", value: "PV"},
-							         		{id: "receipts", value: "Receipts"}
-							            ]
-									},
-									{
-										cells:[                                   
-											{
-												view:"form",
-												id:"EV",
-												elementsConfig:{
-													labelPosition:"left" 
-												},
-												elements:[
-													{
-														view:"combo",
-														name:"eventTypeName",
-														label:_("Type"), 
-														disabled: true,
-														options:{
-															data:getEventTypes()
-														}
-													},
-													{ 
-														view:"text",
-														name:"eventText",
-														label:_("Text")
-													},
-													{
-														cols:[
-															{
-																view:"datepicker",
-																name:"eventDateFrom",
-																label:_("Date From"),
-																value:new Date(),
-																format:date_format
-															},
-															{
-																view:"datepicker",
-																name:"eventDateTo",
-																label:_("Date To"),
-																value:new Date(),
-																format:date_format
-															}
-														]
-													},
-													{ 
-														view:"text",
-														name:"eventArgument",
-														label:_("Argument")
-													},					
-													{ 
-														view:"combo",
-														name:"eventAccountId",
-														label:_("Account"),
-														suggest:getVolunteers()
-													},					
-													{
-														view:"combo",
-														name:"areaId",
-														label:_("Area"), 
-														options:{
-															data:getAreas()
-														}
-													},
-													{
-														cols:[
-															{ 
-																view:"text",
-																name:"eventPlaceCountry",
-																label:_("Country")
-															},
-															{ 
-																view:"combo",
-																name:"eventPlaceProvince",
-																label:_("Province"),
-																options:{
-																	data:getProvinces()
-																}
-															}
-														],
-														rules:{
-															eventText:webix.rules.isNotEmpty,
-															eventDateFrom:webix.rules.isNotEmpty,
-															eventDateTo:webix.rules.isNotEmpty,
-															eventAccountId:webix.rules.isNotEmpty,
-															areaId:webix.rules.isNotEmpty,
-															eventPlaceCountry:webix.rules.isNotEmpty,					
-															eventPlaceProvince:webix.rules.isNotEmpty,
-															eventPlace:webix.rules.isNotEmpty
-														}
-													},
-													{ 
-														view:"text",
-														name:"eventPlace",
-														label:_("Place")
-													},					
-													{ 
-														view:"text",
-														name:"eventPeopleQty",
-														label:_("People Qty"), 
-														format:"11"
-													},
-													{ 
-														view:"text",
-														name:"eventLink",
-														label:_("Link")
-													},
-													{ 
-														view:"text",
-														name:"eventNote",
-														label:_("Note")
-													}
-												] 
-											},
-											{
-												view:"form",
-												id:"receipts",
-												elementsConfig:{labelPosition:"left" },
-												elements:[
-													{ 
-														view:"text",
-														name:"eventReceiptsQty",
-														label:_("Quantity"),
-														labelWidth:100, 
-														format:"1111"
-													},
-													{ 
-														view:"text",
-														name:"eventReceiptsTot",
-														label:_("Total"),
-														labelWidth:100, 
-														format:"1111.11"
-													},
-													{ 
-														view:"text",
-														name:"eventReceiptsTotPOS",
-														label:_("Total POS"),
-														labelWidth:100, 
-														format:"1111.11"
-													},
-													{
-														cols:[
-															{ 
-																view:"text",
-																name:"eventReceiptsTicketFrom",
-																label:_("Ticket From"),
-																labelWidth:100, 
-																format:"1111"
-															},
-															{ 
-																view:"text",
-																name:"eventReceiptsTicketTo",
-																label:_("Ticket To"),
-																format:"1111"
-															}
-														]
-													}
-												] 
-											},
-											{
-												view:"form",
-												id:"PS",
-												elementsConfig:{labelPosition:"left" },
-												elements:[
-													{ 
-														view:"combo",
-														name:"instituteTypeId",
-														label:_("Type"), 
-														options:{
-															data:getInstituteTypes()
-														}
-													},
-													{ 
-														view:"text",
-														name:"instituteName",
-														label:_("Name")
-													},
-													{ 
-														view:"text",
-														name:"instituteSpeaker",
-														label:_("Speaker")
-													},
-													{ 
-														view:"text",
-														name:"instituteContact",
-														label:_("Contact")
-													}	
-												] 
-											},
-											{
-												view:"form",
-												id:"EP",
-												elementsConfig:{
-													labelPosition:"left",
-													labelWidth:100 
-												},
-												elements:[
-													{ 
-														view:"text",
-														name:"disposalMaterialKG",
-														label:_("Material(Kg)"),
-														format:"11"
-													},
-													{ 
-														view:"text",
-														name:"disposalContact",
-														label:_("Contact")
-													}			
-												] 
-											},
-											{
-												view:"form",
-												id:"DP",
-												elementsConfig:{
-													labelPosition:"left",
-													labelWidth:100 
-												},
-												elements:[
-													{ 
-														view:"text",
-														name:"eventDive",
-														label:_("Dive")
-													},
-													{ 
-														view:"text",
-														name:"disposalMaterialKG",
-														label:_("Material(Kg)"),
-														format:"11"
-													},
-													{ 
-														view:"text",
-														name:"disposalContact",
-														label:_("Contact")
-													}
-												] 
-											},
-											{
-												view:"form",
-												id:"PV",
-												elementsConfig:{labelPosition:"left" },
-												elements:[
-													{ 
-														view:"text",
-														name:"shipName",
-														label:_("Ship Name")
-													},
-													{ 
-														view:"combo",
-														name:"instituteTypeId",
-														label:_("Type"), 
-														options:{
-															data:getInstituteTypes()
-														}
-													},
-													{ 
-														view:"text",
-														name:"instituteName",
-														label:_("Name")
-													},
-													{ 
-														view:"text",
-														name:"instituteSpeaker",
-														label:_("Speaker")
-													},
-													{ 
-														view:"text",
-														name:"instituteContact",
-														label:_("Contact")
-													}	
-												] 
-											}											
-										]
-									}
+									tabbar,
+									forms
 								]
 							},
 							{
@@ -402,7 +407,9 @@ export default class SaveEventView extends JetView {
 		};
 	}
 	
-	showWindow(eventType, eventId){
+	showWindow(eventType, eventId) {
+		
+		
 		const _ = this.app.getService("locale")._;
 		const eventTypes = getEventTypes();
 		
@@ -414,15 +421,14 @@ export default class SaveEventView extends JetView {
 		var i;
 		for(i=0; i < eventTypes.length; i++) {
 			
-//			if(this.$$(eventTypes[i].id) != null)
 			this.$$(eventTypes[i].id).clear();
 
-//			if(eventTypes[i].id != "EV") 
-//				this.$$("tabbar").hideOption(eventTypes[i].id);				
+			if(eventTypes[i].id != "EV") 
+				this.$$("tabbar").hideOption(eventTypes[i].id);				
 		}
 
-//		if(eventType != "EV") 
-//			this.$$("tabbar").showOption(eventType);
+		if(eventType != "EV") 
+			this.$$("tabbar").showOption(eventType);
 		
 		if(eventId != null) {	
 			
@@ -435,7 +441,6 @@ export default class SaveEventView extends JetView {
     			
     			var i;
     			for(i=0; i < eventTypes.length; i++) {
-//    				if(view.$$(eventTypes[i].id) != null)
   					view.$$(eventTypes[i].id).setValues(event.getValues());
     			}
 
@@ -445,19 +450,13 @@ export default class SaveEventView extends JetView {
 		else {
 			this.$$("toolbar_label").setValue(_("Insert Event") + " " + eventType);
 			
-//			alert(this.$$("EV").name);
-//			this.listProperties(this.$$("EV"));
-			
 			this.$$("EV").setValues({ eventTypeName: eventType });
 			this.getRoot().show();
-		}
-		
-//		this.$$("tabbar").removeOption("receipts");
-//		this.$$("tabbar").addOption("receipts", "Receipts");		
+		}		
 	}
 
 	closex(){
-		this.getRoot().hide();
+		this.getRoot().close();
 	}
 	
 	listProperties(obj) {

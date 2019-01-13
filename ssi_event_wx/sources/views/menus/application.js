@@ -1,5 +1,6 @@
 import {JetView, plugins} from "webix-jet";
-		
+import {getEventTypeText} from "models/eventTypes";
+
 export default class ApplicationMenu extends JetView {
 	config(){
 		const _ = this.app.getService("locale")._;
@@ -14,11 +15,11 @@ export default class ApplicationMenu extends JetView {
 				{ 
 					icon:"mdi mdi-timetable", value:_("Events"), 
 					data:[
-						{ id: "tables.eventsEV", icon:"mdi mdi-circle", value: "Divulgazione"},
-						{ id: "tables.eventsPS", icon:"mdi mdi-circle", value: "Scuole"},
-						{ id: "tables.eventsEP", icon:"mdi mdi-circle", value: "Spiagge"},
-						{ id: "tables.eventsDP", icon:"mdi mdi-circle", value: "Fondali"},
-						{ id: "tables.eventsPV", icon:"mdi mdi-circle", value: "Imbarcazioni"}
+						{ id: "tables.eventsEV", icon:"mdi mdi-circle", value: getEventTypeText("EV")},
+						{ id: "tables.eventsPS", icon:"mdi mdi-circle", value: getEventTypeText("PS")},
+						{ id: "tables.eventsEP", icon:"mdi mdi-circle", value: getEventTypeText("EP")},
+						{ id: "tables.eventsDP", icon:"mdi mdi-circle", value: getEventTypeText("DP")},
+						{ id: "tables.eventsPV", icon:"mdi mdi-circle", value: getEventTypeText("PV")}
 					]
 				}
 			],

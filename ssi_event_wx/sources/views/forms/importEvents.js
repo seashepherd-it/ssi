@@ -84,6 +84,8 @@ export default class ImportEventsView extends JetView {
 		
 		this.$$("events_upl1").attachEvent("onFileUploadError", function(file, response){
 			
+			alert(file);
+			
 		    webix.message({
 		        type:"error",
 		        text:response.info + "<br/>" + response.error,

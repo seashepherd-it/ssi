@@ -195,7 +195,7 @@ export default class EventsTable extends JetView {
 			    	"mdi-update": function  (event, id, node) {
 				    	var dtable = this;
 			    	    var item = dtable.getItem(id);
-			    	    this.$scope.saveEvent.showWindow(item.SSI_EVENT_TYPE, item.SSI_EVENT_ID);
+			    	    this.$scope.ui(SaveEventView).showWindow(item.SSI_EVENT_TYPE, item.SSI_EVENT_ID);			    	    
 			    	}
 			    }			
 			}
@@ -203,25 +203,25 @@ export default class EventsTable extends JetView {
         this.setDatatable(datatable);
         
 		return {
-			id: "listEvents",
+			id: "events_list",
 			rows:[ 
 				{					
 					view:"toolbar",
 //					css:theme,
 					cols:[
-						{ view:"label", template:_("Events") },
+						{ view:"label", label:_("Events")},
 						{ view: "icon",  icon:"mdi mdi-plus-box-outline",
-							click:() => this.saveEvent.showWindow(this.getEventType())
+							click:() => this.ui(SaveEventView).showWindow(this.getEventType())
 						},						
 						{ view: "icon",  icon:"mdi mdi-filter-outline", 
-							click:() => this.setFilter.showWindow()
+							click:() => this.ui(FilterEventsView).showWindow()
 						},
 						{ view: "icon",  icon:"mdi mdi-file-upload", 
-							click:() => this.importEvents.showWindow()
+							click:() => this.ui(ImportEventsView).showWindow()
 						},
 						{ view: "icon",  icon:"mdi mdi-file-excel",
 							click:() => this.download()
-						}
+						}						
 					]
 				},
 				datatable
@@ -232,11 +232,7 @@ export default class EventsTable extends JetView {
 	init(config) {
 		
 		var datatable = this.$$("events_table");
-
-//		this.importEvents = this.ui(ImportEventsView);
-		this.setFilter = this.ui(FilterEventsView);
-		this.saveEvent = this.ui(SaveEventView);
-		
+	
 		datatable.hideColumn("SSI_EVENT_TYPE");
 		datatable.hideColumn("SSI_EVENT_PLACE_COUNTRY");
 		datatable.hideColumn("SSI_AREA_ID");
@@ -281,6 +277,16 @@ export default class EventsTable extends JetView {
 			if (datatable.count() === 0)
 				datatable.showOverlay("Sorry, there are no events");
 		});
+	}
+	
+	listProperties(obj) {
+		var propList = "";
+		for(var propName in obj) {
+			if(typeof(obj[propName]) != "undefined") {
+				propList += (propName + "=" + obj[propName] + ", ");
+			}
+		}
+		alert(propList);
 	}
 	
 	getEventType() {
