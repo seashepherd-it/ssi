@@ -62,7 +62,7 @@ export default class ImportEventsView extends JetView {
 			// webix.message("Done");
 		});
 		this.$$("events_upl1").attachEvent("onFileUpload", function(file, response){
-			if(response.warning === "") {
+			if(response.warning == "") {
 			    webix.message({		    	
 			        type:"success",
 			        text:response.info
@@ -83,8 +83,6 @@ export default class ImportEventsView extends JetView {
 		});
 		
 		this.$$("events_upl1").attachEvent("onFileUploadError", function(file, response){
-			
-			alert(file);
 			
 		    webix.message({
 		        type:"error",

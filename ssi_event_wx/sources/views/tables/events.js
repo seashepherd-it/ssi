@@ -11,14 +11,7 @@ export default class EventsTable extends JetView {
 		
 		const _ = this.app.getService("locale")._;
 		
-		var actions = "<span class='mdi mdi-trash-can'></span><span class='mdi mdi-update'></span>";
-		
-		var columns = webix.toArray([ {
-			id: "actions",
-	        header: "Actions",
-            adjust:true,	        
-	        template: actions 
-		} ]);
+		var columns = webix.toArray([]);
         
         columns.insertAt({
         	id:"SSI_EVENT_TYPE", 
@@ -178,26 +171,11 @@ export default class EventsTable extends JetView {
 				dragColumn:true,
 				headermenu:true,
 				footer:true,
-				leftSplit:4,
+				leftSplit:3,
 				resizeColumn:true,
 				columns: columns,
-			    onClick:{ 
-			    	"mdi-trash-can": function  (event, id, node) {
-				    	var dtable = this;
-			    	    var event = dtable.getItem(id);
-				    	webix.confirm("Delete " + event.SSI_EVENT_TEXT + "?", function(action) {
-					    if(action === true) {
-					    	if(deleteEvent(event.SSI_EVENT_TYPE, event.SSI_EVENT_ID) === true)
-					    		dtable.remove(id.row);
-					    	}
-				    	});
-			    	},
-			    	"mdi-update": function  (event, id, node) {
-				    	var dtable = this;
-			    	    var item = dtable.getItem(id);
-			    	    this.$scope.ui(SaveEventView).showWindow(item.SSI_EVENT_TYPE, item.SSI_EVENT_ID);			    	    
-			    	}
-			    }			
+				select:true,
+				onContext:{}		
 			}
         
         this.setDatatable(datatable);
@@ -210,18 +188,24 @@ export default class EventsTable extends JetView {
 //					css:theme,
 					cols:[
 						{ view:"label", label:_("Events")},
-						{ view: "icon",  icon:"mdi mdi-plus-box-outline",
-							click:() => this.ui(SaveEventView).showWindow(this.getEventType())
-						},						
+						{ view: "icon",  icon:"mdi mdi-refresh", 
+							click:() =>  this.reloadData()
+						},
 						{ view: "icon",  icon:"mdi mdi-filter-outline", 
 							click:() => this.ui(FilterEventsView).showWindow()
 						},
+						{ view: "icon",  icon:"mdi mdi-plus-box-outline",
+							click:() => this.ui(SaveEventView).showWindow(this.getEventType())
+						},						
 						{ view: "icon",  icon:"mdi mdi-file-upload", 
 							click:() => this.ui(ImportEventsView).showWindow()
 						},
 						{ view: "icon",  icon:"mdi mdi-file-excel",
 							click:() => this.download()
-						}						
+						},
+						{ view:"icon", icon:"mdi mdi-menu",
+						  click:() => this.app.callEvent("menu:toggle")
+						}				
 					]
 				},
 				datatable
@@ -237,14 +221,40 @@ export default class EventsTable extends JetView {
 		datatable.hideColumn("SSI_EVENT_PLACE_COUNTRY");
 		datatable.hideColumn("SSI_AREA_ID");
 		
-		datatable.clearAll();
+		datatable.$scope.reloadData();
 		
-		datatable.sync(getEvents(this.getEventType()));
+	    webix.ui({
+	        view:"contextmenu",
+		    id:"event_menu",
+	        data:["Modify",	"Delete"],
+	        on:{
+	            onItemClick:function(id){
+	                var context = this.getContext();
+	                var dtable = context.obj;	                
+	                var rowId = context.id;
+	                var event = dtable.getItem(rowId);
+	                
+	                switch(this.getItem(id).value){
+	                case 'Modify':
+	                	dtable.$scope.ui(SaveEventView).showWindow(event.SSI_EVENT_TYPE, event.SSI_EVENT_ID);
+	                  break;
+	                case 'Delete':
+				    	webix.confirm("Delete " + event.SSI_EVENT_TEXT + "?", function(action) {
+						    if(action == true) {
+						    	if(deleteEvent(event.SSI_EVENT_TYPE, event.SSI_EVENT_ID) == true)
+						    		dtable.remove(rowId);
+						    }
+				    	});
+	                  break;
+	              }
+	            }
+	        }
+	    });
+
+	    $$("event_menu").attachTo(this.$$("events_table"))
 		
 		this.on(this.app,"search:event", (eventDate, eventArea) => {
 
-			datatable.hideOverlay();
-						
 			if (eventDate) {
 				var myparse = webix.Date.strToDate("%d %M %Y");
 				var dateFrom = myparse(eventDate.start);
@@ -274,19 +284,7 @@ export default class EventsTable extends JetView {
 			if(eventDate == null && area == null)
 				datatable.filter();			
 			
-			if (datatable.count() === 0)
-				datatable.showOverlay("Sorry, there are no events");
 		});
-	}
-	
-	listProperties(obj) {
-		var propList = "";
-		for(var propName in obj) {
-			if(typeof(obj[propName]) != "undefined") {
-				propList += (propName + "=" + obj[propName] + ", ");
-			}
-		}
-		alert(propList);
 	}
 	
 	getEventType() {
@@ -299,6 +297,13 @@ export default class EventsTable extends JetView {
 	
 	getDatatable() {
 		return this.datatable_;
+	}
+	
+	reloadData() {
+		var datatable = this.$$("events_table");
+
+		datatable.clearAll();		
+		datatable.sync(getEvents(this.getEventType()));		
 	}
 	
 	download() {

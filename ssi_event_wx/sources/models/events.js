@@ -34,7 +34,7 @@ export function deleteEvent(eventType, eventId){
 	
 	var result = false;	
 	var data = webix.ajax().sync().get(getServicePath() + "/deleteEvent?eventType="+eventType+"&eventId="+eventId, null, function(text, xml, xhr) {
-		if(text === "OK") {
+		if(text == "OK") {
 			result = true;
 		}
 		else {

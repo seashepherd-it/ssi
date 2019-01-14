@@ -6,7 +6,7 @@ export default class ToolbarMenu extends JetView{
 	config(){
 		const _ = this.app.getService("locale")._;
 		const theme = this.app.config.theme;
-		
+
 		return {
 
 			view:"toolbar",
@@ -22,36 +22,37 @@ export default class ToolbarMenu extends JetView{
 								},
 								{
 									view:"label",
-									template:"SSI Events Application"
-								},
-								{
-									view:"icon",
-									icon:"mdi mdi-invert-colors",
-									tooltip:_("Click to change the theme"),
-									color:theme,
-									click:function(){
-										let color = this.config.color;
-										color = !color ? "webix_dark" : "";
-										webix.storage.local.put("theme_color",color);
-										this.$scope.app.config.theme = color;
-										this.$scope.app.refresh();
-									}
-								},
-								{
-									view:"icon", icon:"mdi mdi-bell",
-									localId:"bell",
-									badge:0, tooltip:_("Latest notifications"),
-									click:function(){
-										this.$scope.notifications.showPopup(this.$view);
-									}
-								},
-								{
-									view:"icon", icon:"mdi mdi-earth",
-									tooltip:_("Change the language"),
-									click:function(){
-										this.$scope.languages.showPopup(this.$view);
-									}
+									template:"SSI Activities"
 								}
+//								,
+//								{
+//									view:"icon",
+//									icon:"mdi mdi-invert-colors",
+//									tooltip:_("Click to change the theme"),
+//									color:theme,
+//									click:function(){
+//										let color = this.config.color;
+//										color = !color ? "webix_dark" : "";
+//										webix.storage.local.put("theme_color",color);
+//										this.$scope.app.config.theme = color;
+//										this.$scope.app.refresh();
+//									}
+//								},
+//								{
+//									view:"icon", icon:"mdi mdi-bell",
+//									localId:"bell",
+//									badge:0, tooltip:_("Latest notifications"),
+//									click:function(){
+//										this.$scope.notifications.showPopup(this.$view);
+//									}
+//								},
+//								{
+//									view:"icon", icon:"mdi mdi-earth",
+//									tooltip:_("Change the language"),
+//									click:function(){
+//										this.$scope.languages.showPopup(this.$view);
+//									}
+//								}
 							]
 						}
 					]

@@ -335,10 +335,10 @@ export default class SaveEventView extends JetView {
 							        	label:"Add Row",
 							        	click:function() {
 							        		var data = {};
-							        		this.$$('event_volunteers').editStop();
-							        		var id = this.$$('event_volunteers').add(data, this.$$('event_volunteers').count());
-							        		this.$$('event_volunteers').editRow(id);
-							        		this.$$("event_volunteers").focusEditor({
+							        		this.$scope.$$('event_volunteers').editStop();
+							        		var id = this.$scope.$$('event_volunteers').add(data, this.$scope.$$('event_volunteers').count());
+							        		this.$scope.$$('event_volunteers').editRow(id);
+							        		this.$scope.$$("event_volunteers").focusEditor({
 							        		    row:id,
 							        		    column:"volunteerId"
 							        		});
