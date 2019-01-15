@@ -34,6 +34,20 @@ export default class EventsTable extends JetView {
           }, columns.length);
         
         columns.insertAt({
+        	id:"SSI_EVENT_STATUS", 
+        	header:"Status",
+            adjust:true,
+            sort:"string"
+        }, columns.length);
+        
+        columns.insertAt({
+        	id:"SSI_EVENT_STATUS_TEXT", 
+        	header:"Status",
+            adjust:true,
+            sort:"string"
+        }, columns.length);
+        
+        columns.insertAt({
             id: "SSI_AREA_ID",
             header: "Area Id"
           }, columns.length);
@@ -218,6 +232,7 @@ export default class EventsTable extends JetView {
 		var datatable = this.$$("events_table");
 	
 		datatable.hideColumn("SSI_EVENT_TYPE");
+		datatable.hideColumn("SSI_EVENT_STATUS");
 		datatable.hideColumn("SSI_EVENT_PLACE_COUNTRY");
 		datatable.hideColumn("SSI_AREA_ID");
 		
@@ -253,7 +268,7 @@ export default class EventsTable extends JetView {
 
 	    $$("event_menu").attachTo(this.$$("events_table"))
 		
-		this.on(this.app,"search:event", (eventDate, eventArea) => {
+		this.on(this.app,"search:event", (eventDate, eventArea, eventStatus) => {
 
 			if (eventDate) {
 				var myparse = webix.Date.strToDate("%d %M %Y");
@@ -263,9 +278,9 @@ export default class EventsTable extends JetView {
 				myparse = webix.Date.dateToStr("%Y-%m-%d");
 				dateFrom = myparse(dateFrom);
 				dateTo = myparse(dateTo);
-				
+							
 				datatable.filter(obj => {				
-					if((obj.SSI_EVENT_DATE_FROM >= dateFrom) && (obj.SSI_EVENT_DATE_TO <= dateTo))
+					if((dateFrom == "" || obj.SSI_EVENT_DATE_FROM >= dateFrom) && (dateTo == "" || obj.SSI_EVENT_DATE_TO <= dateTo))
 						return true;
 					else 
 						return false;
@@ -280,8 +295,17 @@ export default class EventsTable extends JetView {
 						return false;
 				});
 			}
-			
-			if(eventDate == null && area == null)
+
+			if(eventStatus) {
+				datatable.filter(obj => {
+					if(obj.SSI_EVENT_STATUS == eventStatus)
+						return true;
+					else 
+						return false;
+				});
+			}
+
+			if(eventDate == null && eventArea == null && eventStatus == null)
 				datatable.filter();			
 			
 		});

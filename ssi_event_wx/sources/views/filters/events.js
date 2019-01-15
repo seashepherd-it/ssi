@@ -1,5 +1,6 @@
 import {JetView} from "webix-jet";
 import {getAreas} from "models/areas";
+import {getEventStates} from "models/eventStates";
 
 export default class FilterEventsView extends JetView {
 	
@@ -21,13 +22,24 @@ export default class FilterEventsView extends JetView {
 				elements:[
 					{
 						view:"combo",
+						name:"eventStatus",
+						label:_("Status"), 
+						placeholder:_("Select status"),
+						required:false,
+						options:{
+							data:getEventStates()
+						}
+					},
+					{
+						view:"combo",
 						name:"eventArea",
 						label:_("Area"), 
 						placeholder:_("Select area"),
+						required:false,
 						options:{
 							data:getAreas()
 						}
-					},				
+					},
 					{
 						view:"daterangepicker",
 						name:"eventDate",
@@ -60,6 +72,6 @@ export default class FilterEventsView extends JetView {
 	}
 	searchEvents() {
 		const data = this.$$("form_filter").getValues();
-		this.app.callEvent("search:event",[data.eventDate, data.eventArea]);
+		this.app.callEvent("search:event",[data.eventDate, data.eventArea, data.eventStatus]);
 	}
 }

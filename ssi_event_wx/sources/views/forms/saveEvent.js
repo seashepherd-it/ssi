@@ -409,7 +409,6 @@ export default class SaveEventView extends JetView {
 	
 	showWindow(eventType, eventId) {
 		
-		
 		const _ = this.app.getService("locale")._;
 		const eventTypes = getEventTypes();
 		
@@ -470,28 +469,25 @@ export default class SaveEventView extends JetView {
 	}
 	
 	saveEvent() {
-		const event = this.$$("EV").getValues();
+		if (!this.$$("EV").validate())
+			return;
+		
+		if (!this.$$(this.getEventTypeName()).validate())
+			return;
 
-		if(this.$$("PS") != null) {
-			const eventPS = this.$$("PS").getValues();
-		}
-		if(this.$$("EP") != null) {
-			const eventEP = this.$$("mEP").getValues();
-		}
-		if(this.$$("DP") != null) {
-			const eventDP = this.$$("DP").getValues();
-		}
-		if(this.$$("PV") != null) {
-			const eventDP = this.$$("PV").getValues();
-		}
-		const receipts = $$("form_receipts").serialize();
+		const event = this.$$("EV").getValues();
+		alert(event);
+		
+		if(this.getEventTypeName() != "EV") {
+			const eventTemp = this.$$(this.getEventTypeName()).getValues();
+			alert(eventTemp);
+		} 
+		const receipts = this.$$("form_receipts").serialize();
 		const volunteers = this.$$("event_volunteers").serialize();
-//		if (!this.$$("form").validate())
-//			return;
 		
 		event.volunteers = volunteers
 		
-		alert(JSON.stringify(event));
+//		alert(JSON.stringify(event));
 		
 		closex();
 	}

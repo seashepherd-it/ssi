@@ -3,7 +3,7 @@ export function getAreas(){
 };
 
 const areas = [
-	{"id":"", value:"", "$empty": true },
+	{id:"", value:"", $empty:true},
 	{"id":"14","value":"Abruzzo"},
 	{"id":"6","value":"Emilia Romagna"},
 	{"id":"2","value":"Friuli Venezia Giulia"},

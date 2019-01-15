@@ -37,5 +37,7 @@ export default {
 	"Total":"Total",
 	"Total POS":"Total POS",
 	"Ticket From":"Ticket From",
-	"Ticket To":"Ticket To"
+	"Ticket To":"Ticket To",
+	"Status":"Status",
+	"Select status":"Select status"
 };
