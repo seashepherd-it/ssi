@@ -6,7 +6,6 @@ export default class FilterEventsView extends JetView {
 	
 	config(){
 		const _ = this.app.getService("locale")._;
-		const date_format = "%d %M %Y";
 
 		return {
 			view:"window",
@@ -44,8 +43,7 @@ export default class FilterEventsView extends JetView {
 						view:"daterangepicker",
 						name:"eventDate",
 						label:_("Event Date"),
-						value:{start: webix.Date.add(new Date(), -2, "year"), end: webix.Date.add(new Date(), 1, "month")},
-						format:date_format
+						value:{start: webix.Date.add(new Date(), -2, "year"), end: webix.Date.add(new Date(), 1, "month")}
 					},
 					{
 						cols:[

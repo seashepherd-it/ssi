@@ -137,4 +137,23 @@
 		<servlet-name>EventDeleteServlet</servlet-name>
 		<url-pattern>/service/deleteEvent</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>EventSaveServlet</servlet-name>
+		<servlet-class>it.seashepherd.servlet.EventSaveServlet</servlet-class>
+		<init-param>
+			<param-name>ssi_user</param-name>
+			<param-value>pippo</param-value>
+		</init-param>
+		<init-param>
+			<param-name>ssi_password</param-name>
+			<param-value>pluto</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EventSaveServlet</servlet-name>
+		<url-pattern>/service/saveEvent</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

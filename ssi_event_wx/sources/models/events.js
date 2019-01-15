@@ -44,3 +44,19 @@ export function deleteEvent(eventType, eventId){
 	
 	return result;
 };
+
+export function saveEvent(event){
+	
+	var result = false;	
+	var data = webix.ajax().sync().post(getServicePath() + "/saveEvent", "event="+webix.ajax().stringify(event), function(text, xml, xhr) {
+		
+		if(text.startsWith("ERROR")) {
+			result = false;
+		}
+		else {
+			result = true;
+		}
+	});	
+	
+	return result;
+};

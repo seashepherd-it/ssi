@@ -194,4 +194,9 @@ public class EventDAO_SQL {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public static String saveEvent(EventConnection connection, String jsonEvent) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

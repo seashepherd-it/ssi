@@ -1,6 +1,7 @@
 import {JetView} from "webix-jet";
-import {getEvent, getEventVolunteers, deleteEvent} from "models/events";
+import {getEvent, getEventVolunteers, deleteEvent, saveEvent} from "models/events";
 import {getEventTypes, getEventTypeText} from "models/eventTypes";
+import {getEventStates} from "models/eventStates";
 import {getAreas} from "models/areas";
 import {getProvinces} from "models/provinces";
 import {getInstituteTypes} from "models/instituteTypes";
@@ -11,7 +12,6 @@ export default class SaveEventView extends JetView {
 	config(){
 		const _ = this.app.getService("locale")._;		
 		const actions = "<span class='mdi mdi-trash-can'></span>";
-		const date_format = "%d %M %Y";
 
 		var tabbar = {
 						view: "tabbar",  
@@ -48,24 +48,35 @@ export default class SaveEventView extends JetView {
 									},
 									{ 
 										view:"text",
+										name:"eventId",
+										label:_("EventId")
+									},
+									{ 
+										view:"text",
 										name:"eventText",
 										label:_("Text")
 									},
+									{
+										view:"combo",
+										name:"eventStatus",
+										label:_("Status"), 
+										options:{
+											data:getEventStates()
+										}
+									},									
 									{
 										cols:[
 											{
 												view:"datepicker",
 												name:"eventDateFrom",
 												label:_("Date From"),
-												value:new Date(),
-												format:date_format
+												value:new Date()
 											},
 											{
 												view:"datepicker",
 												name:"eventDateTo",
 												label:_("Date To"),
-												value:new Date(),
-												format:date_format
+												value:new Date()
 											}
 										]
 									},
@@ -78,8 +89,10 @@ export default class SaveEventView extends JetView {
 										view:"combo",
 										name:"eventAccountId",
 										label:_("Account"),
-										suggest:getVolunteers()
-									},					
+										options:{ 
+											data:getVolunteers()
+										}
+									},														
 									{
 										view:"combo",
 										name:"areaId",
@@ -103,17 +116,7 @@ export default class SaveEventView extends JetView {
 													data:getProvinces()
 												}
 											}
-										],
-										rules:{
-											eventText:webix.rules.isNotEmpty,
-											eventDateFrom:webix.rules.isNotEmpty,
-											eventDateTo:webix.rules.isNotEmpty,
-											eventAccountId:webix.rules.isNotEmpty,
-											areaId:webix.rules.isNotEmpty,
-											eventPlaceCountry:webix.rules.isNotEmpty,					
-											eventPlaceProvince:webix.rules.isNotEmpty,
-											eventPlace:webix.rules.isNotEmpty
-										}
+										]
 									},
 									{ 
 										view:"text",
@@ -136,7 +139,17 @@ export default class SaveEventView extends JetView {
 										name:"eventNote",
 										label:_("Note")
 									}
-								] 
+								],
+								rules:{
+									eventText:webix.rules.isNotEmpty,
+									eventDateFrom:webix.rules.isNotEmpty,
+									eventDateTo:webix.rules.isNotEmpty,
+									eventAccountId:webix.rules.isNotEmpty,
+									areaId:webix.rules.isNotEmpty,
+									eventPlaceCountry:webix.rules.isNotEmpty,					
+									eventPlaceProvince:webix.rules.isNotEmpty,
+									eventPlace:webix.rules.isNotEmpty
+								}
 							},
 							{
 								view:"form",
@@ -155,14 +168,14 @@ export default class SaveEventView extends JetView {
 										name:"eventReceiptsTot",
 										label:_("Total"),
 										labelWidth:100, 
-										format:"1111.11"
+										format:"1111"
 									},
 									{ 
 										view:"text",
 										name:"eventReceiptsTotPOS",
 										label:_("Total POS"),
 										labelWidth:100, 
-										format:"1111.11"
+										format:"1111"
 									},
 									{
 										cols:[
@@ -225,7 +238,7 @@ export default class SaveEventView extends JetView {
 										view:"text",
 										name:"disposalMaterialKG",
 										label:_("Material(Kg)"),
-										format:"11"
+										format:"1111"
 									},
 									{ 
 										view:"text",
@@ -251,7 +264,7 @@ export default class SaveEventView extends JetView {
 										view:"text",
 										name:"disposalMaterialKG",
 										label:_("Material(Kg)"),
-										format:"11"
+										format:"1111"
 									},
 									{ 
 										view:"text",
@@ -300,7 +313,6 @@ export default class SaveEventView extends JetView {
 		
 		return {
 			view:"window",
-//			id:"event_window",
 			position:"center",
 			modal:true,
 			move:true,
@@ -335,10 +347,10 @@ export default class SaveEventView extends JetView {
 							        	label:"Add Row",
 							        	click:function() {
 							        		var data = {};
-							        		this.$scope.$$('event_volunteers').editStop();
-							        		var id = this.$scope.$$('event_volunteers').add(data, this.$scope.$$('event_volunteers').count());
-							        		this.$scope.$$('event_volunteers').editRow(id);
-							        		this.$scope.$$("event_volunteers").focusEditor({
+							        		this.$scope.$$('volunteers').editStop();
+							        		var id = this.$scope.$$('volunteers').add(data, this.$scope.$$('volunteers').count());
+							        		this.$scope.$$('volunteers').editRow(id);
+							        		this.$scope.$$("volunteers").focusEditor({
 							        		    row:id,
 							        		    column:"volunteerId"
 							        		});
@@ -346,7 +358,7 @@ export default class SaveEventView extends JetView {
 								    },
 									{					
 										view:"datatable",
-										localId:"event_volunteers",
+										localId:"volunteers",
 										resizeColumn:true,
 										footer:true,
 									    editable:true,
@@ -415,7 +427,7 @@ export default class SaveEventView extends JetView {
 		this.setEventTypeName(eventType);
 
 		this.$$("receipts").clear();		
-		this.$$("event_volunteers").clearAll();
+		this.$$("volunteers").clearAll();
 
 		var i;
 		for(i=0; i < eventTypes.length; i++) {
@@ -435,12 +447,12 @@ export default class SaveEventView extends JetView {
     	    const event = getEvent(eventType, eventId, function() {
     			view.$$("toolbar_label").setValue(_("Update Event") + " " + event.getValues().eventText + " (" + eventType + "-" + eventId + ")");
     	
-    			view.$$("receipts").setValues(event.getValues());
-    			view.$$("event_volunteers").sync(getEventVolunteers(eventType, eventId));
+    			view.setFormValues(view.$$("receipts"), event.getValues());
+    			view.$$("volunteers").sync(getEventVolunteers(eventType, eventId));
     			
     			var i;
     			for(i=0; i < eventTypes.length; i++) {
-  					view.$$(eventTypes[i].id).setValues(event.getValues());
+    				view.setFormValues(view.$$(eventTypes[i].id), event.getValues());
     			}
 
     			view.getRoot().show();
@@ -450,7 +462,7 @@ export default class SaveEventView extends JetView {
 			this.$$("toolbar_label").setValue(_("Insert Event") + " " + eventType);
 			
 			this.$$("EV").setValues({ eventTypeName: eventType });
-			this.getRoot().show();
+			this.getRoot().show();			
 		}		
 	}
 
@@ -458,38 +470,34 @@ export default class SaveEventView extends JetView {
 		this.getRoot().close();
 	}
 	
-	listProperties(obj) {
-		var propList = "";
-		for(var propName in obj) {
-			if(typeof(obj[propName]) != "undefined") {
-				propList += (propName + "=" + obj[propName] + ", ");
-			}
-		}
-		alert(propList);
-	}
-	
 	saveEvent() {
+		
 		if (!this.$$("EV").validate())
 			return;
-		
+
 		if (!this.$$(this.getEventTypeName()).validate())
 			return;
+		
+		if (!this.$$("receipts").validate())
+			return;
 
-		const event = this.$$("EV").getValues();
-		alert(event);
+		var event = this.$$("EV").getValues();
 		
 		if(this.getEventTypeName() != "EV") {
-			const eventTemp = this.$$(this.getEventTypeName()).getValues();
-			alert(eventTemp);
-		} 
-		const receipts = this.$$("form_receipts").serialize();
-		const volunteers = this.$$("event_volunteers").serialize();
+			var eventTemp = this.$$(this.getEventTypeName()).getValues();
+			Object.assign(event, eventTemp);
+		}
+
+		var receipts = this.$$("receipts").getValues();
+		Object.assign(event, receipts);
 		
-		event.volunteers = volunteers
-		
-//		alert(JSON.stringify(event));
-		
-		closex();
+		var volunteers = this.$$("volunteers").serialize();
+		event.volunteers = volunteers;
+
+		if(saveEvent(event))		
+			this.closex();
+		else
+			alert("error!!!!!!");
 	}
 	
 	setEventTypeName(eventTypeName) {
@@ -498,5 +506,14 @@ export default class SaveEventView extends JetView {
 	
 	getEventTypeName() {
 		return this.eventTypeName_;
+	}
+	
+	setFormValues(form, obj) {
+		
+		for(var propName in obj) {
+			if(typeof(form.elements[propName]) != "undefined") {
+				form.elements[propName].setValue(obj[propName]);
+			}
+		}
 	}
 }

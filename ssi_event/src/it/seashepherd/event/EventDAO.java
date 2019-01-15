@@ -103,6 +103,17 @@ public class EventDAO {
 			break;
 		}
 	}
+	
+	public String saveEvent(EventConnection connection, String jsonEvent) throws Exception {
+
+		switch (mode) {
+		case HTTP:
+			return EventDAO_HTTP.saveEvent(connection, jsonEvent);
+		case SQL:
+			return EventDAO_SQL.saveEvent(connection, jsonEvent);
+		}
+		return null;
+	}
 
 	public String getJSONEvents(EventConnection connection, EventType eventType) throws Exception {
 

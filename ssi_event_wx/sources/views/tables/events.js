@@ -250,9 +250,10 @@ export default class EventsTable extends JetView {
 	                var event = dtable.getItem(rowId);
 	                
 	                switch(this.getItem(id).value){
-	                case 'Modify':
+	                case 'Modify': {
 	                	dtable.$scope.ui(SaveEventView).showWindow(event.SSI_EVENT_TYPE, event.SSI_EVENT_ID);
 	                  break;
+	                }
 	                case 'Delete':
 				    	webix.confirm("Delete " + event.SSI_EVENT_TEXT + "?", function(action) {
 						    if(action == true) {
