@@ -14,7 +14,7 @@ public class EventConnection {
 	}
 
 	private EventConnection(MODE mode, Object connection) {
-		this.dao = new EventDAO(mode);
+		this.dao = new EventDAO(mode, this);
 		this.connection = connection;
 	}
 

@@ -3,48 +3,50 @@ package it.seashepherd.event;
 public class EventDAO {
 
 	private MODE mode = null;
-
+	private EventConnection eventConnection = null;
+	
 	public enum MODE {
 		SQL, HTTP;
 	}
 
-	public EventDAO(MODE mode) {
+	public EventDAO(MODE mode, EventConnection eventConnection) {
 		this.mode = mode;
+		this.eventConnection = eventConnection;
 	}
 	
 	public MODE getMode() {
 		return mode;
 	}
 	
-	public int getAreaIdByName(EventConnection connection, String name) throws Exception {
+	public int getAreaIdByName(String name) throws Exception {
 		if (name == null)
 			return -1;
 
 		switch (mode) {
 		case HTTP:
-			return EventDAO_HTTP.getAreaIdByName(connection, name);
+			return EventDAO_HTTP.getAreaIdByName(eventConnection, name);
 		case SQL:
-			return EventDAO_SQL.getAreaIdByName(connection, name);
+			return EventDAO_SQL.getAreaIdByName(eventConnection, name);
 		}
 
 		return -1;
 	}
 
-	public String getAreaTextById(EventConnection connection, int areaId) throws Exception {
+	public String getAreaTextById(int areaId) throws Exception {
 		if (areaId <= 0)
 			return null;
 
 		switch (mode) {
 		case HTTP:
-			return EventDAO_HTTP.getAreaTextById(connection, areaId);
+			return EventDAO_HTTP.getAreaTextById(eventConnection, areaId);
 		case SQL:
-			return EventDAO_SQL.getAreaTextById(connection, areaId);
+			return EventDAO_SQL.getAreaTextById(eventConnection, areaId);
 		}
 
 		return null;
 	}
 
-	public int getVolunteerIdByName(EventConnection connection, String name) throws Exception {
+	public int getVolunteerIdByName(String name) throws Exception {
 		if (name.trim().isEmpty())
 			return -1;
 
@@ -56,132 +58,147 @@ public class EventDAO {
 
 		switch (mode) {
 		case HTTP:
-			return EventDAO_HTTP.getVolunteerIdByName(connection, volunteerName);
+			return EventDAO_HTTP.getVolunteerIdByName(eventConnection, volunteerName);
 		case SQL:
-			return EventDAO_SQL.getVolunteerIdByName(connection, volunteerName);
+			return EventDAO_SQL.getVolunteerIdByName(eventConnection, volunteerName);
 		}
 
 		return -1;
 	}
 
-	public String getVolunteerTextById(EventConnection connection, int volunteerId) throws Exception {
+	public String getVolunteerTextById(int volunteerId) throws Exception {
 		if (volunteerId <= 0)
 			return null;
 
 		switch (mode) {
 		case HTTP:
-			return EventDAO_HTTP.getVolunteerTextById(connection, volunteerId);
+			return EventDAO_HTTP.getVolunteerTextById(eventConnection, volunteerId);
 		case SQL:
-			return EventDAO_SQL.getVolunteerTextById(connection, volunteerId);
+			return EventDAO_SQL.getVolunteerTextById(eventConnection, volunteerId);
 		}
 
 		return null;
 	}
 
-	public String getVolunteerSurnameById(EventConnection connection, int volunteerId) throws Exception {
+	public String getVolunteerSurnameById(int volunteerId) throws Exception {
 		if (volunteerId <= 0)
 			return null;
 
 		switch (mode) {
 		case HTTP:
-			return EventDAO_HTTP.getVolunteerSurnameById(connection, volunteerId);
+			return EventDAO_HTTP.getVolunteerSurnameById(eventConnection, volunteerId);
 		case SQL:
-			return EventDAO_SQL.getVolunteerSurnameById(connection, volunteerId);
+			return EventDAO_SQL.getVolunteerSurnameById(eventConnection, volunteerId);
 		}
 
 		return null;
 	}
 
-	public void saveEvent(EventConnection connection, EventEntity event) throws Exception {
+	public void saveEvent(EventEntity event) throws Exception {
 
 		switch (mode) {
 		case HTTP:
-			EventDAO_HTTP.saveEvent(connection, event);
+			EventDAO_HTTP.saveEvent(eventConnection, event);
 			break;
 		case SQL:
-			EventDAO_SQL.saveEvent(connection, event);
+			EventDAO_SQL.saveEvent(eventConnection, event);
 			break;
 		}
 	}
 	
-	public String saveEvent(EventConnection connection, String jsonEvent) throws Exception {
+	public String saveEvent(String jsonEvent) throws Exception {
 
 		switch (mode) {
 		case HTTP:
-			return EventDAO_HTTP.saveEvent(connection, jsonEvent);
+			return EventDAO_HTTP.saveEvent(eventConnection, jsonEvent);
 		case SQL:
-			return EventDAO_SQL.saveEvent(connection, jsonEvent);
+			return EventDAO_SQL.saveEvent(eventConnection, jsonEvent);
 		}
 		return null;
 	}
 
-	public String getJSONEvents(EventConnection connection, EventType eventType) throws Exception {
+	public String getJSONEvents(EventType eventType) throws Exception {
 
 		String json = null;
 		switch (mode) {
 		case HTTP:
-			json = EventDAO_HTTP.getJSONEvents(connection, eventType);
+			json = EventDAO_HTTP.getJSONEvents(eventConnection, eventType);
 			break;
 		case SQL:
-			json = EventDAO_SQL.getJSONEvents(connection, eventType);
+			json = EventDAO_SQL.getJSONEvents(eventConnection, eventType);
 			break;
 		}
 		
 		return json;
 	}
 
-	public String getJSONEvent(EventConnection connection, EventType eventType, String eventId) throws Exception {
+	public String getJSONEvent(EventType eventType, String eventId) throws Exception {
 		String json = null;
 		switch (mode) {
 		case HTTP:
-			json = EventDAO_HTTP.getJSONEvent(connection, eventType, eventId);
+			json = EventDAO_HTTP.getJSONEvent(eventConnection, eventType, eventId);
 			break;
 		case SQL:
-			json = EventDAO_SQL.getJSONEvent(connection, eventType, eventId);
+			json = EventDAO_SQL.getJSONEvent(eventConnection, eventType, eventId);
 			break;
 		}
 		
 		return json;
 	}
 
-	public String getJSONEventVolunteers(EventConnection connection, EventType eventType, String eventId) throws Exception {
+	public String getJSONEventVolunteers(EventType eventType, String eventId) throws Exception {
 		String json = null;
 		switch (mode) {
 		case HTTP:
-			json = EventDAO_HTTP.getJSONEventVolunteers(connection, eventType, eventId);
+			json = EventDAO_HTTP.getJSONEventVolunteers(eventConnection, eventType, eventId);
 			break;
 		case SQL:
-			json = EventDAO_SQL.getJSONEventVolunteers(connection, eventType, eventId);
-			break;
-		}
-		
-		return json;
-	}
-	
-	public String getJSONVolunteers(EventConnection connection) throws Exception {
-
-		String json = null;
-		switch (mode) {
-		case HTTP:
-			json = EventDAO_HTTP.getJSONVolunteers(connection);
-			break;
-		case SQL:
-			json = EventDAO_SQL.getJSONVolunteers(connection);
+			json = EventDAO_SQL.getJSONEventVolunteers(eventConnection, eventType, eventId);
 			break;
 		}
 		
 		return json;
 	}
 	
-	public String deleteEvent(EventConnection connection, EventType eventType, String eventId) throws Exception {
+	public String getJSONVolunteers() throws Exception {
 
 		String json = null;
 		switch (mode) {
 		case HTTP:
-			json = EventDAO_HTTP.deleteEvent(connection, eventType, eventId);
+			json = EventDAO_HTTP.getJSONVolunteers(eventConnection);
 			break;
 		case SQL:
-			json = EventDAO_SQL.deleteEvent(connection, eventType, eventId);
+			json = EventDAO_SQL.getJSONVolunteers(eventConnection);
+			break;
+		}
+		
+		return json;
+	}
+	
+	public String deleteEvent(EventType eventType, String eventId) throws Exception {
+
+		String json = null;
+		switch (mode) {
+		case HTTP:
+			json = EventDAO_HTTP.deleteEvent(eventConnection, eventType, eventId);
+			break;
+		case SQL:
+			json = EventDAO_SQL.deleteEvent(eventConnection, eventType, eventId);
+			break;
+		}
+		
+		return json;
+	}
+
+	public String getJSONVolunteer(String volunteerId) throws Exception {
+		
+		String json = null;
+		switch (mode) {
+		case HTTP:
+			json = EventDAO_HTTP.getJSONVolunteer(eventConnection, volunteerId);
+			break;
+		case SQL:
+			json = EventDAO_SQL.getJSONVolunteer(eventConnection, volunteerId);
 			break;
 		}
 		

@@ -6,7 +6,8 @@ export function getEvents(eventType, callback){
 	if(callback != null)
 		data.attachEvent("onAfterLoad", callback);	
 	data.parse(webix.ajax().get(getServicePath() + "/searchEvent?eventType="+eventType));
-
+//	data.parse(webix.ajax().get("/mos/services/getEventsByType.php?eventType="+eventType));
+	
 	return data;
 };
 

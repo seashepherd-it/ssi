@@ -52,7 +52,7 @@ public class EventImporterEV extends EventImporter {
 				// decode account
 				if (nextRow.getCell(0) != null && nextRow.getCell(0).getStringCellValue().equalsIgnoreCase("Resp.")) {
 					String account = nextRow.getCell(1).getStringCellValue();
-					int accountId = getConnection().getDAO().getVolunteerIdByName(getConnection(), account);
+					int accountId = getConnection().getDAO().getVolunteerIdByName(account);
 					if (accountId < 0)
 						addError("Account not found: " + account);
 					getEvent().setEventAccountId(accountId);
@@ -63,7 +63,7 @@ public class EventImporterEV extends EventImporter {
 					String area = nextRow.getCell(4).getStringCellValue().trim().toUpperCase();
 					normalizeText(area);
 					
-					int areaId = getConnection().getDAO().getAreaIdByName(getConnection(), area);
+					int areaId = getConnection().getDAO().getAreaIdByName(area);
 					if (areaId < 0)
 						addError("Area not found: " + area);
 					getEvent().setAreaId(areaId);
@@ -166,14 +166,13 @@ public class EventImporterEV extends EventImporter {
 
 		// volunteer
 		String volunteer = nextRow.getCell(1).getStringCellValue();
-		int volunteerId = getConnection().getDAO().getVolunteerIdByName(getConnection(), volunteer);
+		int volunteerId = getConnection().getDAO().getVolunteerIdByName(volunteer);
 		if (volunteerId < 0) {
 			volunteerId = (int) nextRow.getCell(0).getNumericCellValue();
 			if (volunteerId > 0) {
-				String volunteerSurname = getConnection().getDAO().getVolunteerSurnameById(getConnection(),
-						volunteerId);
+				String volunteerSurname = getConnection().getDAO().getVolunteerSurnameById(volunteerId);
 				if (volunteerSurname == null || !volunteer.toUpperCase().contains(volunteerSurname.toUpperCase())) {
-					String volunteerText = getConnection().getDAO().getVolunteerTextById(getConnection(), volunteerId);
+					String volunteerText = getConnection().getDAO().getVolunteerTextById(volunteerId);
 					addWarning("Volunteer " + volunteer + "(" + volunteerId + ")" + " not found, please use instead "
 							+ volunteerText);
 				}

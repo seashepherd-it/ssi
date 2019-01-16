@@ -49,6 +49,7 @@ export default class SaveEventView extends JetView {
 									{ 
 										view:"text",
 										name:"eventId",
+										hidden:true,
 										label:_("EventId")
 									},
 									{ 
@@ -69,14 +70,12 @@ export default class SaveEventView extends JetView {
 											{
 												view:"datepicker",
 												name:"eventDateFrom",
-												label:_("Date From"),
-												value:new Date()
+												label:_("Date From")
 											},
 											{
 												view:"datepicker",
 												name:"eventDateTo",
-												label:_("Date To"),
-												value:new Date()
+												label:_("Date To")
 											}
 										]
 									},
@@ -106,6 +105,7 @@ export default class SaveEventView extends JetView {
 											{ 
 												view:"text",
 												name:"eventPlaceCountry",
+												disabled: true,
 												label:_("Country")
 											},
 											{ 
@@ -141,7 +141,9 @@ export default class SaveEventView extends JetView {
 									}
 								],
 								rules:{
+									eventTypeName:webix.rules.isNotEmpty,
 									eventText:webix.rules.isNotEmpty,
+									eventStatus:webix.rules.isNotEmpty,
 									eventDateFrom:webix.rules.isNotEmpty,
 									eventDateTo:webix.rules.isNotEmpty,
 									eventAccountId:webix.rules.isNotEmpty,
@@ -461,7 +463,11 @@ export default class SaveEventView extends JetView {
 		else {
 			this.$$("toolbar_label").setValue(_("Insert Event") + " " + eventType);
 			
-			this.$$("EV").setValues({ eventTypeName: eventType });
+			this.$$("EV").setValues({ eventTypeName: eventType,
+				 					  eventStatus: "20" ,
+				 					  eventDateFrom: new Date(),
+				 					  eventDateTo: new Date(),
+				 					  eventPlaceCountry: "Italy"});
 			this.getRoot().show();			
 		}		
 	}

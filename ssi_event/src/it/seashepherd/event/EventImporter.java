@@ -33,7 +33,7 @@ public abstract class EventImporter {
 	}
 
 	protected void saveEvent() throws Exception {
-		getConnection().getDAO().saveEvent(getConnection(), getEvent());
+		getConnection().getDAO().saveEvent(getEvent());
 	}
 
 	public abstract void importEvent() throws Exception;

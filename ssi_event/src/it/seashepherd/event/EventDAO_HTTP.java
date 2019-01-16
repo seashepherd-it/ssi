@@ -115,7 +115,7 @@ public class EventDAO_HTTP {
 			throw new Exception(result.substring(6));
 	}
 
-	public static String saveEvent(EventConnection connection, String jsonEvent) throws Exception  {
+	public static String saveEvent(EventConnection connection, String jsonEvent) throws Exception {
 		String url = "https://www.weit.it/mos/services/saveEvent.php";
 		Map<String, String> params = new HashMap<String, String>();		
 		params.put("event", jsonEvent);
@@ -171,6 +171,17 @@ public class EventDAO_HTTP {
 
 		String url = "https://www.weit.it/mos/services/getVolunteers.php";
 		Map<String, String> params = new HashMap<String, String>();
+		String result = connection.getHttpConnection().postHttpPage(url, HttpUtils.getParamsString(params));
+
+		return result;
+	}
+
+	public static String getJSONVolunteer(EventConnection connection, String volunteerId) throws Exception {
+
+		String url = "https://www.weit.it/mos/services/getVolunteerById.php";
+		Map<String, String> params = new HashMap<String, String>();
+		if(volunteerId != null)
+			params.put("volunteerId", volunteerId);
 		String result = connection.getHttpConnection().postHttpPage(url, HttpUtils.getParamsString(params));
 
 		return result;

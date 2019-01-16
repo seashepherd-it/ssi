@@ -39,5 +39,7 @@ export default {
 	"Ticket From":"Ticket From",
 	"Ticket To":"Ticket To",
 	"Status":"Status",
-	"Select status":"Select status"
+	"Select status":"Select status",
+	"EventId":"EventId",
+	"AccountId":"AccountId"
 };

@@ -72,6 +72,12 @@ export default class EventsTable extends JetView {
           }, columns.length);        
 
         columns.insertAt({
+            id: "SSI_EVENT_ACCOUNT_ID",
+            header: "Account Id",
+            adjust:true
+          }, columns.length);
+        
+        columns.insertAt({
             id: "SSI_EVENT_ACCOUNT_TEXT",
             header: "Account",
             adjust:true,
@@ -235,6 +241,7 @@ export default class EventsTable extends JetView {
 		datatable.hideColumn("SSI_EVENT_STATUS");
 		datatable.hideColumn("SSI_EVENT_PLACE_COUNTRY");
 		datatable.hideColumn("SSI_AREA_ID");
+		datatable.hideColumn("SSI_EVENT_ACCOUNT_ID");
 		
 		datatable.$scope.reloadData();
 		
@@ -269,8 +276,9 @@ export default class EventsTable extends JetView {
 
 	    $$("event_menu").attachTo(this.$$("events_table"))
 		
-		this.on(this.app,"search:event", (eventDate, eventArea, eventStatus) => {
+		this.on(this.app,"search:event", (eventDate, eventArea, eventStatus, eventAccount) => {
 
+			
 			if (eventDate) {
 				var myparse = webix.Date.strToDate("%d %M %Y");
 				var dateFrom = myparse(eventDate.start);
@@ -288,7 +296,7 @@ export default class EventsTable extends JetView {
 				});
 			}
 
-			if(eventArea) {
+			if(eventArea != "") {
 				datatable.filter(obj => {				
 					if(obj.SSI_AREA_ID == eventArea)
 						return true;
@@ -297,7 +305,7 @@ export default class EventsTable extends JetView {
 				});
 			}
 
-			if(eventStatus) {
+			if(eventStatus != "") {
 				datatable.filter(obj => {
 					if(obj.SSI_EVENT_STATUS == eventStatus)
 						return true;
@@ -306,7 +314,16 @@ export default class EventsTable extends JetView {
 				});
 			}
 
-			if(eventDate == null && eventArea == null && eventStatus == null)
+			if(eventAccount != "") {
+				datatable.filter(obj => {				
+					if(obj.SSI_EVENT_ACCOUNT_ID == eventAccount)
+						return true;
+					else 
+						return false;
+				});
+			}
+
+			if(eventDate == null && eventArea == null && eventStatus == null && eventAccount == null)
 				datatable.filter();			
 			
 		});

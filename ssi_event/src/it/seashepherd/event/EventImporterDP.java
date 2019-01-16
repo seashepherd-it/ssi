@@ -70,7 +70,7 @@ public class EventImporterDP extends EventImporter {
 		String area = row.getCell(0).getStringCellValue().trim().toUpperCase();
 		normalizeText(area);
 		
-		int areaId = getConnection().getDAO().getAreaIdByName(getConnection(), area);
+		int areaId = getConnection().getDAO().getAreaIdByName(area);
 		if (areaId < 0)
 			addError("Area not found: " + area);
 		
@@ -84,7 +84,7 @@ public class EventImporterDP extends EventImporter {
 
 		// decode account
 		String account = row.getCell(6).getStringCellValue();
-		int accountId = getConnection().getDAO().getVolunteerIdByName(getConnection(), account);
+		int accountId = getConnection().getDAO().getVolunteerIdByName(account);
 		if (accountId < 0)
 			addError("Account not found: " + account);
 		getEvent().setEventAccountId(accountId);
@@ -124,14 +124,13 @@ public class EventImporterDP extends EventImporter {
 
 		// volunteer
 		String volunteer = row.getCell(1).getStringCellValue().trim();
-		int volunteerId = getConnection().getDAO().getVolunteerIdByName(getConnection(), volunteer);
+		int volunteerId = getConnection().getDAO().getVolunteerIdByName(volunteer);
 		if (volunteerId < 0) {
 			volunteerId = (int) row.getCell(0).getNumericCellValue();
 			if (volunteerId > 0) {
-				String volunteerSurname = getConnection().getDAO().getVolunteerSurnameById(getConnection(),
-						volunteerId);
+				String volunteerSurname = getConnection().getDAO().getVolunteerSurnameById(volunteerId);
 				if (volunteerSurname == null || !volunteer.toUpperCase().contains(volunteerSurname.toUpperCase())) {
-					String volunteerText = getConnection().getDAO().getVolunteerTextById(getConnection(), volunteerId);
+					String volunteerText = getConnection().getDAO().getVolunteerTextById(volunteerId);
 					addWarning("Volunteer " + volunteer + "(" + volunteerId + ")" + " not found, please use instead "
 							+ volunteerText);
 				}

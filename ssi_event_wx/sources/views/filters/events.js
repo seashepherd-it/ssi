@@ -1,6 +1,7 @@
 import {JetView} from "webix-jet";
-import {getAreas} from "models/areas";
 import {getEventStates} from "models/eventStates";
+import {getVolunteers} from "models/volunteers";
+import {getAreas} from "models/areas";
 
 export default class FilterEventsView extends JetView {
 	
@@ -30,6 +31,20 @@ export default class FilterEventsView extends JetView {
 						}
 					},
 					{
+						view:"daterangepicker",
+						name:"eventDate",
+						label:_("Event Date"),
+						value:{start: webix.Date.add(new Date(), -2, "year"), end: webix.Date.add(new Date(), 1, "month")}
+					},
+					{ 
+						view:"combo",
+						name:"eventAccount",
+						label:_("Account"),
+						options:{ 
+							data:getVolunteers()
+						}
+					},																			
+					{
 						view:"combo",
 						name:"eventArea",
 						label:_("Area"), 
@@ -38,12 +53,6 @@ export default class FilterEventsView extends JetView {
 						options:{
 							data:getAreas()
 						}
-					},
-					{
-						view:"daterangepicker",
-						name:"eventDate",
-						label:_("Event Date"),
-						value:{start: webix.Date.add(new Date(), -2, "year"), end: webix.Date.add(new Date(), 1, "month")}
 					},
 					{
 						cols:[
@@ -70,6 +79,6 @@ export default class FilterEventsView extends JetView {
 	}
 	searchEvents() {
 		const data = this.$$("form_filter").getValues();
-		this.app.callEvent("search:event",[data.eventDate, data.eventArea, data.eventStatus]);
+		this.app.callEvent("search:event",[data.eventDate, data.eventArea, data.eventStatus, data.eventAccount]);
 	}
 }
