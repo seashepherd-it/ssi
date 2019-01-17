@@ -1,12 +1,12 @@
-package it.seashepherd.servlet;
+package it.seashepherd.servlet.old;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import it.seashepherd.event.EventConnection;
-import it.seashepherd.event.EventType;
+import it.seashepherd.servlet.EventConnectionServlet;
 
-public class EventLookupServlet extends EventConnectionServlet {
+public class EventSaveServlet extends EventConnectionServlet {
 
 	private static final long serialVersionUID = 1L;
 
@@ -15,15 +15,13 @@ public class EventLookupServlet extends EventConnectionServlet {
 		
 		response.setContentType("text/json");
 
-		String eventType = request.getParameter("eventType");
-		String eventId = request.getParameter("eventId");
-		
+		String event = request.getParameter("event");
 		try {			
-			String result = eventConnection.getDAO().getJSONEvent(EventType.valueOf(eventType), eventId);
-			response.getWriter().print(result.trim());
+			String message = eventConnection.getDAO().saveEvent(event);
+			response.getWriter().write(message);
 			response.flushBuffer();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		}
 	}
 }

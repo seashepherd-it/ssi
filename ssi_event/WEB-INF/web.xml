@@ -51,73 +51,12 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>EventSearchServlet</servlet-name>
-		<servlet-class>it.seashepherd.servlet.EventSearchServlet</servlet-class>
+		<servlet-name>EventProxyServlet</servlet-name>
+		<servlet-class>it.seashepherd.servlet.EventProxyServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>EventSearchServlet</servlet-name>
-		<url-pattern>/service/searchEvent</url-pattern>
+		<servlet-name>EventProxyServlet</servlet-name>
+		<url-pattern>/service/*</url-pattern>
 	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>EventLookupServlet</servlet-name>
-		<servlet-class>it.seashepherd.servlet.EventLookupServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>EventLookupServlet</servlet-name>
-		<url-pattern>/service/lookupEvent</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>EventVolunteersLookupServlet</servlet-name>
-		<servlet-class>it.seashepherd.servlet.EventVolunteersLookupServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>EventVolunteersLookupServlet</servlet-name>
-		<url-pattern>/service/lookupEventVolunteers</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>VolunteerSearchServlet</servlet-name>
-		<servlet-class>it.seashepherd.servlet.VolunteerSearchServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>VolunteerSearchServlet</servlet-name>
-		<url-pattern>/service/searchVolunteer</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>VolunteerLookupServlet</servlet-name>
-		<servlet-class>it.seashepherd.servlet.VolunteerLookupServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>VolunteerLookupServlet</servlet-name>
-		<url-pattern>/service/lookupVolunteer</url-pattern>
-	</servlet-mapping>
-			
-	<servlet>
-		<servlet-name>EventDeleteServlet</servlet-name>
-		<servlet-class>it.seashepherd.servlet.EventDeleteServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>EventDeleteServlet</servlet-name>
-		<url-pattern>/service/deleteEvent</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>EventSaveServlet</servlet-name>
-		<servlet-class>it.seashepherd.servlet.EventSaveServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>EventSaveServlet</servlet-name>
-		<url-pattern>/service/saveEvent</url-pattern>
-	</servlet-mapping>
-	
 </web-app>

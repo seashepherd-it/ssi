@@ -6,6 +6,6 @@ export function getVolunteers(callback){
 	if(callback != null)
 		data.attachEvent("onAfterLoad", callback);	
 
-	data.parse(webix.ajax().get(getServicePath() + "/searchVolunteer"));
+	data.parse(webix.ajax().get(getServicePath() + "/getVolunteers.php"));
 	return data;
 };

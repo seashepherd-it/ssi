@@ -1,5 +1,4 @@
 import {JetView} from "webix-jet";
-import {getServicePath} from "config/host";
 
 export default class ImportEventsView extends JetView {
 	config(){
@@ -23,7 +22,7 @@ export default class ImportEventsView extends JetView {
 			            autosend:false,
 			            value:"Upload files",
 			            link:"mylist",
-			            upload:getServicePath() + "/importEvent"
+			            upload:"http://89.96.140.107:8080/ssi/service/importEvent"
 			        }, 
 			        {
 			            view:"list",  
