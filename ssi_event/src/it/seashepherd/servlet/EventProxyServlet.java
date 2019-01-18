@@ -18,7 +18,6 @@ public class EventProxyServlet extends EventConnectionServlet {
 		String eventType = request.getParameter("eventType");
 		String eventId = request.getParameter("eventId");
 		String event = request.getParameter("event");
-		String volunteerId = request.getParameter("volunteerId");
 		
 		switch (request.getPathInfo()) {
 		case "/getEventsByType.php":	
@@ -75,9 +74,9 @@ public class EventProxyServlet extends EventConnectionServlet {
 				e.printStackTrace();
 			}
 			break;
-		case "/getVolunteerById.php":
+		case "/getUserInfo.php":
 			try {
-				String result = eventConnection.getDAO().getJSONVolunteer(volunteerId);
+				String result = eventConnection.getDAO().getJSONUserInfo();
 				response.getWriter().print(result.trim());
 				response.flushBuffer();
 			} catch (Exception e) {

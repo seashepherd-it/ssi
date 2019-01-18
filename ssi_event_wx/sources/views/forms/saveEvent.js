@@ -163,39 +163,74 @@ export default class SaveEventView extends JetView {
 										name:"eventReceiptsQty",
 										label:_("Quantity"),
 										labelWidth:100, 
-										format:"1111"
+										format:"11111"
 									},
 									{ 
 										view:"text",
 										name:"eventReceiptsTot",
 										label:_("Total"),
 										labelWidth:100, 
-										format:"1111"
+										format:"11111.11"
 									},
 									{ 
 										view:"text",
-										name:"eventReceiptsTotPOS",
+										name:"eventReceiptsPOS",
 										label:_("Total POS"),
 										labelWidth:100, 
-										format:"1111"
+										format:"11111.11"
 									},
 									{
 										cols:[
 											{ 
 												view:"text",
-												name:"eventReceiptsTicketFrom",
+												name:"eventTicketsFrom1",
 												label:_("Ticket From"),
 												labelWidth:100, 
-												format:"1111"
+												format:"11111"
 											},
 											{ 
 												view:"text",
-												name:"eventReceiptsTicketTo",
+												name:"eventTicketsTo1",
 												label:_("Ticket To"),
-												format:"1111"
+												format:"11111"
+											}
+										]
+									},
+									{
+										cols:[
+											{ 
+												view:"text",
+												name:"eventTicketsFrom2",
+												label:_("Ticket From"),
+												labelWidth:100, 
+												format:"11111"
+											},
+											{ 
+												view:"text",
+												name:"eventTicketsTo2",
+												label:_("Ticket To"),
+												format:"11111"
+											}
+										]
+									},
+									{
+										cols:[
+											{ 
+												view:"text",
+												name:"eventTicketsFrom3",
+												label:_("Ticket From"),
+												labelWidth:100, 
+												format:"11111"
+											},
+											{ 
+												view:"text",
+												name:"eventTicketsTo3",
+												label:_("Ticket To"),
+												format:"11111"
 											}
 										]
 									}
+									
 								] 
 							},
 							{
@@ -500,10 +535,8 @@ export default class SaveEventView extends JetView {
 		var volunteers = this.$$("volunteers").serialize();
 		event.volunteers = volunteers;
 
-		if(saveEvent(event))		
-			this.closex();
-		else
-			alert("error!!!!!!");
+		saveEvent(event)		
+		this.closex();
 	}
 	
 	setEventTypeName(eventTypeName) {

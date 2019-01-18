@@ -176,12 +176,10 @@ public class EventDAO_HTTP {
 		return result;
 	}
 
-	public static String getJSONVolunteer(EventConnection connection, String volunteerId) throws Exception {
+	public static String getJSONUserInfo(EventConnection connection) throws Exception {
 
-		String url = "https://www.weit.it/mos/services/getVolunteerById.php";
+		String url = "https://www.weit.it/mos/services/getUserInfo.php";
 		Map<String, String> params = new HashMap<String, String>();
-		if(volunteerId != null)
-			params.put("volunteerId", volunteerId);
 		String result = connection.getHttpConnection().postHttpPage(url, HttpUtils.getParamsString(params));
 
 		return result;

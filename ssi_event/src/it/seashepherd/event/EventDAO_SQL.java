@@ -200,7 +200,7 @@ public class EventDAO_SQL {
 		return null;
 	}
 
-	public static String getJSONVolunteer(EventConnection connection, String volunteerId) {
+	public static String getJSONUserInfo(EventConnection eventConnection) {
 		// TODO Auto-generated method stub
 		return null;
 	}

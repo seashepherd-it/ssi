@@ -7,7 +7,6 @@ export function getEvents(eventType, callback){
 		data.attachEvent("onAfterLoad", callback);
 	
 	data.parse(webix.ajax().get(getServicePath() + "/getEventsByType.php?eventType="+eventType));
-//	data.parse(webix.ajax().get("/mos/services/getEventsByType.php?eventType="+eventType));
 	
 	return data;
 };
@@ -34,31 +33,16 @@ export function getEventVolunteers(eventType, eventId, callback){
 
 export function deleteEvent(eventType, eventId){
 	
-	var result = false;	
-	var data = webix.ajax().sync().get(getServicePath() + "/deleteEvent.php?eventType="+eventType+"&eventId="+eventId, null, function(text, xml, xhr) {
-		if(text == "OK") {
-			result = true;
-		}
-		else {
-			result = false;
-		}
-	});	
+	var result = true;	
+	var data = webix.ajax().get(getServicePath() + "/deleteEvent.php?eventType="+eventType+"&eventId="+eventId);	
 	
 	return result;
 };
 
-export function saveEvent(event){
+export function saveEvent(event) {
 	
-	var result = false;	
-	var data = webix.ajax().sync().post(getServicePath() + "/saveEvent.php", "event="+webix.ajax().stringify(event), function(text, xml, xhr) {
-		
-		if(text.startsWith("ERROR")) {
-			result = false;
-		}
-		else {
-			result = true;
-		}
-	});	
+	var result = true;	
+	var data = webix.ajax().post(getServicePath() + "/saveEvent.php", "event="+webix.ajax().stringify(event));	
 	
 	return result;
 };

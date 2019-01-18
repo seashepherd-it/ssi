@@ -11,7 +11,7 @@ export default class NavView extends JetView{
 		return {
 			css:theme,
 			rows:[
-//				ToolbarMenu, 
+				ToolbarMenu, 
 				{
 					cols:[
 						ApplicationMenu,

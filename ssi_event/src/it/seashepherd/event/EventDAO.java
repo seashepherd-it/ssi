@@ -190,15 +190,15 @@ public class EventDAO {
 		return json;
 	}
 
-	public String getJSONVolunteer(String volunteerId) throws Exception {
+	public String getJSONUserInfo() throws Exception {
 		
 		String json = null;
 		switch (mode) {
 		case HTTP:
-			json = EventDAO_HTTP.getJSONVolunteer(eventConnection, volunteerId);
+			json = EventDAO_HTTP.getJSONUserInfo(eventConnection);
 			break;
 		case SQL:
-			json = EventDAO_SQL.getJSONVolunteer(eventConnection, volunteerId);
+			json = EventDAO_SQL.getJSONUserInfo(eventConnection);
 			break;
 		}
 		

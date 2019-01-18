@@ -3,6 +3,7 @@ import {getEvents, deleteEvent} from "models/events";
 import FilterEventsView from "views/filters/events";
 import ImportEventsView from "views/forms/importEvents";
 import SaveEventView from "views/forms/saveEvent";
+import {getUserInfo} from "models/users";
 
 export default class EventsTable extends JetView {
 
@@ -222,10 +223,11 @@ export default class EventsTable extends JetView {
 						},
 						{ view: "icon",  icon:"mdi mdi-file-excel",
 							click:() => this.download()
-						},
-						{ view:"icon", icon:"mdi mdi-menu",
-						  click:() => this.app.callEvent("menu:toggle")
-						}				
+						}
+//						,
+//						{ view:"icon", icon:"mdi mdi-menu",
+//						  click:() => this.app.callEvent("menu:toggle")
+//						}				
 					]
 				},
 				datatable
@@ -248,37 +250,63 @@ export default class EventsTable extends JetView {
 	    webix.ui({
 	        view:"contextmenu",
 		    id:"event_menu",
-	        data:["Modify",	"Delete"],
+	        data:[
+                {id:"modify",value:"Modify"},
+                {id:"delete",value:"Delete"}
+                ],
 	        on:{
 	            onItemClick:function(id){
+        	    	var contextMenu = this;
 	                var context = this.getContext();
+	                var itemMenu = contextMenu.getItem(id);
+	                
 	                var dtable = context.obj;	                
 	                var rowId = context.id;
 	                var event = dtable.getItem(rowId);
-	                
-	                switch(this.getItem(id).value){
-	                case 'Modify': {
-	                	dtable.$scope.ui(SaveEventView).showWindow(event.SSI_EVENT_TYPE, event.SSI_EVENT_ID);
-	                  break;
-	                }
-	                case 'Delete':
-				    	webix.confirm("Delete " + event.SSI_EVENT_TEXT + "?", function(action) {
-						    if(action == true) {
-						    	if(deleteEvent(event.SSI_EVENT_TYPE, event.SSI_EVENT_ID) == true)
-						    		dtable.remove(rowId);
-						    }
-				    	});
-	                  break;
-	              }
+        	    		        		                
+//	                if(itemMenu.isEnabled()) {
+	                	switch(itemMenu.id){
+		                case 'modify': {
+		                	dtable.$scope.ui(SaveEventView).showWindow(event.SSI_EVENT_TYPE, event.SSI_EVENT_ID);
+		                  break;
+		                }
+		                case 'delete':
+					    	webix.confirm("Delete " + event.SSI_EVENT_TEXT + "?", function(action) {
+							    if(action == true) {
+							    	deleteEvent(event.SSI_EVENT_TYPE, event.SSI_EVENT_ID);
+							    	dtable.remove(rowId);
+							    }
+					    	});
+		                  break;
+	                	}
+//	                }
 	            }
 	        }
 	    });
 
-	    $$("event_menu").attachTo(this.$$("events_table"))
-		
+	    var eventMenu = $$("event_menu");
+	    eventMenu.attachTo(datatable);
+	    
+	    datatable.attachEvent('onAfterContextMenu', function(id, e, node) {
+    		eventMenu.showItem("modify");	
+    		eventMenu.showItem("delete");
+    		
+	    	var event = datatable.getItem(id);
+	    	if(event.SSI_EVENT_STATUS == "80") {
+	    		eventMenu.hideItem("modify");	
+	    		eventMenu.hideItem("delete");
+	    		
+	            var userInfo = getUserInfo(() => {
+	    	    	if(userInfo.getValues().userLevel >= 5) {
+	    	    		eventMenu.showItem("modify");	
+	    	    		eventMenu.showItem("delete");
+	    	    	}		        	    		
+        	    });
+	    	}
+	    });
+	    
 		this.on(this.app,"search:event", (eventDate, eventArea, eventStatus, eventAccount) => {
 
-			
 			if (eventDate) {
 				var myparse = webix.Date.strToDate("%d %M %Y");
 				var dateFrom = myparse(eventDate.start);

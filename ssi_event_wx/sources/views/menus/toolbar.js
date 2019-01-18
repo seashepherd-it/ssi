@@ -1,12 +1,13 @@
 import {JetView} from "webix-jet";
 import LanguagesPopup from "views/lists/languages";
 import NotificationsPopup from "views/lists/notifications";
+import {getUserInfo} from "models/users";
 
 export default class ToolbarMenu extends JetView{
 	config(){
 		const _ = this.app.getService("locale")._;
 		const theme = this.app.config.theme;
-
+		
 		return {
 
 			view:"toolbar",
@@ -23,6 +24,12 @@ export default class ToolbarMenu extends JetView{
 								{
 									view:"label",
 									template:"SSI Activities"
+								},
+								{},
+								{
+									localId: "userInfo",
+									align: "right",
+									view:"label"
 								}
 //								,
 //								{
@@ -65,6 +72,11 @@ export default class ToolbarMenu extends JetView{
 //		this.languages = this.ui(LanguagesPopup);
 //		this.notifications = this.ui(NotificationsPopup);
 
+		var userInfo = getUserInfo(() => {			
+			this.$$("userInfo").config.label = userInfo.getValues().userName;
+			this.$$("userInfo").refresh();
+		});		
+		
 		this.on(this.app,"read:notifications",() => {
 			this.$$("bell").config.badge = 0;
 			this.$$("bell").refresh();
