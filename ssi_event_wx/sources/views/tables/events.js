@@ -223,11 +223,10 @@ export default class EventsTable extends JetView {
 						},
 						{ view: "icon",  icon:"mdi mdi-file-excel",
 							click:() => this.download()
-						}
-//						,
-//						{ view:"icon", icon:"mdi mdi-menu",
-//						  click:() => this.app.callEvent("menu:toggle")
-//						}				
+						},
+						{ view:"icon", icon:"mdi mdi-menu",
+						  click:() => this.app.callEvent("menu:toggle")
+						}				
 					]
 				},
 				datatable

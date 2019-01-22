@@ -27,11 +27,12 @@ export default class SaveEventView extends JetView {
 			            ],
 					};
 		
-		var forms = {
-					height: 700,
+		var forms = {				
+					height:450,
 					cells: [                              
 							{
-								view:"form",
+								view:"form",								
+								scroll:true,
 								id:"EV",
 								elementsConfig:{
 									labelPosition:"left" 
@@ -155,6 +156,7 @@ export default class SaveEventView extends JetView {
 							},
 							{
 								view:"form",
+								scroll:true,
 								id:"receipts",
 								elementsConfig:{labelPosition:"left" },
 								elements:[
@@ -235,6 +237,7 @@ export default class SaveEventView extends JetView {
 							},
 							{
 								view:"form",
+								scroll:true,
 								id:"PS",
 								elementsConfig:{labelPosition:"left" },
 								elements:[
@@ -265,6 +268,7 @@ export default class SaveEventView extends JetView {
 							},
 							{
 								view:"form",
+								scroll:true,
 								id:"EP",
 								elementsConfig:{
 									labelPosition:"left",
@@ -286,6 +290,7 @@ export default class SaveEventView extends JetView {
 							},
 							{
 								view:"form",
+								scroll:true,
 								id:"DP",
 								elementsConfig:{
 									labelPosition:"left",
@@ -312,6 +317,7 @@ export default class SaveEventView extends JetView {
 							},
 							{
 								view:"form",
+								scroll:true,
 								id:"PV",
 								elementsConfig:{labelPosition:"left" },
 								elements:[

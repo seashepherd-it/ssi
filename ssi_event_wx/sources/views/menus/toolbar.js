@@ -11,6 +11,7 @@ export default class ToolbarMenu extends JetView{
 		return {
 
 			view:"toolbar",
+
 			css:theme,
 			elements:[
 				{
