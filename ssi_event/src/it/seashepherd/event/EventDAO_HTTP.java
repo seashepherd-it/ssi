@@ -119,7 +119,7 @@ public class EventDAO_HTTP {
 		String url = "https://www.weit.it/mos/services/saveEvent.php";
 		Map<String, String> params = new HashMap<String, String>();		
 		params.put("event", jsonEvent);
-		params.put("replace", "true");
+//		params.put("replace", "true");
 		String result = connection.getHttpConnection().postHttpPage(url, HttpUtils.getParamsString(params)).trim();
 
 		return result;

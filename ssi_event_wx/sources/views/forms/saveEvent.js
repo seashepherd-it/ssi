@@ -486,6 +486,8 @@ export default class SaveEventView extends JetView {
 		
 		if(eventId != null) {	
 			
+			this.$$("EV").setValues({ eventReplace: true});
+			
 			const view = this;
     	    const event = getEvent(eventType, eventId, function() {
     			view.$$("toolbar_label").setValue(_("Update Event") + " " + event.getValues().eventText + " (" + eventType + "-" + eventId + ")");
