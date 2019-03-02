@@ -16,7 +16,7 @@ public class EventDAO_HTTP {
 
 		int areaId = -1;
 
-		String url = "https://www.weit.it/mos/services/getAreaIdByName.php";
+		String url = "https://www.ssio.it/mos/services/getAreaIdByName.php";
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("areaName", name);
 		String result = connection.getHttpConnection().postHttpPage(url, HttpUtils.getParamsString(params));
@@ -34,7 +34,7 @@ public class EventDAO_HTTP {
 
 		String areaText = null;
 
-		String url = "https://www.weit.it/mos/services/getAreaTextById.php";
+		String url = "https://www.ssio.it/mos/services/getAreaTextById.php";
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("areaId", Integer.toString(areaId));
 		String result = connection.getHttpConnection().postHttpPage(url, HttpUtils.getParamsString(params));
@@ -52,7 +52,7 @@ public class EventDAO_HTTP {
 
 		int volunteerId = -1;
 
-		String url = "https://www.weit.it/mos/services/getVolunteerIdByName.php";
+		String url = "https://www.ssio.it/mos/services/getVolunteerIdByName.php";
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("volunteerName", volunteerName);
 		String result = connection.getHttpConnection().postHttpPage(url, HttpUtils.getParamsString(params));
@@ -70,7 +70,7 @@ public class EventDAO_HTTP {
 
 		String volunteerText = null;
 
-		String url = "https://www.weit.it/mos/services/getVolunteerTextById.php";
+		String url = "https://www.ssio.it/mos/services/getVolunteerTextById.php";
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("volunteerId", Integer.toString(volunteerId));
 		String result = connection.getHttpConnection().postHttpPage(url, HttpUtils.getParamsString(params));
@@ -88,7 +88,7 @@ public class EventDAO_HTTP {
 
 		String volunteerText = null;
 
-		String url = "https://www.weit.it/mos/services/getVolunteerSurnameById.php";
+		String url = "https://www.ssio.it/mos/services/getVolunteerSurnameById.php";
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("volunteerId", Integer.toString(volunteerId));
 		String result = connection.getHttpConnection().postHttpPage(url, HttpUtils.getParamsString(params));
@@ -104,7 +104,7 @@ public class EventDAO_HTTP {
 
 	public static void saveEvent(EventConnection connection, EventEntity event) throws Exception {
 		
-		String url = "https://www.weit.it/mos/services/saveEvent.php";
+		String url = "https://www.ssio.it/mos/services/saveEvent.php";
 		Map<String, String> params = new HashMap<String, String>();
 		
 		String json = new JSONObject(event).toString();
@@ -116,7 +116,7 @@ public class EventDAO_HTTP {
 	}
 
 	public static String saveEvent(EventConnection connection, String jsonEvent) throws Exception {
-		String url = "https://www.weit.it/mos/services/saveEvent.php";
+		String url = "https://www.ssio.it/mos/services/saveEvent.php";
 		Map<String, String> params = new HashMap<String, String>();		
 		params.put("event", jsonEvent);
 //		params.put("replace", "true");
@@ -127,7 +127,7 @@ public class EventDAO_HTTP {
 
 	public static String getJSONEvents(EventConnection connection, EventType eventType) throws Exception {
 
-		String url = "https://www.weit.it/mos/services/getEventsByType.php";
+		String url = "https://www.ssio.it/mos/services/getEventsByType.php";
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("eventType", eventType.name());
 		String result = connection.getHttpConnection().postHttpPage(url, HttpUtils.getParamsString(params));
@@ -136,7 +136,7 @@ public class EventDAO_HTTP {
 	}
 
 	public static String getJSONEvent(EventConnection connection, EventType eventType, String eventId) throws Exception {
-		String url = "https://www.weit.it/mos/services/getEventByTypeId.php";
+		String url = "https://www.ssio.it/mos/services/getEventByTypeId.php";
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("eventType", eventType.name());
 		params.put("eventId", eventId);
@@ -147,7 +147,7 @@ public class EventDAO_HTTP {
 
 	public static String getJSONEventVolunteers(EventConnection connection, EventType eventType, String eventId) throws Exception {
 
-		String url = "https://www.weit.it/mos/services/getEventVolunteersByTypeId.php";
+		String url = "https://www.ssio.it/mos/services/getEventVolunteersByTypeId.php";
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("eventType", eventType.name());		
 		params.put("eventId", eventId);		
@@ -158,7 +158,7 @@ public class EventDAO_HTTP {
 	
 	public static String deleteEvent(EventConnection connection, EventType eventType, String eventId) throws Exception {
 
-		String url = "https://www.weit.it/mos/services/deleteEvent.php";
+		String url = "https://www.ssio.it/mos/services/deleteEvent.php";
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("eventType", eventType.name());
 		params.put("eventId", eventId);
@@ -169,7 +169,7 @@ public class EventDAO_HTTP {
 
 	public static String getJSONVolunteers(EventConnection connection) throws Exception {
 
-		String url = "https://www.weit.it/mos/services/getVolunteers.php";
+		String url = "https://www.ssio.it/mos/services/getVolunteers.php";
 		Map<String, String> params = new HashMap<String, String>();
 		String result = connection.getHttpConnection().postHttpPage(url, HttpUtils.getParamsString(params));
 
@@ -178,7 +178,7 @@ public class EventDAO_HTTP {
 
 	public static String getJSONUserInfo(EventConnection connection) throws Exception {
 
-		String url = "https://www.weit.it/mos/services/getUserInfo.php";
+		String url = "https://www.ssio.it/mos/services/getUserInfo.php";
 		Map<String, String> params = new HashMap<String, String>();
 		String result = connection.getHttpConnection().postHttpPage(url, HttpUtils.getParamsString(params));
 

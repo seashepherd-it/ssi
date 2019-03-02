@@ -18,7 +18,7 @@ public class HttpConnection {
 	
 	public HttpConnection() {
 		// cookies
-		cookies = retrieveCookies("https://www.weit.it/mos");
+		cookies = retrieveCookies("https://www.ssio.it/mos");
 //		System.out.print("cookies: " + cookies);
 	}
 	
@@ -30,7 +30,7 @@ public class HttpConnection {
 	
 	public void login(String user, String password) {
 		
-		String url = "https://www.weit.it/mos/checklogin.php";
+		String url = "https://www.ssio.it/mos/checklogin.php";
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("myusername", user);
 		params.put("mypassword", password);
@@ -49,7 +49,7 @@ public class HttpConnection {
 	public void logout() {
 
 		// logout
-		String url = "https://www.weit.it/mos/logout.php";
+		String url = "https://www.ssio.it/mos/logout.php";
 		try {
 			String page = postHttpPage(url, "");
 			page.toCharArray();
