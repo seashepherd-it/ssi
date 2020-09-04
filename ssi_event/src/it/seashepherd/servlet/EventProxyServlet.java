@@ -18,73 +18,51 @@ public class EventProxyServlet extends EventConnectionServlet {
 		String eventType = request.getParameter("eventType");
 		String eventId = request.getParameter("eventId");
 		String event = request.getParameter("event");
-		
-		switch (request.getPathInfo()) {
-		case "/getEventsByType.php":	
-			try {
-				String result = eventConnection.getDAO().getJSONEvents(EventType.valueOf(eventType));
+
+		try {
+			String result = null;
+			switch (request.getPathInfo()) {
+			case "/getEventsByType.php":
+				result = eventConnection.getDAO().getJSONEvents(EventType.valueOf(eventType));
 				response.getWriter().print(result.trim());
 				response.flushBuffer();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			break;
-		case "/getEventByTypeId.php":			
-			try {			
-				String result = eventConnection.getDAO().getJSONEvent(EventType.valueOf(eventType), eventId);
+				break;
+			case "/getEventByTypeId.php":
+				result = eventConnection.getDAO().getJSONEvent(EventType.valueOf(eventType), eventId);
 				response.getWriter().print(result.trim());
 				response.flushBuffer();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			break;
-		case "/getEventVolunteersByTypeId.php":
-			try {			
-				String result = eventConnection.getDAO().getJSONEventVolunteers(EventType.valueOf(eventType), eventId);
+				break;
+			case "/getEventVolunteersByTypeId.php":
+				result = eventConnection.getDAO().getJSONEventVolunteers(EventType.valueOf(eventType), eventId);
 				response.getWriter().print(result.trim());
 				response.flushBuffer();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			break;
-		case "/deleteEvent.php":		
-			try {			
-				String result = eventConnection.getDAO().deleteEvent(EventType.valueOf(eventType), eventId);
+				break;
+			case "/deleteEvent.php":
+				result = eventConnection.getDAO().deleteEvent(EventType.valueOf(eventType), eventId);
 				response.getWriter().print(result.trim());
 				response.flushBuffer();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}			
-			break;
-		case "/saveEvent.php":
-			try {			
+				break;
+			case "/saveEvent.php":
 				String message = eventConnection.getDAO().saveEvent(event);
 				response.getWriter().write(message);
 				response.flushBuffer();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			break;
-		case "/getVolunteers.php":			
-			try {			
-				String result = eventConnection.getDAO().getJSONVolunteers();
+				break;
+			case "/getVolunteers.php":
+				result = eventConnection.getDAO().getJSONVolunteers();
 				response.getWriter().print(result.trim());
 				response.flushBuffer();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			break;
-		case "/getUserInfo.php":
-			try {
-				String result = eventConnection.getDAO().getJSONUserInfo();
+				break;
+			case "/getUserInfo.php":
+				result = eventConnection.getDAO().getJSONUserInfo();
 				response.getWriter().print(result.trim());
 				response.flushBuffer();
-			} catch (Exception e) {
-				e.printStackTrace();
-			} 
-			break;
-		default:
-			break;
+				break;
+			default:
+				break;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+
 	}
 }

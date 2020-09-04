@@ -13,47 +13,49 @@ import it.seashepherd.event.EventDAO;
 public abstract class EventConnectionServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	private static EventConnection connection = null;
 
 	@Override
-	public final void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public final void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doPost(request, response);
 	}
-	
+
 	@Override
-	public final void doPost(HttpServletRequest request, HttpServletResponse response)
+	public synchronized final void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		EventConnection eventConnection = getEventConnection(request, response);
-		
-		execute(eventConnection, request, response);
-		
-		try {
-			eventConnection.disconnect();
+
+		try  {
+			EventConnection eventConnection = getEventConnection(request, response);
+			execute(eventConnection, request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	protected abstract void execute(EventConnection eventConnection, HttpServletRequest request, HttpServletResponse response);
-	
-	private EventConnection getEventConnection(HttpServletRequest request, HttpServletResponse response) throws IOException {
-				
-//		System.out.println(request.getSession().getId());
-		
-		EventConnection connection = (EventConnection) request.getSession().getAttribute("ssi_connection");
-		if(connection == null) {
+
+	protected abstract void execute(EventConnection eventConnection, HttpServletRequest request,
+			HttpServletResponse response);
+
+	private synchronized EventConnection getEventConnection(HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+
+		// System.out.println(request.getSession().getId());
+
+		// EventConnection connection = (EventConnection)
+		// request.getSession().getAttribute("ssi_connection");
+		if (connection == null) {
 			String ssi_user = getServletContext().getInitParameter("ssi_user");
 			String ssi_password = getServletContext().getInitParameter("ssi_password");
 
 			EventDAO.MODE mode = EventDAO.MODE.HTTP;
 			try {
 				connection = EventConnection.connect(mode, ssi_user, ssi_password);
-//				request.getSession().setAttribute("ssi_connection", connection);
+				// request.getSession().setAttribute("ssi_connection", connection);
 			} catch (Exception e) {
 				response.getWriter().print(e.getMessage());
 				response.flushBuffer();
-			}			
-		}		
+			}
+		}
 		return connection;
 	}
 }

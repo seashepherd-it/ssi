@@ -245,45 +245,45 @@ export default class EventsTable extends JetView {
 		datatable.hideColumn("SSI_EVENT_ACCOUNT_ID");
 		
 		datatable.$scope.reloadData();
-		
-	    webix.ui({
+
+		var eventMenu = webix.ui({
 	        view:"contextmenu",
-		    id:"event_menu",
+//		    id:"event_menu",
 	        data:[
                 {id:"modify",value:"Modify"},
                 {id:"delete",value:"Delete"}
                 ],
 	        on:{
-	            onItemClick:function(id){
+	            onItemClick:function(id) {
         	    	var contextMenu = this;
 	                var context = this.getContext();
 	                var itemMenu = contextMenu.getItem(id);
-	                
 	                var dtable = context.obj;	                
 	                var rowId = context.id;
 	                var event = dtable.getItem(rowId);
-        	    		        		                
+
 //	                if(itemMenu.isEnabled()) {
 	                	switch(itemMenu.id){
-		                case 'modify': {
-		                	dtable.$scope.ui(SaveEventView).showWindow(event.SSI_EVENT_TYPE, event.SSI_EVENT_ID);
-		                  break;
+			                case 'modify': {
+			                	dtable.$scope.ui(SaveEventView).showWindow(event.SSI_EVENT_TYPE, event.SSI_EVENT_ID);
+			                  break;
+			                }
+			                case 'delete': {
+						    	webix.confirm("Delete " + event.SSI_EVENT_TEXT + "?", function(action) {
+								    if(action == true) {
+								    	deleteEvent(event.SSI_EVENT_TYPE, event.SSI_EVENT_ID);
+								    	dtable.remove(rowId);
+								    }
+						    	});
+			                  break;
+		                	}
 		                }
-		                case 'delete':
-					    	webix.confirm("Delete " + event.SSI_EVENT_TEXT + "?", function(action) {
-							    if(action == true) {
-							    	deleteEvent(event.SSI_EVENT_TYPE, event.SSI_EVENT_ID);
-							    	dtable.remove(rowId);
-							    }
-					    	});
-		                  break;
-	                	}
-//	                }
-	            }
+//	            	}
+	        	}
 	        }
-	    });
-
-	    var eventMenu = $$("event_menu");
+		});
+	
+//	    var eventMenu = $$("event_menu");
 	    eventMenu.attachTo(datatable);
 	    
 	    datatable.attachEvent('onAfterContextMenu', function(id, e, node) {
