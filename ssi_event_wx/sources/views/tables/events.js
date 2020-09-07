@@ -8,6 +8,7 @@ import {getUserInfo} from "models/users";
 export default class EventsTable extends JetView {
 
 	config(eventType) {
+        
 		this.eventType_ = eventType;
 		
 		const _ = this.app.getService("locale")._;
@@ -29,7 +30,7 @@ export default class EventsTable extends JetView {
         columns.insertAt({
             id: "SSI_EVENT_TEXT",
             header: "Text",
-//            width:280,
+// width:280,
             adjust:true,
             sort:"string"
           }, columns.length);
@@ -130,7 +131,10 @@ export default class EventsTable extends JetView {
             id: "SSI_EVENT_DAYS",
             header: "Days",
             adjust:true,            
-            format:webix.Number.numToStr({decimalSize:0}),
+            format:webix.Number.numToStr({
+                groupSize:3,
+                groupDelimiter:"."
+            }),
             css:{'text-align':'right'},        
             sort:"int",
             footer:{content:"summColumn", css:{'text-align':'right'}}
@@ -140,7 +144,10 @@ export default class EventsTable extends JetView {
             id: "SSI_EVENT_PEOPLE_QTY",
             header: "People",
             adjust:true,            
-            format:webix.Number.numToStr({decimalSize:0}),
+            format:webix.Number.numToStr({
+                groupSize:3,
+                groupDelimiter:"."
+            }),
             css:{'text-align':'right'},
             sort:"int", 
             footer:{content:"summColumn", css:{'text-align':'right'}}
@@ -150,7 +157,10 @@ export default class EventsTable extends JetView {
             id: "SSI_VOLUNTEER_TOT",
             header: "Volunteers",
             adjust:true,            
-            format:webix.Number.numToStr({decimalSize:0}),
+            format:webix.Number.numToStr({
+                groupSize:3,
+                groupDelimiter:"."
+            }),
             css:{'text-align':'right'},
             sort:"int", 
             footer:{content:"summColumn", css:{'text-align':'right'}}
@@ -160,7 +170,12 @@ export default class EventsTable extends JetView {
             id: "SSI_VOLUNTEER_HOURS",
             header: "Hours",
             adjust:true,            
-            format:webix.Number.numToStr({decimalSize:0}),
+            format:webix.Number.numToStr({
+                groupSize:3,
+                groupDelimiter:".",
+                decimalDelimiter:",",
+                decimalSize:1
+            }),
             css:{'text-align':'right'},
             sort:"int", 
             footer:{content:"summColumn", css:{'text-align':'right'}}
@@ -170,7 +185,12 @@ export default class EventsTable extends JetView {
             id: "SSI_EVENT_RECEIPTS_TOT",
             header: "Receipts Tot",
             adjust:true,            
-            format:webix.Number.numToStr({decimalSize:0}),
+            format:webix.Number.numToStr({
+                groupSize:3,
+                groupDelimiter:".",
+                decimalSize:2,
+                decimalDelimiter:","
+            }),
             css:{'text-align':'right'},
             sort:"int", 
             footer:{content:"summColumn", css:{'text-align':'right'}}
@@ -180,7 +200,10 @@ export default class EventsTable extends JetView {
             id: "SSI_EVENT_RECEIPTS_QTY",
             header: "Receipts Qty",
             adjust:true,            
-            format:webix.Number.numToStr({decimalSize:0}),
+            format:webix.Number.numToStr({
+                groupSize:3,
+                groupDelimiter:"."
+            }),
             css:{'text-align':'right'},
             sort:"int", 
             footer:{content:"summColumn", css:{'text-align':'right'}}
@@ -206,7 +229,7 @@ export default class EventsTable extends JetView {
 			rows:[ 
 				{					
 					view:"toolbar",
-//					css:theme,
+// css:theme,
 					cols:[
 						{ view:"label", label:_("Events")},
 						{ view: "icon",  icon:"mdi mdi-refresh", 
@@ -248,7 +271,7 @@ export default class EventsTable extends JetView {
 
 		var eventMenu = webix.ui({
 	        view:"contextmenu",
-//		    id:"event_menu",
+// id:"event_menu",
 	        data:[
                 {id:"modify",value:"Modify"},
                 {id:"delete",value:"Delete"}
@@ -262,7 +285,7 @@ export default class EventsTable extends JetView {
 	                var rowId = context.id;
 	                var event = dtable.getItem(rowId);
 
-//	                if(itemMenu.isEnabled()) {
+// if(itemMenu.isEnabled()) {
 	                	switch(itemMenu.id){
 			                case 'modify': {
 			                	dtable.$scope.ui(SaveEventView).showWindow(event.SSI_EVENT_TYPE, event.SSI_EVENT_ID);
@@ -278,12 +301,12 @@ export default class EventsTable extends JetView {
 			                  break;
 		                	}
 		                }
-//	            	}
+// }
 	        	}
 	        }
 		});
 	
-//	    var eventMenu = $$("event_menu");
+// var eventMenu = $$("event_menu");
 	    eventMenu.attachTo(datatable);
 	    
 	    datatable.attachEvent('onAfterContextMenu', function(id, e, node) {

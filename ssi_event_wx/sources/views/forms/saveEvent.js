@@ -12,7 +12,7 @@ export default class SaveEventView extends JetView {
 	config(){
 		const _ = this.app.getService("locale")._;		
 		const actions = "<span class='mdi mdi-trash-can'></span>";
-
+				
 		var tabbar = {
 						view: "tabbar",  
 						localId:"tabbar",
@@ -127,8 +127,9 @@ export default class SaveEventView extends JetView {
 									{ 
 										view:"text",
 										name:"eventPeopleQty",
-										label:_("People Qty"), 
-										format:"11"
+										label:_("People Qty"),
+										inputAlign:"right",
+										format:"1.111"
 									},
 									{ 
 										view:"text",
@@ -164,22 +165,25 @@ export default class SaveEventView extends JetView {
 										view:"text",
 										name:"eventReceiptsQty",
 										label:_("Quantity"),
-										labelWidth:100, 
-										format:"11111"
+										labelWidth:100,
+										inputAlign:"right",
+										format:"1.111"
 									},
 									{ 
 										view:"text",
 										name:"eventReceiptsTot",
 										label:_("Total"),
-										labelWidth:100, 
-										format:"11111.11"
+										labelWidth:100,
+										inputAlign:"right",
+										format: "1.111,00"
 									},
 									{ 
 										view:"text",
 										name:"eventReceiptsPOS",
 										label:_("Total POS"),
-										labelWidth:100, 
-										format:"11111.11"
+										labelWidth:100,
+										inputAlign:"right",
+										format: "1.111,00"
 									},
 									{
 										cols:[
@@ -187,14 +191,16 @@ export default class SaveEventView extends JetView {
 												view:"text",
 												name:"eventTicketsFrom1",
 												label:_("Ticket From"),
-												labelWidth:100, 
-												format:"11111"
+												labelWidth:100,
+												inputAlign:"right",
+												format:"1.111"
 											},
 											{ 
 												view:"text",
 												name:"eventTicketsTo1",
 												label:_("Ticket To"),
-												format:"11111"
+												inputAlign:"right",
+												format:"1.111"
 											}
 										]
 									},
@@ -205,13 +211,15 @@ export default class SaveEventView extends JetView {
 												name:"eventTicketsFrom2",
 												label:_("Ticket From"),
 												labelWidth:100, 
-												format:"11111"
+												inputAlign:"right",
+												format:"1.111"
 											},
 											{ 
 												view:"text",
 												name:"eventTicketsTo2",
 												label:_("Ticket To"),
-												format:"11111"
+												inputAlign:"right",
+												format:"1.111"
 											}
 										]
 									},
@@ -221,14 +229,16 @@ export default class SaveEventView extends JetView {
 												view:"text",
 												name:"eventTicketsFrom3",
 												label:_("Ticket From"),
-												labelWidth:100, 
-												format:"11111"
+												labelWidth:100,
+												inputAlign:"right",
+												format:"1.111"
 											},
 											{ 
 												view:"text",
 												name:"eventTicketsTo3",
 												label:_("Ticket To"),
-												format:"11111"
+												inputAlign:"right",
+												format:"1.111"
 											}
 										]
 									}
@@ -279,7 +289,8 @@ export default class SaveEventView extends JetView {
 										view:"text",
 										name:"disposalMaterialKG",
 										label:_("Material(Kg)"),
-										format:"1111"
+										inputAlign:"right",
+										format:"1.111,00"
 									},
 									{ 
 										view:"text",
@@ -306,7 +317,8 @@ export default class SaveEventView extends JetView {
 										view:"text",
 										name:"disposalMaterialKG",
 										label:_("Material(Kg)"),
-										format:"1111"
+										inputAlign:"right",
+										format:"1.111,00"
 									},
 									{ 
 										view:"text",
@@ -462,6 +474,10 @@ export default class SaveEventView extends JetView {
 		};
 	}
 	
+	init(config) {
+// webix.i18n.setLocale("it-IT");
+	}
+	
 	showWindow(eventType, eventId) {
 		
 		const _ = this.app.getService("locale")._;
@@ -490,6 +506,16 @@ export default class SaveEventView extends JetView {
 			
 			const view = this;
     	    const event = getEvent(eventType, eventId, function() {
+ 
+    	    	var values = event.getValues();
+    	    	var fmt = {
+	    	    		decimalSize: 2, groupSize: 3, 
+	    	    		decimalDelimiter: ",", groupDelimiter: "."
+				  	};
+    	    	values.eventReceiptsTot = webix.Number.format(values.eventReceiptsTot, fmt);
+    	    	values.eventReceiptsPOS = webix.Number.format(values.eventReceiptsPOS, fmt);
+    	    	values.disposalMaterialKG = webix.Number.format(values.disposalMaterialKG, fmt);   	    	
+    	    	
     			view.$$("toolbar_label").setValue(_("Update Event") + " " + event.getValues().eventText + " (" + eventType + "-" + eventId + ")");
     	
     			view.setFormValues(view.$$("receipts"), event.getValues());
@@ -514,7 +540,7 @@ export default class SaveEventView extends JetView {
 			this.getRoot().show();			
 		}		
 	}
-
+	
 	closex(){
 		this.getRoot().close();
 	}

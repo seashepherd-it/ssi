@@ -24,6 +24,8 @@ if (!BUILD_AS_MODULE){
 		if (!webix.env.touch && webix.env.scrollSize && webix.CustomScroll)
 			webix.CustomScroll.init();
 		
+		webix.i18n.setLocale( "it-IT" );
+		
 		new MyApp().render();
 	});
 }

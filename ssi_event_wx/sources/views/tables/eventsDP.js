@@ -18,7 +18,12 @@ export default class EventsTableDP extends EventsTable {
         columns.insertAt({
             id: "SSI_DISPOSAL_MATERIAL_KG",
             header: "Material",
-            format:webix.Number.numToStr({decimalSize:0}),
+            format:webix.Number.numToStr({
+                groupSize:3,
+                groupDelimiter:".",
+                decimalSize:2,
+                decimalDelimiter:","
+            }),
             sort:"int",
             footer:{content:"summColumn", css:{'text-align':'right'}},
             css:{'text-align':'right'}
