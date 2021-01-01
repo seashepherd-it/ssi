@@ -50,6 +50,7 @@ public abstract class EventImporter {
 			eventImporter = new EventImporterEP(connection, event, workbook);
 			break;
 		case EV:
+		case JA:		
 			eventImporter = new EventImporterEV(connection, event, workbook);
 			break;
 		case PS:

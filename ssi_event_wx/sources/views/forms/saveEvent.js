@@ -21,6 +21,7 @@ export default class SaveEventView extends JetView {
 			         		{id: "EV", value: "Base"},
 			         		{id: "PS", value: getEventTypeText("PS")},
 			         		{id: "EP", value: getEventTypeText("EP")},
+			         		{id: "JA", value: getEventTypeText("JA")},
 			         		{id: "DP", value: getEventTypeText("DP")},
 			         		{id: "PV", value: getEventTypeText("PV")},
 			         		{id: "receipts", value: "Receipts"}
@@ -299,6 +300,29 @@ export default class SaveEventView extends JetView {
 									}			
 								] 
 							},
+							{
+								view:"form",
+								scroll:true,
+								id:"JA",
+								elementsConfig:{
+									labelPosition:"left",
+									labelWidth:100 
+								},
+								elements:[
+									{ 
+										view:"text",
+										name:"disposalMaterialKG",
+										label:_("Material(Kg)"),
+										inputAlign:"right",
+										format:"1.111,00"
+									},
+									{ 
+										view:"text",
+										name:"disposalContact",
+										label:_("Contact")
+									}			
+								] 
+							},							
 							{
 								view:"form",
 								scroll:true,

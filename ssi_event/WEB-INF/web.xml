@@ -32,12 +32,12 @@
 
     <context-param>
         <param-name>ssi_user</param-name>
-        <param-value>pippo</param-value>
+        <param-value>Mattia.R</param-value>
     </context-param>
     
     <context-param>
         <param-name>ssi_password</param-name>
-        <param-value>pluto</param-value>
+        <param-value>Mat6321</param-value>
     </context-param>
     
 	<servlet>

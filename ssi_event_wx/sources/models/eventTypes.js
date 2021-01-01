@@ -31,6 +31,10 @@ const types = [
 		value: "Spiagge"
 	},
 	{
+		id: "JA",
+		value: "Jairo"
+	},	
+	{
 		id: "PS",
 		value: "Scuole"
 	},

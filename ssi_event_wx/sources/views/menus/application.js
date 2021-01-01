@@ -18,6 +18,7 @@ export default class ApplicationMenu extends JetView {
 						{ id: "tables.eventsEV", icon:"mdi mdi-circle", value: getEventTypeText("EV")},
 						{ id: "tables.eventsPS", icon:"mdi mdi-circle", value: getEventTypeText("PS")},
 						{ id: "tables.eventsEP", icon:"mdi mdi-circle", value: getEventTypeText("EP")},
+						{ id: "tables.eventsJA", icon:"mdi mdi-circle", value: getEventTypeText("JA")},						
 						{ id: "tables.eventsDP", icon:"mdi mdi-circle", value: getEventTypeText("DP")},
 						{ id: "tables.eventsPV", icon:"mdi mdi-circle", value: getEventTypeText("PV")}
 					]
