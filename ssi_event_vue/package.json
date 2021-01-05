@@ -18,7 +18,7 @@
     "@progress/kendo-spreadsheet-vue-wrapper": "^2018.2.516",
     "@progress/kendo-theme-default": "^2.53.2",
     "@progress/kendo-ui": "^2018.2.530",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "tslib": "^1.9.2",
     "vue-i18n": "^7.8.0",
     "vue-router": "^3.0.1",
